@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+.output
+
+# Vite / Temp files
+.vite
+*.local
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea
+.vscode

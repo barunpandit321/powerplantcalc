@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>PowerPlantCalc — Free Online Power Plant Engineering Calculators</title>
+    <meta name="description" content="Free online Power Plant Engineering Calculators & IAPWS-IF97 Steam Table Suite on PowerPlantCalc.com. High-precision thermodynamic tools for steam, boilers, turbines, and cooling towers.">
+    <meta name="keywords" content="power plant calculator, powerplantcalc, steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, boiler efficiency calculator, turbine heat rate calculator">
+    <meta name="author" content="PowerPlantCalc">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PowerPlantCalc — Free Online Power Plant Calculators">
+    <meta property="og:description" content="Comprehensive suite of power plant engineering tools: IAPWS-IF97 steam tables, boiler efficiency, turbine heat rate, cooling tower performance, and condenser vacuum.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PowerPlantCalc — Engineering Suite">
+    <meta name="twitter:description" content="High-precision thermodynamic suite for power plant engineers on PowerPlantCalc.com. Supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
+    
+    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PowerPlantCalc Engineering Suite",
+      "url": "https://powerplantcalc.com/",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Professional Power Plant Engineering Calculators & IAPWS-IF97 Steam Properties Suite on PowerPlantCalc.com.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "PowerPlantCalc",
+        "url": "https://powerplantcalc.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link active">All Tools</a>
+                <a href="/steam-calculator" class="nav-link">Steam Calculator</a>
+            </div>
+
+            <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-text">Light Mode</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Portal Hero Header -->
+        <header class="portal-hero">
+            <div class="badge">Power Plant Engineering Suite</div>
+            <h1>High-Precision Power Plant Calculators</h1>
+            <p>Free online thermodynamic tools for thermal power stations, boilers, steam turbines, and cooling systems based on industrial standards.</p>
+        </header>
+
+        <!-- Tools Suite Flat Directory -->
+        <section class="tools-directory-section">
+            <div class="section-title">
+                <h2>Browse Engineering Tools</h2>
+                <p>Select any tool below to launch calculations</p>
+            </div>
+
+            <div class="tools-portal-grid">
+
+                <!-- Steam Calculator Card (Flat URL) -->
+                <a href="/steam-calculator" class="portal-card active">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <span class="status-badge active">Active Tool</span>
+                    </div>
+                    <h3>Steam Properties & Enthalpy</h3>
+                    <p>IAPWS-IF97 thermodynamic steam tables. Calculates enthalpy, entropy, superheat, quality, and 12+ properties.</p>
+                    <div class="card-action">Launch Calculator →</div>
+                </a>
+
+                <!-- Boiler Efficiency Card -->
+                <div class="portal-card coming-soon">
+                    <div class="card-header">
+                        <span class="card-icon">🔥</span>
+                        <span class="status-badge soon">Under Development</span>
+                    </div>
+                    <h3>Boiler Efficiency (BS 845 / ASME PTC 4)</h3>
+                    <p>Direct and Indirect heat loss method to compute boiler efficiency, blowdown losses, and fuel cost savings.</p>
+                    <div class="card-action">Coming Soon</div>
+                </div>
+
+                <!-- Turbine Heat Rate Card -->
+                <div class="portal-card coming-soon">
+                    <div class="card-header">
+                        <span class="card-icon">🌀</span>
+                        <span class="status-badge soon">Under Development</span>
+                    </div>
+                    <h3>Steam Turbine Heat Rate</h3>
+                    <p>Calculates gross & net turbine heat rate, isentropic efficiency, steam rate (kg/kWh), and cycle performance.</p>
+                    <div class="card-action">Coming Soon</div>
+                </div>
+
+                <!-- Cooling Tower Card -->
+                <div class="portal-card coming-soon">
+                    <div class="card-header">
+                        <span class="card-icon">❄️</span>
+                        <span class="status-badge soon">Under Development</span>
+                    </div>
+                    <h3>Cooling Tower Performance</h3>
+                    <p>Calculates Range, Approach, Cooling Efficiency (%), Evaporation Loss, Cycles of Concentration (COC), and Makeup Water.</p>
+                    <div class="card-action">Coming Soon</div>
+                </div>
+
+                <!-- Condenser Duty Card -->
+                <div class="portal-card coming-soon">
+                    <div class="card-header">
+                        <span class="card-icon">💧</span>
+                        <span class="status-badge soon">Under Development</span>
+                    </div>
+                    <h3>Condenser Vacuum & Duty</h3>
+                    <p>Calculates condenser thermal load (Gcal/h), cooling water flow rate, LMTD, and vacuum pressure loss in inHg.</p>
+                    <div class="card-action">Coming Soon</div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>© <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering & Thermodynamics Suite</p>
+        </footer>
+
+    </div>
+
+    <script type="module">
+        import { UNITS } from "/src/units.js";
+        
+        // Simple theme toggle for homepage
+        const THEME_KEY = "steam_calculator_theme";
+        const themeToggleBtn = document.getElementById("themeToggle");
+        
+        function applyTheme(theme) {
+            if (theme === "dark") {
+                document.documentElement.removeAttribute("data-theme");
+                if (themeToggleBtn) {
+                    themeToggleBtn.querySelector(".theme-icon").textContent = "🌙";
+                    themeToggleBtn.querySelector(".theme-text").textContent = "Dark Mode";
+                }
+            } else {
+                document.documentElement.setAttribute("data-theme", "light");
+                if (themeToggleBtn) {
+                    themeToggleBtn.querySelector(".theme-icon").textContent = "☀️";
+                    themeToggleBtn.querySelector(".theme-text").textContent = "Light Mode";
+                }
+            }
+        }
+
+        const savedTheme = localStorage.getItem(THEME_KEY) || "light";
+        applyTheme(savedTheme);
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener("click", () => {
+                const isLight = document.documentElement.getAttribute("data-theme") === "light";
+                const next = isLight ? "dark" : "light";
+                applyTheme(next);
+                localStorage.setItem(THEME_KEY, next);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

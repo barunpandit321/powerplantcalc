@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc</title>
+    <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb.">
+    <meta name="keywords" content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering">
+    <meta name="author" content="PowerPlantCalc">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL for SEO -->
+    <link rel="canonical" href="https://powerplantcalc.com/steam-calculator">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Steam Properties & Enthalpy Calculator | PowerPlantCalc">
+    <meta property="og:description" content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/steam-calculator">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Steam Properties Calculator | PowerPlantCalc">
+    <meta name="twitter:description" content="High-precision thermodynamic calculator for power plant engineers. Supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
+    
+    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Steam Properties & Enthalpy Calculator",
+      "url": "https://powerplantcalc.com/steam-calculator",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator for power plant engineers on PowerPlantCalc.com.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "PowerPlantCalc",
+        "url": "https://powerplantcalc.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home (All Tools)</a>
+                <a href="/steam-calculator" class="nav-link active">Steam Calculator</a>
+            </div>
+
+            <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                <span class="theme-icon">☀️</span>
+                <span class="theme-text">Light Mode</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">IAPWS-IF97 Standard Engine</div>
+            </div>
+            <h1>Steam Properties & Enthalpy Calculator</h1>
+            <p>High-precision thermodynamic engine with dynamic multi-unit conversions & industrial steam table accuracy</p>
+        </header>
+
+        <main>
+            <section class="card input-card" aria-label="Calculation Controls">
+
+                <div class="input-group full-width">
+                    <label for="mode">Calculation Mode</label>
+                    <select id="mode">
+                        <option value="PT" selected>Pressure + Temperature (P, T)</option>
+                        <option value="PH">Pressure + Enthalpy (P, h)</option>
+                        <option value="PS">Pressure + Entropy (P, s)</option>
+                        <option value="HS">Enthalpy + Entropy (h, s - Mollier Diagram)</option>
+                        <option value="TH">Temperature + Enthalpy (T, h)</option>
+                        <option value="TS">Temperature + Entropy (T, s)</option>
+                        <option value="PX">Pressure + Vapor Quality (P, x)</option>
+                        <option value="TX">Temperature + Vapor Quality (T, x)</option>
+                    </select>
+                </div>
+
+                <div class="grid">
+
+                    <div class="input-group">
+                        <label id="label1" for="input1">Pressure</label>
+                        <div class="input-with-unit">
+                            <input id="input1" type="number" step="any" placeholder="70">
+                            <select id="unit1" aria-label="Input 1 Unit"></select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label id="label2" for="input2">Temperature</label>
+                        <div class="input-with-unit">
+                            <input id="input2" type="number" step="any" placeholder="490">
+                            <select id="unit2" aria-label="Input 2 Unit"></select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button id="calculateBtn">
+                    <span>Calculate Properties</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+
+            </section>
+
+            <section class="results-header">
+                <h2>Thermodynamic State Results</h2>
+                <p class="subtitle">Select any unit dropdown below to instantly convert output properties</p>
+            </section>
+
+            <section class="results" aria-label="Calculation Output Results">
+
+                <div class="result-card highlight">
+                    <span>IAPWS Region</span>
+                    <h2 id="region">--</h2>
+                    <small class="static-label">State Region</small>
+                </div>
+
+                <div class="result-card key-metric">
+                    <span>Specific Enthalpy (h)</span>
+                    <h2 id="enthalpy">--</h2>
+                    <select class="unit-select" id="unit-enthalpy" data-type="enthalpy" aria-label="Enthalpy Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Pressure (P)</span>
+                    <h2 id="pressureResult">--</h2>
+                    <select class="unit-select" id="unit-pressure" data-type="pressure" aria-label="Pressure Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Temperature (T)</span>
+                    <h2 id="temperatureResult">--</h2>
+                    <select class="unit-select" id="unit-temperature" data-type="temperature" aria-label="Temperature Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Saturation Temp (Tsat)</span>
+                    <h2 id="tsat">--</h2>
+                    <select class="unit-select" id="unit-tsat" data-type="temperature" aria-label="Saturation Temperature Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Degree of Superheat (ΔT)</span>
+                    <h2 id="superheat">--</h2>
+                    <small class="static-label">T - Tsat</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Vapor Quality (x)</span>
+                    <h2 id="quality">--</h2>
+                    <select class="unit-select" id="unit-quality" data-type="quality" aria-label="Vapor Quality Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Specific Entropy (s)</span>
+                    <h2 id="entropy">--</h2>
+                    <select class="unit-select" id="unit-entropy" data-type="entropy" aria-label="Entropy Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Specific Volume (v)</span>
+                    <h2 id="volume">--</h2>
+                    <select class="unit-select" id="unit-volume" data-type="volume" aria-label="Specific Volume Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Density (ρ)</span>
+                    <h2 id="density">--</h2>
+                    <select class="unit-select" id="unit-density" data-type="density" aria-label="Density Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Internal Energy (u)</span>
+                    <h2 id="internalEnergy">--</h2>
+                    <select class="unit-select" id="unit-internalEnergy" data-type="enthalpy" aria-label="Internal Energy Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Isobaric Heat Capacity (Cp)</span>
+                    <h2 id="cp">--</h2>
+                    <select class="unit-select" id="unit-cp" data-type="entropy" aria-label="Isobaric Heat Capacity Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Isochoric Heat Capacity (Cv)</span>
+                    <h2 id="cv">--</h2>
+                    <select class="unit-select" id="unit-cv" data-type="entropy" aria-label="Isochoric Heat Capacity Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Speed of Sound (w)</span>
+                    <h2 id="sound">--</h2>
+                    <select class="unit-select" id="unit-sound" data-type="speed" aria-label="Speed of Sound Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Dynamic Viscosity (μ)</span>
+                    <h2 id="viscosity">--</h2>
+                    <select class="unit-select" id="unit-viscosity" data-type="viscosity" aria-label="Dynamic Viscosity Output Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Thermal Conductivity (λ)</span>
+                    <h2 id="conductivity">--</h2>
+                    <select class="unit-select" id="unit-conductivity" data-type="conductivity" aria-label="Thermal Conductivity Output Unit"></select>
+                </div>
+
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>© <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering & Thermodynamics Suite</p>
+        </footer>
+
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+
+</body>
+
+</html>
