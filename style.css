@@ -71,7 +71,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
 }
 
 .brand-logo {
@@ -83,6 +83,7 @@ body {
     font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: -0.02em;
+    flex-shrink: 0;
 }
 
 .brand-logo .highlight-text {
@@ -96,7 +97,7 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
 }
 
 .nav-link {
@@ -105,6 +106,7 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     transition: color 0.2s ease;
+    white-space: nowrap;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -239,43 +241,6 @@ body {
     color: var(--primary);
 }
 
-/* Featured Tool Section */
-.featured-calculator-section {
-    border-top: 1px solid var(--border-color);
-    padding-top: 36px;
-    margin-top: 10px;
-}
-
-.featured-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.featured-badge {
-    display: inline-block;
-    background: rgba(59, 130, 246, 0.12);
-    color: var(--primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 4px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 10px;
-}
-
-.featured-header h2 {
-    font-size: clamp(1.3rem, 4vw, 1.85rem);
-    font-weight: 700;
-}
-
-.featured-header p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-top: 4px;
-}
-
 header {
     text-align: center;
     margin-bottom: 24px;
@@ -309,6 +274,7 @@ header {
 .theme-toggle-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     background: var(--bg-input);
     border: 1px solid var(--border-color);
@@ -322,11 +288,17 @@ header {
     width: auto;
     min-height: 34px;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .theme-toggle-btn:hover {
     border-color: var(--primary);
     transform: translateY(-1px);
+}
+
+.theme-icon {
+    font-size: 1rem;
+    line-height: 1;
 }
 
 header h1 {
@@ -582,6 +554,19 @@ button#calculateBtn:active {
    Responsive Breakpoints (Mobile & Tablet)
    ========================================== */
 
+@media (max-width: 600px) {
+    .theme-toggle-btn {
+        padding: 6px 10px;
+        min-height: 32px;
+        border-radius: 16px;
+    }
+
+    /* Hide the text 'Light Mode'/'Dark Mode' on mobile screens so the icon fits perfectly */
+    .theme-toggle-btn .theme-text {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 16px 12px;
@@ -614,7 +599,20 @@ button#calculateBtn:active {
 
 @media (max-width: 480px) {
     .nav-container {
-        padding: 10px 12px;
+        padding: 10px 10px;
+        gap: 8px;
+    }
+
+    .brand-logo {
+        font-size: 1rem;
+    }
+
+    .nav-links {
+        gap: 8px;
+    }
+
+    .nav-link {
+        font-size: 0.775rem;
     }
 
     .tools-portal-grid {
