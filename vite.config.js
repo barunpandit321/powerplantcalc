@@ -1,12 +1,15 @@
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
     build: {
         rollupOptions: {
             input: {
-                main: resolve(import.meta.dirname, "index.html"),
-                steam: resolve(import.meta.dirname, "steam-calculator.html")
+                main: resolve(__dirname, "index.html"),
+                steam: resolve(__dirname, "steam-calculator.html")
             }
         }
     }
