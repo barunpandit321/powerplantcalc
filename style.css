@@ -613,14 +613,6 @@ button#calculateBtn:active {
     position: relative;
 }
 
-.step-number {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--primary);
-    display: block;
-    margin-bottom: 6px;
-}
-
 .step-card h4 {
     font-size: 0.975rem;
     font-weight: 700;
