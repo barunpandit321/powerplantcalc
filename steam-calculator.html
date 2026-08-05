@@ -7,8 +7,8 @@
     
     <!-- Primary SEO Title & Meta Tags -->
     <title>Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc</title>
-    <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb.">
-    <meta name="keywords" content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering">
+    <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb with technical documentation and FAQs.">
+    <meta name="keywords" content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering, superheat calculation, dryness fraction">
     <meta name="author" content="PowerPlantCalc">
     
     <!-- Temporary NOINDEX while site content is under development -->
@@ -21,8 +21,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <!-- Open Graph / Facebook Social Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Steam Properties & Enthalpy Calculator | PowerPlantCalc">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Steam Properties & Enthalpy Calculator (IAPWS-IF97) | PowerPlantCalc">
     <meta property="og:description" content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations.">
     <meta property="og:site_name" content="PowerPlantCalc">
     <meta property="og:url" content="https://powerplantcalc.com/steam-calculator">
@@ -32,28 +32,68 @@
     <meta name="twitter:title" content="Steam Properties Calculator | PowerPlantCalc">
     <meta name="twitter:description" content="High-precision thermodynamic calculator for power plant engineers. Supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
     
-    <!-- Structured Data (JSON-LD) for Google Rich Snippets -->
+    <!-- Structured Data (JSON-LD WebApplication + FAQPage) for Google Rich Snippets -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Steam Properties & Enthalpy Calculator",
-      "url": "https://powerplantcalc.com/steam-calculator",
-      "operatingSystem": "All",
-      "applicationCategory": "EngineeringApplication",
-      "browserRequirements": "Requires JavaScript",
-      "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator for power plant engineers on PowerPlantCalc.com.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "PowerPlantCalc",
-        "url": "https://powerplantcalc.com"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Steam Properties & Enthalpy Calculator",
+        "url": "https://powerplantcalc.com/steam-calculator",
+        "operatingSystem": "All",
+        "applicationCategory": "EngineeringApplication",
+        "browserRequirements": "Requires JavaScript",
+        "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator for power plant engineers on PowerPlantCalc.com.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "PowerPlantCalc",
+          "url": "https://powerplantcalc.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
       },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the IAPWS-IF97 standard in steam calculations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "IAPWS-IF97 (International Association for the Properties of Water and Steam 1997 Industrial Formulation) is the international standard governing high-accuracy thermodynamic calculations of water and steam in thermal power plants, boilers, and steam turbines."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you calculate degree of superheat (ΔT)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Degree of superheat is calculated as ΔT = T_actual - T_sat, where T_actual is the measured steam temperature and T_sat is the saturation boiling temperature at the given operating pressure."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between gauge pressure and absolute pressure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Gauge pressure measures pressure relative to atmospheric pressure (P_abs = P_gauge + P_atm), whereas absolute pressure measures total pressure relative to a perfect vacuum. Standard atmospheric pressure equals 1.0332 kg/cm² = 1.01325 bar = 14.696 psi."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is International Table calorie (kcal_IT) standard used in power plant steam tables?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Industrial steam tables (ASME, TLV, ISO) use the International Table Calorie standard defined as 1 kcal_IT = 4.1868 kJ. Using thermochemical calories (4.184 kJ) introduces a 0.5 kcal/kg discrepancy in high-pressure steam calculations."
+            }
+          }
+        ]
       }
-    }
+    ]
     </script>
 
     <!-- Modern Typography -->
@@ -106,6 +146,7 @@
         </header>
 
         <main>
+            <!-- Interactive Calculator Section -->
             <section class="card input-card" aria-label="Calculation Controls">
 
                 <div class="input-group full-width">
@@ -253,6 +294,169 @@
                 </div>
 
             </section>
+
+            <!-- SEO Comprehensive Technical Documentation Article -->
+            <article class="article-section">
+                
+                <header class="article-header">
+                    <h2>Comprehensive Guide to Steam Properties & Thermodynamic Calculations</h2>
+                    <p class="article-meta">Authoritative Technical Documentation based on IAPWS-IF97 Standard</p>
+                </header>
+
+                <div class="article-content">
+                    
+                    <h3>1. Introduction to the IAPWS-IF97 Steam Formulation</h3>
+                    <p>
+                        The <strong>IAPWS-IF97</strong> (International Association for the Properties of Water and Steam 1997 Industrial Formulation) is the international benchmark specification used for calculating the thermodynamic and transport properties of water and steam in thermal power plants, industrial boilers, steam turbines, and nuclear reactors.
+                    </p>
+                    <p>
+                        Developing accurate steam properties is essential for heat balance calculations, boiler efficiency evaluations, turbine heat rate computations, and valve sizing. Compared to historical 1967 formulations (IF-67), IAPWS-IF97 provides superior numerical consistency across region boundaries and significantly higher computational execution speeds.
+                    </p>
+
+                    <div class="info-box">
+                        <strong>💡 Key Advantage of IAPWS-IF97:</strong> It defines 5 distinct thermodynamic calculation regions covering pressures up to 100 MPa (1000 bar) and temperatures up to 800°C (1472°F), with an extended region up to 2000°C.
+                    </div>
+
+                    <h3>2. The 5 Thermodynamic Regions of IAPWS-IF97</h3>
+                    <p>
+                        Water and steam behave differently depending on temperature and pressure. IAPWS-IF97 splits the state diagram into 5 operational regions:
+                    </p>
+
+                    <div class="region-cards-grid">
+                        <div class="region-info-card">
+                            <span class="reg-num">Region 1</span>
+                            <h4>Subcooled & Compressed Water</h4>
+                            <p>Liquid water state below saturation boiling temperature (T &lt; T_sat). Governed by fundamental equation g(P, T) Gibbs free energy.</p>
+                        </div>
+
+                        <div class="region-info-card">
+                            <span class="reg-num">Region 2</span>
+                            <h4>Superheated Steam / Vapor</h4>
+                            <p>Superheated steam above saturation (T &gt; T_sat). Ideal for steam turbine high-pressure (HP) and intermediate-pressure (IP) stages.</p>
+                        </div>
+
+                        <div class="region-info-card">
+                            <span class="reg-num">Region 3</span>
+                            <h4>Supercritical Fluid Region</h4>
+                            <p>Transcritical state above critical point (P_c = 22.064 MPa, T_c = 373.94°C). Fundamental equation f(ρ, T) Helmholtz free energy.</p>
+                        </div>
+
+                        <div class="region-info-card">
+                            <span class="reg-num">Region 4</span>
+                            <h4>Two-Phase Saturation Region</h4>
+                            <p>Coexistence of saturated liquid water and saturated vapor. Properties defined by pressure or temperature along saturation line (x = 0 to 1).</p>
+                        </div>
+
+                        <div class="region-info-card">
+                            <span class="reg-num">Region 5</span>
+                            <h4>High-Temperature Steam</h4>
+                            <p>Extreme high-temperature steam region up to 2000°C (3632°F) for gas turbine heat recovery steam generators (HRSG).</p>
+                        </div>
+                    </div>
+
+                    <h3>3. Power Plant Engineering Calculation Walkthrough</h3>
+                    <p>
+                        Consider a superheated steam boiler operating at a drum outlet pressure of <strong>70 kg/cm² (gauge)</strong> and a main steam temperature of <strong>490°C</strong>:
+                    </p>
+                    <ul>
+                        <li><strong>Step 1: Convert Gauge Pressure to Absolute Pressure (MPa)</strong><br>
+                            P_abs = (70 kg/cm² g + 1.0332 kg/cm² atm) × 0.0980665 = 6.9656 MPa.
+                        </li>
+                        <li><strong>Step 2: Determine State Region</strong><br>
+                            At P = 6.9656 MPa, the saturation boiling temperature is T_sat = 285.83°C. Since measured temperature 490°C &gt; 285.83°C, the state lies in <strong>Region 2 (Superheated Steam)</strong>.
+                        </li>
+                        <li><strong>Step 3: Evaluate Thermodynamic Properties</strong><br>
+                            Using IAPWS-IF97 Region 2 equations:
+                            <ul>
+                                <li>Specific Enthalpy (h): <strong>3388.5 kJ/kg</strong> = <strong>809.3 kcal/kg</strong> = <strong>1456.8 Btu/lb</strong></li>
+                                <li>Degree of Superheat (ΔT): 490°C - 285.83°C = <strong>204.17°C</strong></li>
+                                <li>Specific Entropy (s): <strong>6.815 kJ/(kg·K)</strong></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>4. Gauge Pressure vs. Absolute Pressure Reference Table</h3>
+                    <p>
+                        Pressure instrumentation in thermal power plants (Bourdon gauges, transmitters) reads <strong>gauge pressure (g)</strong>, which measures pressure above ambient atmosphere. Standard atmospheric pressure definitions:
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Pressure Unit</th>
+                                    <th>Standard Atmosphere (P_atm)</th>
+                                    <th>Conversion to Base MPa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>kg/cm² (gauge)</strong></td>
+                                    <td>1.033227 kg/cm²</td>
+                                    <td>P_abs = (P_g + 1.0332) × 0.0980665</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>bar (gauge)</strong></td>
+                                    <td>1.01325 bar</td>
+                                    <td>P_abs = (P_g + 1.01325) × 0.1</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>psi (gauge)</strong></td>
+                                    <td>14.69595 psi</td>
+                                    <td>P_abs = (P_g + 14.696) × 0.00689476</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>inHg (gauge)</strong></td>
+                                    <td>29.92126 inHg</td>
+                                    <td>P_abs = (P_g + 29.921) × 0.00338639</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>mmHg (abs)</strong></td>
+                                    <td>760 mmHg</td>
+                                    <td>P_abs = P_a × 0.000133322</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>5. Frequently Asked Questions (FAQ)</h3>
+
+                    <div class="faq-container">
+                        
+                        <div class="faq-item">
+                            <h4>Q: What is the difference between Saturated Steam and Superheated Steam?</h4>
+                            <p>
+                                <strong>Saturated Steam</strong> exists at the exact boiling temperature corresponding to its pressure (T = T_sat). Adding heat to saturated steam increases its temperature above boiling, converting it into <strong>Superheated Steam</strong> (T &gt; T_sat). Superheated steam contains zero moisture, preventing erosion of steam turbine blades.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How do you calculate degree of superheat (ΔT)?</h4>
+                            <p>
+                                Degree of superheat is defined as:
+                                ΔT_superheat = T_actual - T_sat
+                                Where T_actual is the operating steam temperature and T_sat is the saturation temperature at the operating pressure. For example, steam at 490°C and 70 kg/cm² (g) (T_sat = 285.8°C) has a superheat of 204.2°C.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: Why is International Table Calorie (kcal_IT) used instead of Thermochemical Calorie?</h4>
+                            <p>
+                                Power plant steam tables (ASME, TLV, ISO) use the International Table Calorie standard defined as 1 kcal_IT = 4.1868 kJ. Using thermochemical calories (4.184 kJ) introduces an artificial 0.5 kcal/kg error in high-pressure enthalpy calculations.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How is the Mollier Enthalpy-Entropy (h-s) calculation used in turbines?</h4>
+                            <p>
+                                In steam turbines, steam expands isentropically (s = constant) from high pressure to condenser vacuum pressure. By calculating initial enthalpy h_1 and final enthalpy h_2 using <strong>Enthalpy + Entropy (h, s) mode</strong>, engineers determine theoretical turbine work (W = h_1 - h_2) and heat rate efficiency.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </article>
         </main>
 
         <footer class="site-footer">
