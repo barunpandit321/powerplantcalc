@@ -597,6 +597,83 @@ button#calculateBtn:active {
     margin-bottom: 8px;
 }
 
+/* Guide Steps Cards */
+.guide-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.step-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+}
+
+.step-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.step-card h4 {
+    font-size: 0.975rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.step-card p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    line-height: 1.45;
+}
+
+/* Uncommon Units Grid */
+.uncommon-units-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.unit-desc-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.unit-code {
+    display: inline-block;
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--accent);
+    font-size: 0.725rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    margin-bottom: 8px;
+}
+
+.unit-desc-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.unit-desc-card p {
+    font-size: 0.825rem;
+    margin-bottom: 0;
+    line-height: 1.45;
+}
+
 .info-box {
     background: rgba(59, 130, 246, 0.08);
     border-left: 4px solid var(--primary);
