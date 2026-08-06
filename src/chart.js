@@ -96,7 +96,8 @@ export function drawThermodynamicChart(canvasId, state, chartType = 'hs', isDark
     ctx.fillStyle = colors.bg;
     ctx.fillRect(0, 0, width, height);
 
-    const padding = { top: 40, right: 30, bottom: 45, left: 55 };
+    // Padding with ample left space (68px) to prevent Y-axis title overlap
+    const padding = { top: 40, right: 30, bottom: 45, left: 68 };
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
 
@@ -156,18 +157,19 @@ export function drawThermodynamicChart(canvasId, state, chartType = 'hs', isDark
             ctx.stroke();
 
             ctx.textAlign = 'right';
-            ctx.fillText(t + '°C', padding.left - 8, y + 4);
+            ctx.fillText(t.toString(), padding.left - 8, y + 4);
         }
     }
 
-    // Axis Labels
+    // Axis Title Labels
     ctx.fillStyle = colors.text;
     ctx.font = '600 11px Inter, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Specific Entropy s [kJ/(kg·K)]', padding.left + chartW / 2, height - 10);
 
+    // Rotated Y-Axis Title Label
     ctx.save();
-    ctx.translate(15, padding.top + chartH / 2);
+    ctx.translate(16, padding.top + chartH / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText(chartType === 'hs' ? 'Specific Enthalpy h [kJ/kg]' : 'Temperature T [°C]', 0, 0);
     ctx.restore();
