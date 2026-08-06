@@ -139,10 +139,10 @@
 
         <header class="header">
             <div class="header-top">
-                <div class="badge">IAPWS-IF97 Standard Engine</div>
+                <div class="badge">IAPWS-IF97 Standard</div>
             </div>
             <h1>Steam Properties & Enthalpy Calculator</h1>
-            <p>High-precision thermodynamic engine with dynamic multi-unit conversions & industrial steam table accuracy</p>
+            <p>Thermodynamic steam and water calculator tool with dynamic graphs, multi-unit conversions, and industrial steam table accuracy</p>
         </header>
 
         <main>
@@ -394,8 +394,7 @@
 
                     <h3>2. Output Data Breakdown: Where Each Property Is Used in Power Plants</h3>
                     <p>
-                        The calculator generates 16 output metrics. Below is an explaining
-                        where and why each parameter is applied in real plant operations:
+                        The calculator generates 16 output metrics. Below is an explanation of where and why each parameter is applied in real plant operations:
                     </p>
 
                     <div class="table-responsive">
@@ -412,17 +411,12 @@
                                     <td><strong>Specific Enthalpy</strong></td>
                                     <td><strong>h</strong></td>
                                     <td>Enthalpy represents the total energy content of the steam. It is commonly used
-                                        for
-                                        boiler heat balances, turbine work calculations(<strong>W = h₁
-                                            - h₂</strong>),condenser duty, and feedwater
-                                        heater performance.</td>
+                                        for boiler heat balances, turbine work calculations (<strong>W = h₁ - h₂</strong>), condenser duty, and feedwater heater performance.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Specific Entropy</strong></td>
                                     <td><strong>s</strong></td>
-                                    <td>Entropy is mainly used when evaluating turbine efficiency and ideal isentropic
-                                        expansion. It is also the basis of the Mollier (<strong>h-s</strong>) diagram.
-                                    </td>
+                                    <td>Entropy is mainly used when evaluating turbine efficiency and ideal isentropic expansion. It is also the basis of the Mollier (<strong>h-s</strong>) diagram.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Saturation Temp (T<sub>sat</sub>)</strong></td>
@@ -432,148 +426,119 @@
                                 <tr>
                                     <td><strong>Degree of Superheat</strong></td>
                                     <td><strong>ΔT</strong></td>
-                                    <td>Crucial metric (<strong>T - T<sub>sat</sub></strong>) to ensure main steam has
-                                        zero water droplets, protecting turbine HP/IP blades against moisture erosion.
-                                    </td>
+                                    <td>This metric (<strong>T - T<sub>sat</sub></strong>) ensures main steam has zero water droplets, protecting turbine HP (high pressure) and IP (intermediate pressure) blades against moisture erosion.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Vapor Quality (Dryness)</strong></td>
                                     <td><strong>x</strong></td>
-                                    <td>Measures mass fraction of vapor in wet steam (0.0 = 100% liquid, 1.0 = 100% dry
-                                        vapor). Used in boiler drums and wet steam turbine exhaust stages.</td>
+                                    <td>Measures the mass fraction of vapor in wet steam (0.0 = 100% liquid, 1.0 = 100% dry vapor). This is used in boiler drums and wet steam LP (low pressure) turbine exhaust stages.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Specific Volume & Density</strong></td>
                                     <td><strong>v, ρ</strong></td>
-                                    <td>Used in steam piping sizing, calculating steam flow velocity (<strong>V = ṁ · v
-                                            / A</strong>), safety valve sizing, and boiler drum volumetric capacity.
-                                    </td>
+                                    <td>Used in steam pipe sizing to calculate steam flow velocity (<strong>V = ṁ · v / A</strong>), safety valve sizing, boiler drum volumetric capacity, and many other plant areas.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Internal Energy</strong></td>
                                     <td><strong>u</strong></td>
-                                    <td>Used in closed vessel thermodynamics, blowdown expansion tank design, and
-                                        pressure vessel emergency relief energy calculations.</td>
+                                    <td>Internal energy is used in closed vessel thermodynamics, blowdown expansion tank design, and pressure vessel emergency relief energy calculations.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Heat Capacities (C<sub>p</sub>, C<sub>v</sub>)</strong></td>
                                     <td><strong>C<sub>p</sub>, C<sub>v</sub></strong></td>
-                                    <td>Used in heat exchanger design, calculating steam attemperation water spray
-                                        rates, and transient thermal stress models.</td>
+                                    <td>Used in heat exchanger design and for calculating steam attemperation water spray rates.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Speed of Sound</strong></td>
                                     <td><strong>w</strong></td>
-                                    <td>Used to detect sonic (choked) flow in safety relief valves, turbine nozzles, and
-                                        acoustic resonance in steam headers.</td>
+                                    <td>Used to detect sonic (choked) flow in safety relief valves, turbine nozzles, and acoustic resonance in steam headers.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Dynamic Viscosity & Thermal Conductivity</strong></td>
                                     <td><strong>μ, λ</strong></td>
-                                    <td>Used to compute Reynolds number (<strong>Re</strong>), Nusselt number
-                                        (<strong>Nu</strong>), convective heat transfer coefficients
-                                        (<strong>U-value</strong>), and pipe friction pressure drop.</td>
+                                    <td>Used to calculate Reynolds number (<strong>Re</strong>), Nusselt number (<strong>Nu</strong>), convective heat transfer coefficients (<strong>U-value</strong>), and pipe friction pressure drop.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <h3>3. Guide to Lesser-Known & Uncommon Engineering Units</h3>
+                    <h3>3. Description of Uncommon Engineering Units Supported in This Calculator</h3>
                     <p>
-                        Different regions and engineering specialties use unique units. Here is a quick cheat-sheet for
-                        less common units supported in this tool:
+                        Different regions and engineering specialties use unique units. Check below where 4 less common units supported by this tool are described:
                     </p>
 
                     <div class="uncommon-units-grid">
                         <div class="unit-desc-card">
                             <span class="unit-code">inHg (gauge)</span>
                             <h4>Inches of Mercury Gauge</h4>
-                            <p><strong>Where Used:</strong> Steam Turbine Condenser Vacuum readings (e.g.
-                                <code>28 inHg vacuum</code>). 29.92 inHg = 1 atmosphere.
-                            </p>
+                            <p><strong>Where Used:</strong> Steam Turbine Condenser Vacuum readings (e.g. <code>28 inHg vacuum</code>). 29.92 inHg = 1 atmosphere.</p>
                         </div>
 
                         <div class="unit-desc-card">
                             <span class="unit-code">mmWC (gauge)</span>
                             <h4>Millimeters of Water Column</h4>
-                            <p><strong>Where Used:</strong> Boiler draft pressure, ID/FD fan static head, and flue gas
-                                duct pressure drops. 10332 mmWC = 1 atmosphere.</p>
+                            <p><strong>Where Used:</strong> Boiler draft pressure, ID/FD fan static head, and flue gas duct pressure drops. 10332 mmWC = 1 atmosphere.</p>
                         </div>
 
                         <div class="unit-desc-card">
                             <span class="unit-code">cm³/g</span>
                             <h4>Cubic Centimeters per Gram</h4>
-                            <p><strong>Where Used:</strong> Laboratory water chemistry and specific volume scaling. 1
-                                cm³/g = 0.001 m³/kg = 1 L/kg.</p>
+                            <p><strong>Where Used:</strong> Laboratory water chemistry and specific volume scaling. 1 cm³/g = 0.001 m³/kg = 1 L/kg.</p>
                         </div>
 
                         <div class="unit-desc-card">
                             <span class="unit-code">kcal/kg (IT)</span>
                             <h4>International Table Kilocalorie</h4>
-                            <p><strong>Where Used:</strong> Standard unit in Indian, Asian, and European power plant
-                                steam tables. Defined as 1 kcal<sub>IT</sub> = 4.1868 kJ.</p>
+                            <p><strong>Where Used:</strong> Standard unit in Indian, Asian, and European power plant steam tables. Defined as 1 kcal<sub>IT</sub> = 4.1868 kJ.</p>
                         </div>
                     </div>
 
                     <h3>4. Introduction to the IAPWS-IF97 Steam Formulation</h3>
                     <p>
-                        The <strong>IAPWS-IF97</strong> (International Association for the Properties of Water and Steam
-                        1997 Industrial Formulation) is the international benchmark specification used for calculating
-                        the thermodynamic and transport properties of water and steam in thermal power plants,
-                        industrial boilers, steam turbines, and nuclear reactors.
+                        The <strong>IAPWS-IF97</strong> (International Association for the Properties of Water and Steam 1997 Industrial Formulation) is the international benchmark specification used for calculating the thermodynamic and transport properties of water and steam in thermal power plants, industrial boilers, steam turbines, and nuclear reactors.
                     </p>
                     <p>
-                        IAPWS-IF97 is the industrial standard used by most engineering software to calculate the
-                        properties of water and steam. It replaced the older IF-67 formulation and provides faster
-                        calculations while maintaining consistent accuracy across the different thermodynamic regions.
+                        IAPWS-IF97 is the industrial standard used by most engineering software to calculate the properties of water and steam. It replaced the older IF-67 formulation and provides faster calculations while maintaining consistent accuracy across the different thermodynamic regions.
                     </p>
 
                     <div class="info-box">
-                        <strong>💡Advantage of IAPWS-IF97:</strong> It defines 5 distinct thermodynamic calculation
-                        regions covering pressures up to 100 MPa (1000 bar) and temperatures up to 800°C (1472°F), with
-                        an extended region up to 2000°C.
+                        <strong>💡 Advantage of IAPWS-IF97:</strong> It defines 5 distinct thermodynamic calculation regions covering pressures up to 100 MPa (1000 bar) and temperatures up to 800°C (1472°F), with an extended region up to 2000°C.
                     </div>
 
                     <h3>5. The 5 Thermodynamic Regions of IAPWS-IF97</h3>
                     <p>
-                        Water and steam behave differently depending on temperature and pressure. IAPWS-IF97 splits the
-                        state diagram into 5 operational regions:
+                        Water and steam behave differently depending on temperature and pressure. IAPWS-IF97 splits the state diagram into 5 operational regions:
                     </p>
 
                     <div class="region-cards-grid">
                         <div class="region-info-card">
                             <span class="reg-num">Region 1</span>
                             <h4>Subcooled & Compressed Water</h4>
-                            <p>Liquid water state below saturation boiling temperature (T &lt; T<sub>sat</sub>).
-                                Governed by fundamental equation g(P, T) Gibbs free energy.</p>
+                            <p>Liquid water state below saturation boiling temperature (T &lt; T<sub>sat</sub>). Governed by fundamental equation g(P, T) Gibbs free energy.</p>
                         </div>
 
                         <div class="region-info-card">
                             <span class="reg-num">Region 2</span>
                             <h4>Superheated Steam / Vapor</h4>
-                            <p>Superheated steam above saturation (T &gt; T<sub>sat</sub>). Ideal for steam turbine
-                                high-pressure (HP) and intermediate-pressure (IP) stages.</p>
+                            <p>Superheated steam above saturation (T &gt; T<sub>sat</sub>). Ideal for steam turbine high-pressure (HP) and intermediate-pressure (IP) stages.</p>
                         </div>
 
                         <div class="region-info-card">
                             <span class="reg-num">Region 3</span>
                             <h4>Supercritical Fluid Region</h4>
-                            <p>Transcritical state above critical point (P<sub>c</sub> = 22.064 MPa, T<sub>c</sub> =
-                                373.94°C). Fundamental equation f(ρ, T) Helmholtz free energy.</p>
+                            <p>Transcritical state above critical point (P<sub>c</sub> = 22.064 MPa, T<sub>c</sub> = 373.94°C). Fundamental equation f(ρ, T) Helmholtz free energy.</p>
                         </div>
 
                         <div class="region-info-card">
                             <span class="reg-num">Region 4</span>
                             <h4>Two-Phase Saturation Region</h4>
-                            <p>Coexistence of saturated liquid water and saturated vapor. Properties defined by pressure
-                                or temperature along saturation line (x = 0 to 1).</p>
+                            <p>Coexistence of saturated liquid water and saturated vapor. Properties defined by pressure or temperature along saturation line (x = 0 to 1).</p>
                         </div>
 
                         <div class="region-info-card">
                             <span class="reg-num">Region 5</span>
                             <h4>High-Temperature Steam</h4>
-                            <p>Extreme high-temperature steam region up to 2000°C (3632°F) for gas turbine heat recovery
-                                steam generators (HRSG).</p>
+                            <p>Extreme high-temperature steam region up to 2000°C (3632°F) for gas turbine heat recovery steam generators (HRSG).</p>
                         </div>
                     </div>
 
@@ -584,11 +549,7 @@
                         <div class="faq-item">
                             <h4>Q: What is the difference between Saturated Steam and Superheated Steam?</h4>
                             <p>
-                                <strong>Saturated Steam</strong> exists at the exact boiling temperature corresponding
-                                to its pressure (T = T<sub>sat</sub>). Adding heat to saturated steam increases its
-                                temperature above boiling, converting it into <strong>Superheated Steam</strong> (T &gt;
-                                T<sub>sat</sub>). Superheated steam contains zero moisture, preventing erosion of steam
-                                turbine blades.
+                                <strong>Saturated Steam</strong> exists at the exact boiling temperature corresponding to its pressure (T = T<sub>sat</sub>). Adding heat to saturated steam increases its temperature above boiling, converting it into <strong>Superheated Steam</strong> (T &gt; T<sub>sat</sub>). Superheated steam contains zero moisture, preventing erosion of steam turbine blades.
                             </p>
                         </div>
 
@@ -597,29 +558,21 @@
                             <p>
                                 Degree of superheat is defined as:
                                 <strong>ΔT<sub>superheat</sub> = T<sub>actual</sub> - T<sub>sat</sub></strong>
-                                Where T<sub>actual</sub> is the operating steam temperature and T<sub>sat</sub> is the
-                                saturation temperature at the operating pressure. For example, steam at 490°C and 70
-                                kg/cm² (g) (T<sub>sat</sub> = 285.8°C) has a superheat of 204.2°C.
+                                Where T<sub>actual</sub> is the operating steam temperature and T<sub>sat</sub> is the saturation temperature at the operating pressure. For example, steam at 490°C and 70 kg/cm² (g) (T<sub>sat</sub> = 285.8°C) has a superheat of 204.2°C.
                             </p>
                         </div>
 
                         <div class="faq-item">
-                            <h4>Q: Why is International Table Calorie (kcal<sub>IT</sub>) used instead of Thermochemical
-                                Calorie?</h4>
+                            <h4>Q: Why is International Table Calorie (kcal<sub>IT</sub>) used instead of Thermochemical Calorie?</h4>
                             <p>
-                                Power plant steam tables (ASME, TLV, ISO) use the International Table Calorie standard
-                                defined as 1 kcal<sub>IT</sub> = 4.1868 kJ. Using thermochemical calories (4.184 kJ)
-                                introduces an artificial 0.5 kcal/kg error in high-pressure enthalpy calculations.
+                                Power plant steam tables (ASME, TLV, ISO) use the International Table Calorie standard defined as 1 kcal<sub>IT</sub> = 4.1868 kJ. Using thermochemical calories (4.184 kJ) introduces an artificial 0.5 kcal/kg error in high-pressure enthalpy calculations.
                             </p>
                         </div>
 
                         <div class="faq-item">
                             <h4>Q: How is the Mollier Enthalpy-Entropy (h-s) calculation used in turbines?</h4>
                             <p>
-                                In steam turbines, steam expands isentropically (s = constant) from high pressure to
-                                condenser vacuum pressure. By calculating initial enthalpy h₁ and final enthalpy h₂
-                                using <strong>Enthalpy + Entropy (h, s) mode</strong>, engineers determine theoretical
-                                turbine work (W = h₁ - h₂) and heat rate efficiency.
+                                In steam turbines, steam expands isentropically (s = constant) from high pressure to condenser vacuum pressure. By calculating initial enthalpy h₁ and final enthalpy h₂ using <strong>Enthalpy + Entropy (h, s) mode</strong>, engineers calculate theoretical turbine work (W = h₁ - h₂) and heat rate efficiency.
                             </p>
                         </div>
 
@@ -630,7 +583,7 @@
         </main>
 
         <footer class="site-footer">
-            <p>© <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering & Thermodynamics Suite</p>
+            <p>© <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools</p>
         </footer>
 
     </div>
