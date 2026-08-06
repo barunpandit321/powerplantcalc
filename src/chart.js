@@ -7,37 +7,49 @@ import { solvePx } from 'iapws-if97';
 
 // Pre-computed Saturation Boundary Data (IAPWS-IF97 Saturation Dome)
 function generateSaturationDome() {
-    const dome = [];
-    // Pressures from 0.001 MPa (0.01 bar) up to 22.064 MPa (Critical Point)
+    const liquidPoints = [];
+    const vaporPoints = [];
+
+    // Dense pressure sampling up to Critical Point (22.064 MPa)
     const pressures = [];
-    for (let p = 0.001; p < 0.1; p += 0.005) pressures.push(p);
-    for (let p = 0.1; p < 1.0; p += 0.05) pressures.push(p);
-    for (let p = 1.0; p < 10.0; p += 0.5) pressures.push(p);
-    for (let p = 10.0; p <= 22.0; p += 1.0) pressures.push(p);
-    pressures.push(22.064); // Critical point
+    for (let p = 0.001; p < 0.01; p += 0.001) pressures.push(p);
+    for (let p = 0.01; p < 0.1; p += 0.005) pressures.push(p);
+    for (let p = 0.1; p < 1.0; p += 0.02) pressures.push(p);
+    for (let p = 1.0; p < 10.0; p += 0.2) pressures.push(p);
+    for (let p = 10.0; p < 22.0; p += 0.2) pressures.push(p);
+    for (let p = 22.0; p < 22.064; p += 0.005) pressures.push(p);
+    pressures.push(22.064);
 
     pressures.forEach(p => {
         try {
             const liquid = solvePx(p, 0); // x = 0 (Saturated Liquid)
             const vapor = solvePx(p, 1);  // x = 1 (Saturated Vapor)
             if (liquid && vapor) {
-                dome.push({
+                liquidPoints.push({
                     p: p,
                     T: liquid.temperature - 273.15,
-                    hf: liquid.enthalpy,
-                    hg: vapor.enthalpy,
-                    sf: liquid.entropy,
-                    sg: vapor.entropy
+                    h: liquid.enthalpy,
+                    s: liquid.entropy
+                });
+                vaporPoints.push({
+                    p: p,
+                    T: vapor.temperature - 273.15,
+                    h: vapor.enthalpy,
+                    s: vapor.entropy
                 });
             }
         } catch (e) {
-            // Ignore near critical point numerical edge cases
+            // Ignore near critical point numerical boundary edge cases
         }
     });
-    return dome;
+
+    // Exact Critical Point values (Pc = 22.064 MPa, Tc = 373.946°C, hc = 2087.5 kJ/kg, sc = 4.412 kJ/kg·K)
+    const critPoint = { p: 22.064, T: 373.946, h: 2087.5, s: 4.412 };
+
+    return { liquidPoints, vaporPoints, critPoint };
 }
 
-const saturationDome = generateSaturationDome();
+const domeData = generateSaturationDome();
 
 export function drawThermodynamicChart(canvasId, state, chartType = 'hs', isDarkMode = true) {
     const canvas = document.getElementById(canvasId);
@@ -160,30 +172,39 @@ export function drawThermodynamicChart(canvasId, state, chartType = 'hs', isDark
     ctx.fillText(chartType === 'hs' ? 'Specific Enthalpy h [kJ/kg]' : 'Temperature T [°C]', 0, 0);
     ctx.restore();
 
-    // Draw Saturation Line (Dome)
-    ctx.lineWidth = 2;
-    
-    // Liquid Saturation Line (x = 0)
+    // Draw Smooth, Continuous Saturation Dome (x = 0 to Critical Point to x = 1)
+    const critX = toCanvasX(domeData.critPoint.s);
+    const critY = toCanvasY(chartType === 'hs' ? domeData.critPoint.h : domeData.critPoint.T);
+
+    // Liquid Saturation Line (x = 0) up to Critical Point
+    ctx.lineWidth = 2.5;
     ctx.strokeStyle = colors.liquidLine;
     ctx.beginPath();
-    saturationDome.forEach((pt, i) => {
-        const x = toCanvasX(pt.sf);
-        const y = toCanvasY(chartType === 'hs' ? pt.hf : pt.T);
+    domeData.liquidPoints.forEach((pt, i) => {
+        const x = toCanvasX(pt.s);
+        const y = toCanvasY(chartType === 'hs' ? pt.h : pt.T);
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
+    });
+    ctx.lineTo(critX, critY); // Connect seamlessly to Critical Point
+    ctx.stroke();
+
+    // Vapor Saturation Line (x = 1) down from Critical Point
+    ctx.strokeStyle = colors.vaporLine;
+    ctx.beginPath();
+    ctx.moveTo(critX, critY); // Start seamlessly from Critical Point
+    domeData.vaporPoints.slice().reverse().forEach((pt) => {
+        const x = toCanvasX(pt.s);
+        const y = toCanvasY(chartType === 'hs' ? pt.h : pt.T);
+        ctx.lineTo(x, y);
     });
     ctx.stroke();
 
-    // Vapor Saturation Line (x = 1)
-    ctx.strokeStyle = colors.vaporLine;
+    // Draw Critical Point Indicator Marker
+    ctx.fillStyle = colors.marker;
     ctx.beginPath();
-    saturationDome.forEach((pt, i) => {
-        const x = toCanvasX(pt.sg);
-        const y = toCanvasY(chartType === 'hs' ? pt.hg : pt.T);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
+    ctx.arc(critX, critY, 4, 0, Math.PI * 2);
+    ctx.fill();
 
     // Plot User Operating Point (if valid state is available)
     if (state && state.entropy && (state.enthalpy || state.temperature)) {
