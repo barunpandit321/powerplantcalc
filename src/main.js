@@ -3,9 +3,9 @@ import { calculate } from "./steam.js";
 import { UNITS, UNIT_TYPES, convertToBase, convertFromBase } from "./units.js";
 import { solvePx } from "iapws-if97";
 import { drawThermodynamicChart } from "./chart.js";
+import { initNavbar } from "./navbar.js";
 
 const STORAGE_KEY = "steam_calculator_user_units_v1";
-const THEME_KEY = "steam_calculator_theme";
 
 const modeSelect = document.getElementById("mode");
 const input1 = document.getElementById("input1");
@@ -17,7 +17,6 @@ const label2 = document.getElementById("label2");
 const calculateBtn = document.getElementById("calculateBtn");
 const shareLinkBtn = document.getElementById("shareLinkBtn");
 const printReportBtn = document.getElementById("printReportBtn");
-const themeToggleBtn = document.getElementById("themeToggle");
 const toastEl = document.getElementById("toast");
 
 // Result DOM elements
@@ -75,41 +74,6 @@ function showToast(msg) {
 function updateChart() {
     const isDarkMode = document.documentElement.getAttribute("data-theme") !== "light";
     drawThermodynamicChart("steamChart", currentState, activeChartType, isDarkMode);
-}
-
-/**
- * Theme toggle logic (Default: Light mode)
- */
-function applyTheme(theme) {
-    if (theme === "dark") {
-        document.documentElement.removeAttribute("data-theme");
-        if (themeToggleBtn) {
-            themeToggleBtn.querySelector(".theme-icon").textContent = "🌙";
-            themeToggleBtn.querySelector(".theme-text").textContent = "Dark Mode";
-        }
-    } else {
-        // Light mode is default
-        document.documentElement.setAttribute("data-theme", "light");
-        if (themeToggleBtn) {
-            themeToggleBtn.querySelector(".theme-icon").textContent = "☀️";
-            themeToggleBtn.querySelector(".theme-text").textContent = "Light Mode";
-        }
-    }
-    updateChart();
-}
-
-function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY) || "light";
-    applyTheme(savedTheme);
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener("click", () => {
-            const isLight = document.documentElement.getAttribute("data-theme") === "light";
-            const next = isLight ? "dark" : "light";
-            applyTheme(next);
-            localStorage.setItem(THEME_KEY, next);
-        });
-    }
 }
 
 /**
@@ -556,8 +520,8 @@ if (savedPrefs && savedPrefs.mode) {
     modeSelect.value = savedPrefs.mode;
 }
 
-// Initialize Theme & UI
-initTheme();
+// Initialize Shared Navbar & UI
+initNavbar();
 
 const hasUrlParams = parseUrlQueryParams();
 if (!hasUrlParams) {
