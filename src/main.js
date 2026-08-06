@@ -2,6 +2,7 @@ import "../style.css";
 import { calculate } from "./steam.js";
 import { UNITS, UNIT_TYPES, convertToBase, convertFromBase } from "./units.js";
 import { solvePx } from "iapws-if97";
+import { drawThermodynamicChart } from "./chart.js";
 
 const STORAGE_KEY = "steam_calculator_user_units_v1";
 const THEME_KEY = "steam_calculator_theme";
@@ -14,7 +15,10 @@ const unit2Select = document.getElementById("unit2");
 const label1 = document.getElementById("label1");
 const label2 = document.getElementById("label2");
 const calculateBtn = document.getElementById("calculateBtn");
+const shareLinkBtn = document.getElementById("shareLinkBtn");
+const printReportBtn = document.getElementById("printReportBtn");
 const themeToggleBtn = document.getElementById("themeToggle");
+const toastEl = document.getElementById("toast");
 
 // Result DOM elements
 const regionEl = document.getElementById("region");
@@ -34,6 +38,11 @@ const soundEl = document.getElementById("sound");
 const viscosityEl = document.getElementById("viscosity");
 const conductivityEl = document.getElementById("conductivity");
 
+// Chart Tab Elements
+const tabHs = document.getElementById("tabHs");
+const tabTs = document.getElementById("tabTs");
+let activeChartType = "hs";
+
 // Store current computed state in base units
 let currentState = null;
 
@@ -47,6 +56,26 @@ const modeConfigs = {
     PX: { label1: "Pressure", unitType1: UNIT_TYPES.PRESSURE, label2: "Vapor Quality (x)", unitType2: UNIT_TYPES.QUALITY, p1: "70", p2: "1.0" },
     TX: { label1: "Temperature", unitType1: UNIT_TYPES.TEMPERATURE, label2: "Vapor Quality (x)", unitType2: UNIT_TYPES.QUALITY, p1: "490", p2: "1.0" }
 };
+
+/**
+ * Toast Notification Helper
+ */
+function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    setTimeout(() => {
+        toastEl.classList.remove("show");
+    }, 2500);
+}
+
+/**
+ * Render Active Thermodynamic Chart
+ */
+function updateChart() {
+    const isDarkMode = document.documentElement.getAttribute("data-theme") !== "light";
+    drawThermodynamicChart("steamChart", currentState, activeChartType, isDarkMode);
+}
 
 /**
  * Theme toggle logic (Default: Light mode)
@@ -66,6 +95,7 @@ function applyTheme(theme) {
             themeToggleBtn.querySelector(".theme-text").textContent = "Light Mode";
         }
     }
+    updateChart();
 }
 
 function initTheme() {
@@ -284,6 +314,7 @@ function resetResults() {
     soundEl.textContent = "--";
     viscosityEl.textContent = "--";
     conductivityEl.textContent = "--";
+    updateChart();
 }
 
 function formatValue(val, digits = 4, exp = false) {
@@ -337,7 +368,6 @@ function renderResults() {
 
             if (currentState.region === 2 || currentState.temperature >= tsatK) {
                 const superheatK = currentState.temperature - tsatK;
-                // Format superheat in selected temperature unit scale
                 const tempSelect = document.getElementById("unit-temperature");
                 const unitId = tempSelect ? tempSelect.value : "C";
                 const superheatVal = (unitId === "F" || unitId === "R") ? superheatK * (9 / 5) : superheatK;
@@ -407,7 +437,81 @@ function renderResults() {
     conductivityEl.textContent = getOutputConvertedValue(
         currentState.thermalConductivity, "unit-conductivity", UNIT_TYPES.CONDUCTIVITY, 5
     );
+
+    updateChart();
 }
+
+/**
+ * Handle URL Query Parameter Parsing for Calculation Links
+ */
+function parseUrlQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get("mode");
+    const v1 = urlParams.get("v1");
+    const v2 = urlParams.get("v2");
+    const u1 = urlParams.get("u1");
+    const u2 = urlParams.get("u2");
+
+    if (mode && modeConfigs[mode]) {
+        modeSelect.value = mode;
+        updateInputMode();
+
+        if (v1 !== null) input1.value = v1;
+        if (v2 !== null) input2.value = v2;
+        if (u1) unit1Select.value = u1;
+        if (u2) unit2Select.value = u2;
+
+        return true;
+    }
+    return false;
+}
+
+// Chart Tab Switchers
+if (tabHs && tabTs) {
+    tabHs.addEventListener("click", () => {
+        tabHs.classList.add("active");
+        tabTs.classList.remove("active");
+        activeChartType = "hs";
+        updateChart();
+    });
+
+    tabTs.addEventListener("click", () => {
+        tabTs.classList.add("active");
+        tabHs.classList.remove("active");
+        activeChartType = "ts";
+        updateChart();
+    });
+}
+
+// Shareable Link Copy Handler
+if (shareLinkBtn) {
+    shareLinkBtn.addEventListener("click", () => {
+        const mode = modeSelect.value;
+        const v1 = encodeURIComponent(input1.value);
+        const v2 = encodeURIComponent(input2.value);
+        const u1 = encodeURIComponent(unit1Select.value);
+        const u2 = encodeURIComponent(unit2Select.value);
+
+        const shareUrl = `${window.location.origin}${window.location.pathname}?mode=${mode}&v1=${v1}&v2=${v2}&u1=${u1}&u2=${u2}`;
+        
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            showToast("🔗 Calculation link copied to clipboard!");
+        }).catch(err => {
+            console.error("Clipboard copy failed:", err);
+            showToast("Failed to copy link");
+        });
+    });
+}
+
+// Print / PDF Report Handler
+if (printReportBtn) {
+    printReportBtn.addEventListener("click", () => {
+        window.print();
+    });
+}
+
+// Window Resize Redraw
+window.addEventListener("resize", updateChart);
 
 // Event Listeners
 modeSelect.addEventListener("change", () => {
@@ -454,7 +558,12 @@ if (savedPrefs && savedPrefs.mode) {
 
 // Initialize Theme & UI
 initTheme();
-updateInputMode();
+
+const hasUrlParams = parseUrlQueryParams();
+if (!hasUrlParams) {
+    updateInputMode();
+}
+
 initOutputUnitDropdowns();
 resetResults();
 

@@ -401,9 +401,15 @@ header p {
     box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
-button#calculateBtn {
+.action-buttons-group {
+    display: flex;
+    gap: 12px;
     margin-top: 20px;
-    width: 100%;
+    flex-wrap: wrap;
+}
+
+.primary-btn {
+    flex: 1 1 65%;
     padding: 14px 20px;
     min-height: 48px;
     border: none;
@@ -422,30 +428,61 @@ button#calculateBtn {
     box-sizing: border-box;
 }
 
-button#calculateBtn:hover {
+.primary-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
 }
 
-button#calculateBtn:active {
-    transform: translateY(1px);
+.secondary-btn {
+    flex: 0 0 auto;
+    padding: 12px 18px;
+    min-height: 48px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.secondary-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
 }
 
 .results-header {
     margin-bottom: 16px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.results-header h2 {
+.results-title-box h2 {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-main);
 }
 
-.results-header .subtitle {
+.results-title-box .subtitle {
     font-size: 0.825rem;
     color: var(--text-muted);
     margin-top: 2px;
+}
+
+.print-btn {
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 0.825rem;
 }
 
 .results {
@@ -453,7 +490,7 @@ button#calculateBtn:active {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 16px;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .result-card {
@@ -539,6 +576,128 @@ button#calculateBtn:active {
 
 .result-card.key-metric h2 {
     color: var(--primary);
+}
+
+/* Interactive Chart Card */
+.chart-card {
+    padding: 24px;
+    margin-bottom: 36px;
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.chart-title h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.chart-title .subtitle {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.chart-tabs {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-input);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.chart-tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chart-tab-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.canvas-container {
+    width: 100%;
+    height: 380px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+#steamChart {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.chart-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.legend-color.liquid { background: #3b82f6; }
+.legend-color.vapor { background: #06b6d4; }
+.legend-color.state { background: #38bdf8; border-radius: 50%; box-shadow: 0 0 6px #38bdf8; }
+
+/* Toast Notification */
+.toast-popup {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0f172a;
+    color: #38bdf8;
+    border: 1px solid #0284c7;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast-popup.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* SEO Article Technical Documentation */
@@ -800,6 +959,32 @@ button#calculateBtn:active {
         padding: 20px 14px;
         border-radius: 14px;
     }
+
+    .canvas-container {
+        height: 280px;
+    }
+
+    .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .chart-tabs {
+        width: 100%;
+    }
+
+    .chart-tab-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .action-buttons-group {
+        flex-direction: column;
+    }
+
+    .primary-btn, .secondary-btn {
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -899,5 +1084,45 @@ button#calculateBtn:active {
 @media (max-width: 340px) {
     .results {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================
+   Print / PDF Export Styles
+   ========================================== */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .site-nav, .theme-toggle-btn, .action-buttons-group, .chart-tabs, .print-btn, .article-section, .site-footer {
+        display: none !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .card {
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        page-break-inside: avoid;
+    }
+
+    .results {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .result-card {
+        border: 1px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+    }
+
+    .canvas-container {
+        height: 300px !important;
+        border: 1px solid #cbd5e1 !important;
     }
 }

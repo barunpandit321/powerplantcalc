@@ -4,17 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <!-- Primary SEO Title & Meta Tags -->
     <title>Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc</title>
-    <meta name="description"
-        content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb with technical documentation and FAQs.">
-    <meta name="keywords"
-        content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering, superheat calculation, dryness fraction, speed of sound in steam, steam viscosity">
+    <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Features interactive Mollier h-s & T-s diagrams, supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb.">
+    <meta name="keywords" content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, mollier diagram online, t-s diagram steam, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering, superheat calculation, dryness fraction, speed of sound in steam, steam viscosity">
     <meta name="author" content="PowerPlantCalc">
-
-    <!-- Temporary NOINDEX while site content is under development -->
-    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
     <!-- Flat Canonical URL for SEO -->
     <link rel="canonical" href="https://powerplantcalc.com/steam-calculator">
@@ -25,17 +23,15 @@
     <!-- Open Graph / Facebook Social Meta Tags -->
     <meta property="og:type" content="article">
     <meta property="og:title" content="Steam Properties & Enthalpy Calculator (IAPWS-IF97) | PowerPlantCalc">
-    <meta property="og:description"
-        content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations.">
+    <meta property="og:description" content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations with interactive Mollier charts.">
     <meta property="og:site_name" content="PowerPlantCalc">
     <meta property="og:url" content="https://powerplantcalc.com/steam-calculator">
-
+    
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Steam Properties Calculator | PowerPlantCalc">
-    <meta name="twitter:description"
-        content="High-precision thermodynamic calculator for power plant engineers. Supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
-
+    <meta name="twitter:title" content="Steam Properties Calculator with Interactive Mollier Diagram | PowerPlantCalc">
+    <meta name="twitter:description" content="High-precision thermodynamic calculator for power plant engineers. Features interactive h-s and T-s charts, supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
+    
     <!-- Structured Data (JSON-LD WebApplication + FAQPage) for Google Rich Snippets -->
     <script type="application/ld+json">
     [
@@ -47,7 +43,7 @@
         "operatingSystem": "All",
         "applicationCategory": "EngineeringApplication",
         "browserRequirements": "Requires JavaScript",
-        "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator for power plant engineers on PowerPlantCalc.com.",
+        "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator with interactive Mollier diagrams on PowerPlantCalc.com.",
         "publisher": {
           "@type": "Organization",
           "name": "PowerPlantCalc",
@@ -117,17 +113,16 @@
                 <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
                     <defs>
                         <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#3b82f6" />
-                            <stop offset="100%" stop-color="#06b6d4" />
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
                         </linearGradient>
                     </defs>
-                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)" />
-                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"
-                        fill="none" />
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
                 </svg>
                 <span>PowerPlant<span class="highlight-text">Calc</span></span>
             </a>
-
+            
             <div class="nav-links">
                 <a href="/" class="nav-link">Home (All Tools)</a>
                 <a href="/steam-calculator" class="nav-link active">Steam Calculator</a>
@@ -147,8 +142,7 @@
                 <div class="badge">IAPWS-IF97 Standard Engine</div>
             </div>
             <h1>Steam Properties & Enthalpy Calculator</h1>
-            <p>High-precision thermodynamic engine with dynamic multi-unit conversions & industrial steam table accuracy
-            </p>
+            <p>High-precision thermodynamic engine with dynamic multi-unit conversions & industrial steam table accuracy</p>
         </header>
 
         <main>
@@ -189,18 +183,28 @@
 
                 </div>
 
-                <button id="calculateBtn">
-                    <span>Calculate Properties</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
+                <div class="action-buttons-group">
+                    <button id="calculateBtn" class="primary-btn">
+                        <span>Calculate Properties</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <button id="shareLinkBtn" class="secondary-btn" title="Copy calculation deep-link to share with colleagues">
+                        <span>🔗 Share Link</span>
+                    </button>
+                </div>
 
             </section>
 
             <section class="results-header">
-                <h2>Thermodynamic State Results</h2>
-                <p class="subtitle">Select any unit dropdown below to convert output properties</p>
+                <div class="results-title-box">
+                    <h2>Thermodynamic State Results</h2>
+                    <p class="subtitle">Select any unit dropdown below to convert output properties</p>
+                </div>
+                <button id="printReportBtn" class="secondary-btn print-btn">
+                    <span>🖨️ Export PDF / Print</span>
+                </button>
             </section>
 
             <section class="results" aria-label="Calculation Output Results">
@@ -315,6 +319,30 @@
                         aria-label="Thermal Conductivity Output Unit"></select>
                 </div>
 
+            </section>
+
+            <!-- Interactive Thermodynamic Diagram Section -->
+            <section class="card chart-card" aria-label="Thermodynamic Diagram">
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <h2>Interactive Thermodynamic Diagram</h2>
+                        <p class="subtitle">Live Mollier (h-s) & Temperature-Entropy (T-s) curves with state marker</p>
+                    </div>
+                    <div class="chart-tabs">
+                        <button id="tabHs" class="chart-tab-btn active" data-chart="hs">Mollier Diagram (h-s)</button>
+                        <button id="tabTs" class="chart-tab-btn" data-chart="ts">T-s Diagram</button>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="steamChart"></canvas>
+                </div>
+
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-color liquid"></span> Saturated Liquid (x = 0)</span>
+                    <span class="legend-item"><span class="legend-color vapor"></span> Saturated Vapor (x = 1)</span>
+                    <span class="legend-item"><span class="legend-color state"></span> Operating State Point</span>
+                </div>
             </section>
 
             <!-- Technical Documentation Article -->
@@ -606,6 +634,9 @@
         </footer>
 
     </div>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="toast-popup" aria-live="polite">Link copied to clipboard!</div>
 
     <script type="module" src="/src/main.js"></script>
 
