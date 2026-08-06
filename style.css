@@ -1070,6 +1070,22 @@ header p {
     width: 100%;
 }
 
+.footer-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+    color: var(--accent);
+}
+
+.privacy-page {
+    margin-top: 20px;
+}
+
 /* ==========================================
    Responsive Mobile Media Queries
    ========================================== */

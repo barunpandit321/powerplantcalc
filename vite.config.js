@@ -9,7 +9,8 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, "index.html"),
-                steam: resolve(__dirname, "steam-calculator.html")
+                steam: resolve(__dirname, "steam-calculator.html"),
+                privacy: resolve(__dirname, "privacy-policy.html")
             }
         }
     }
