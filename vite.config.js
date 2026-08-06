@@ -11,7 +11,8 @@ export default defineConfig({
                 main: resolve(__dirname, "index.html"),
                 steam: resolve(__dirname, "steam-calculator.html"),
                 privacy: resolve(__dirname, "privacy-policy.html"),
-                contact: resolve(__dirname, "contact.html")
+                contact: resolve(__dirname, "contact.html"),
+                terms: resolve(__dirname, "terms-and-conditions.html")
             }
         }
     }
