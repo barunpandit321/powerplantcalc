@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Contact Us | PowerPlantCalc</title>
+    <meta name="description" content="Contact the PowerPlantCalc team. Send us technical feedback, bug reports, feature requests, or general inquiries regarding our engineering calculators.">
+    <meta name="keywords" content="contact powerplantcalc, power plant calculator support, engineering feedback, steam table support">
+    <meta name="author" content="PowerPlantCalc">
+    
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="p58uC_qEWbH1fKPQ_C6j6-V4pfZL39CfyICOZpLp498" />
+
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/contact">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact Us | PowerPlantCalc">
+    <meta property="og:description" content="Get in touch with the PowerPlantCalc team for technical inquiries, feedback, and support.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/contact">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Contact Us | PowerPlantCalc">
+    <meta name="twitter:description" content="Get in touch with the PowerPlantCalc team for technical inquiries and feedback.">
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools (Home)</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Calculator</a>
+                <a href="/contact" class="nav-link active">✉️ Contact Us</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <main>
+            <article class="article-section contact-page">
+                <header class="article-header">
+                    <h1>Contact Us</h1>
+                    <p class="article-meta">Have questions, feedback, or bug reports? We'd love to hear from you!</p>
+                </header>
+
+                <div class="article-content">
+
+                    <div class="contact-info-grid">
+                        <div class="contact-card">
+                            <span class="contact-icon">📝</span>
+                            <h3>Online Contact Form</h3>
+                            <p>Use the form below to send us your feedback, bug reports, or feature requests.</p>
+                        </div>
+
+                        <div class="contact-card">
+                            <span class="contact-icon">⚡</span>
+                            <h3>Engineering Support</h3>
+                            <p>Found a calculation discrepancy or want to request a new calculator? Let us know!</p>
+                        </div>
+                    </div>
+
+                    <div class="form-container-card">
+                        <h2>Send Us a Message</h2>
+                        <p class="form-subtext">Fill out the form below and our team will get back to you promptly.</p>
+
+                        <!-- Embedded Google Form -->
+                        <div class="google-form-wrapper">
+                            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfWOfGKPcenJAlLRm3FQTy13oAiquy6YfJ9TiqhDYNS-Twliw/viewform?embedded=true" width="100%" height="780" frameborder="0" marginheight="0" marginwidth="0">Loading contact form…</iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+        </main>
+
+        <footer class="site-footer">
+            <p>
+                © <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools | 
+                <a href="/contact" class="footer-link">Contact Us</a> | 
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <script type="module">
+        import { initNavbar } from "/src/navbar.js";
+        initNavbar();
+    </script>
+
+</body>
+
+</html>

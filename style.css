@@ -1086,6 +1086,90 @@ header p {
     margin-top: 20px;
 }
 
+.contact-page {
+    margin-top: 20px;
+}
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.contact-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.contact-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.contact-card p {
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+}
+
+.contact-email-link {
+    display: inline-block;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.contact-email-link:hover {
+    text-decoration: underline;
+    color: var(--accent);
+}
+
+.form-container-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.form-container-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.form-subtext {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.google-form-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.google-form-wrapper iframe {
+    width: 100%;
+    border: none;
+}
+
 /* ==========================================
    Responsive Mobile Media Queries
    ========================================== */
