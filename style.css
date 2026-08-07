@@ -1245,6 +1245,82 @@ header p {
     margin-bottom: 6px;
 }
 
+/* Engineering Formula Box & Vertical Math Fractions */
+.formula-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+    box-shadow: var(--card-shadow);
+}
+
+.math-fraction {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    padding: 0 4px;
+}
+
+.math-fraction .numerator {
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+    text-align: center;
+    width: 100%;
+}
+
+.math-fraction .denominator {
+    text-align: center;
+    width: 100%;
+}
+
+.step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+/* SEO High-Intent Target Tags Bar */
+.seo-tags-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.seo-tag {
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
 /* Cross-Functional Peer Collaboration Banner */
 .collaboration-banner {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.07), rgba(16, 185, 129, 0.07));
@@ -1419,6 +1495,24 @@ header p {
     .primary-btn, .secondary-btn {
         width: 100%;
     }
+
+    .primary-btn {
+        min-height: 48px;
+        font-size: 1.025rem;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    }
+}
+
+/* Table Responsive Scroll Indicator Cue */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {

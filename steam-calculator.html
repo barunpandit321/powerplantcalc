@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary SEO Title & Meta Tags -->
-    <title>Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc</title>
+    <title>Steam Enthalpy & Properties Calculator | PowerPlantCalc</title>
     <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Features interactive Mollier h-s & T-s diagrams, supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb.">
-    <meta name="keywords" content="steam enthalpy calculator, superheated steam calculator, iapws-if97, steam table online, mollier diagram calculator, mollier diagram online, t-s diagram steam, enthalpy kcal/kg, kg/cm2 gauge pressure, steam properties calculator, power plant engineering, superheat calculation, dryness fraction, speed of sound in steam, steam viscosity">
     <meta name="author" content="PowerPlantCalc">
     
     <!-- Google Search Console Verification Meta Tag -->
@@ -24,29 +23,31 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <!-- Open Graph / Facebook Social Meta Tags -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="Steam Properties & Enthalpy Calculator (IAPWS-IF97) | PowerPlantCalc">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Steam Enthalpy & Properties Calculator | PowerPlantCalc">
     <meta property="og:description" content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations with interactive Mollier charts.">
     <meta property="og:site_name" content="PowerPlantCalc">
     <meta property="og:url" content="https://powerplantcalc.com/steam-calculator">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Steam Properties Calculator with Interactive Mollier Diagram | PowerPlantCalc">
+    <meta name="twitter:title" content="Steam Enthalpy & Properties Calculator | PowerPlantCalc">
     <meta name="twitter:description" content="High-precision thermodynamic calculator for power plant engineers. Features interactive h-s and T-s charts, supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
     
-    <!-- Structured Data (JSON-LD WebApplication + FAQPage) for Google Rich Snippets -->
+    <!-- JSON-LD Structured Data Schema Markup -->
     <script type="application/ld+json">
     [
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Steam Properties & Enthalpy Calculator",
+        "name": "PowerPlantCalc Steam Properties & Enthalpy Calculator",
         "url": "https://powerplantcalc.com/steam-calculator",
-        "operatingSystem": "All",
+        "description": "High-precision IAPWS-IF97 water and steam thermodynamic property calculator with interactive Mollier h-s and T-s diagrams.",
         "applicationCategory": "EngineeringApplication",
+        "operatingSystem": "All",
         "browserRequirements": "Requires JavaScript",
-        "description": "Professional IAPWS-IF97 Steam Properties & Enthalpy Calculator with interactive Mollier diagrams on PowerPlantCalc.com.",
         "publisher": {
           "@type": "Organization",
           "name": "PowerPlantCalc",
@@ -91,7 +92,15 @@
             "name": "Why is International Table calorie (kcal_IT) standard used in power plant steam tables?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Industrial steam tables (ASME, TLV, ISO) use the International Table Calorie standard defined as 1 kcal_IT = 4.1868 kJ. Using thermochemical calories (4.184 kJ) introduces a 0.5 kcal/kg discrepancy in high-pressure steam calculations."
+              "text": "Power plant steam tables use the International Table Calorie standard defined as 1 kcal_IT = 4.1868 kJ to prevent enthalpy calculation discrepancies in high-pressure thermodynamic balances."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is the Mollier Enthalpy-Entropy (h-s) calculation used in turbines?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In steam turbines, steam expands isentropically (s = constant) from high pressure to condenser vacuum pressure. Calculating initial and final enthalpy allows engineers to derive theoretical turbine work output and heat rate efficiency."
             }
           }
         ]
@@ -154,6 +163,14 @@
             </div>
             <h1>Steam Properties & Enthalpy Calculator</h1>
             <p>Thermodynamic steam and water calculator tool with dynamic graphs, multi-unit conversions, and industrial steam table accuracy</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">♨️ Steam Table Calculator</span>
+                <span class="seo-tag">📊 Mollier Diagram (h-s)</span>
+                <span class="seo-tag">🔥 Superheated Steam Enthalpy</span>
+                <span class="seo-tag">💧 Saturated Steam Table</span>
+                <span class="seo-tag">⚡ IAPWS-IF97 Benchmark</span>
+            </div>
         </header>
 
         <main>
@@ -179,7 +196,7 @@
                     <div class="input-group">
                         <label id="label1" for="input1">Pressure</label>
                         <div class="input-with-unit">
-                            <input id="input1" type="number" step="any" placeholder="70">
+                            <input id="input1" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" placeholder="70">
                             <select id="unit1" aria-label="Input 1 Unit"></select>
                         </div>
                     </div>
@@ -187,7 +204,7 @@
                     <div class="input-group">
                         <label id="label2" for="input2">Temperature</label>
                         <div class="input-with-unit">
-                            <input id="input2" type="number" step="any" placeholder="490">
+                            <input id="input2" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" placeholder="490">
                             <select id="unit2" aria-label="Input 2 Unit"></select>
                         </div>
                     </div>
@@ -376,6 +393,7 @@
 
                     <div class="guide-steps-grid">
                         <div class="step-card">
+                            <span class="step-badge">1</span>
                             <h4>Choose two known properties.</h4>
                             <p>Choose your 2 known independent parameters from the dropdown (e.g. <em>Pressure +
                                     Temperature [P, T]</em>, <em>Enthalpy + Entropy [h, s]</em> for Mollier charts, or
@@ -383,6 +401,7 @@
                             </p>
                         </div>
                         <div class="step-card">
+                            <span class="step-badge">2</span>
                             <h4>Enter their values and units.</h4>
                             <p>Input your numeric operating values and pick your preferred unit for each input (e.g.,
                                 <code>kg/cm² (gauge)</code>, <code>bar (abs)</code>, <code>psi (gauge)</code>,
@@ -390,11 +409,13 @@
                             </p>
                         </div>
                         <div class="step-card">
+                            <span class="step-badge">3</span>
                             <h4>Click Calculate.</h4>
                             <p>The IAPWS-IF97 thermodynamic engine evaluates all 16 state parameters across
                                 Region 1 through Region 5.</p>
                         </div>
                         <div class="step-card">
+                            <span class="step-badge">4</span>
                             <h4>Review the calculated properties or change the output units if needed.</h4>
                             <p>Click any output card dropdown to convert results to your target units (e.g.,
                                 <code>kcal/kg</code>, <code>MJ/kg</code>, <code>Btu/lb</code>, <code>m³/kg</code>,
@@ -587,6 +608,65 @@
                             </p>
                         </div>
 
+                    </div>
+
+                    <h3>7. Engineering Calculation Formulas & Thermodynamic Theory</h3>
+                    <p>
+                        Understanding the mathematical theory behind steam property calculations helps plant engineers verify calculations manually and troubleshoot thermodynamic performance. Below are the fundamental formulas used in steam and water evaluation:
+                    </p>
+
+                    <div class="guide-steps-grid">
+                        <div class="step-card">
+                            <h4>How Steam Quality (x) Is Calculated</h4>
+                            <p>In two-phase wet steam (Region 4), dryness fraction <strong>x</strong> represents the mass ratio of vapor to total mixture:</p>
+                            <div class="formula-box">
+                                <span class="formula-var">x</span> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">h - h<sub>f</sub></span>
+                                    <span class="denominator">h<sub>g</sub> - h<sub>f</sub></span>
+                                </div> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">h - h<sub>f</sub></span>
+                                    <span class="denominator">h<sub>fg</sub></span>
+                                </div>
+                            </div>
+                            <p>Where <em>h</em> is actual mixture enthalpy, <em>h<sub>f</sub></em> is saturated liquid enthalpy, <em>h<sub>g</sub></em> is saturated vapor enthalpy, and <em>h<sub>fg</sub></em> is latent heat of vaporization at operating pressure.</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>How Degree of Superheat (ΔT) Is Calculated</h4>
+                            <p>Degree of superheat measures how many degrees main steam is heated above boiling temperature:</p>
+                            <div class="formula-box">
+                                <span>ΔT<sub>superheat</sub> = T<sub>actual</sub> - T<sub>sat</sub>(P)</span>
+                            </div>
+                            <p>Maintaining positive ΔT (e.g. &gt; 150°C) is critical to prevent water droplet formation in steam turbine HP stages.</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>How Isentropic Steam Turbine Work (W) Is Calculated</h4>
+                            <p>Ideal turbine work output between inlet pressure <em>P₁</em> and exhaust pressure <em>P₂</em> is calculated along constant entropy (<em>s₁ = s₂</em>):</p>
+                            <div class="formula-box">
+                                <span>W<sub>ideal</sub> = h<sub>1</sub> - h<sub>2,isentropic</sub></span>
+                            </div>
+                            <p>Actual turbine output includes isentropic efficiency <em>η<sub>t</sub></em>: <code>W<sub>actual</sub> = (h<sub>1</sub> - h<sub>2,isentropic</sub>) × η<sub>t</sub></code>.</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>How Steam Pipe Velocity (V) Is Calculated</h4>
+                            <p>Steam velocity inside piping depends on mass flow rate <em>ṁ</em>, specific volume <em>v</em>, and pipe cross-sectional area <em>A</em>:</p>
+                            <div class="formula-box">
+                                <span>V</span> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">ṁ × v</span>
+                                    <span class="denominator">A</span>
+                                </div> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">ṁ / ρ</span>
+                                    <span class="denominator">A</span>
+                                </div>
+                            </div>
+                            <p>Standard design practice maintains main steam line velocities between 30 m/s and 50 m/s to balance pressure drop and pipe sizing.</p>
+                        </div>
                     </div>
 
                 </div>

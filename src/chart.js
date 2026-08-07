@@ -51,9 +51,76 @@ function generateSaturationDome() {
 
 const domeData = generateSaturationDome();
 
+// Touch Gesture Zoom & Pan State
+let touchScale = 1.0;
+let touchPanX = 0;
+let touchPanY = 0;
+let initialDistance = null;
+let lastTouchX = null;
+let lastTouchY = null;
+
+function setupTouchControls(canvas) {
+    if (canvas._hasTouchSetup) return;
+    canvas._hasTouchSetup = true;
+
+    canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            lastTouchX = e.touches[0].clientX;
+            lastTouchY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+            initialDistance = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+        }
+    }, { passive: true });
+
+    canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && lastTouchX !== null && lastTouchY !== null) {
+            const dx = e.touches[0].clientX - lastTouchX;
+            const dy = e.touches[0].clientY - lastTouchY;
+            touchPanX += dx;
+            touchPanY += dy;
+            lastTouchX = e.touches[0].clientX;
+            lastTouchY = e.touches[0].clientY;
+        } else if (e.touches.length === 2 && initialDistance !== null) {
+            const currentDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            const factor = currentDist / initialDistance;
+            touchScale = Math.max(1.0, Math.min(3.0, touchScale * factor));
+            initialDistance = currentDist;
+        }
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', (e) => {
+        if (e.touches.length === 0) {
+            lastTouchX = null;
+            lastTouchY = null;
+            initialDistance = null;
+        }
+    });
+
+    // Double tap to reset zoom & pan
+    let lastTap = 0;
+    canvas.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
+            touchScale = 1.0;
+            touchPanX = 0;
+            touchPanY = 0;
+        }
+        lastTap = currentTime;
+    });
+}
+
 export function drawThermodynamicChart(canvasId, state, chartType = 'hs', isDarkMode = true) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
+
+    setupTouchControls(canvas);
 
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
