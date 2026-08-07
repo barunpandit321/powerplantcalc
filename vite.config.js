@@ -13,7 +13,8 @@ export default defineConfig({
                 privacy: resolve(__dirname, "privacy-policy.html"),
                 contact: resolve(__dirname, "contact.html"),
                 terms: resolve(__dirname, "terms-and-conditions.html"),
-                about: resolve(__dirname, "about.html")
+                about: resolve(__dirname, "about.html"),
+                cooling: resolve(__dirname, "cooling-tower-calculator.html")
             }
         }
     }

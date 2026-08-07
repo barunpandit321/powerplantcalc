@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Cooling Tower Performance Calculator | PowerPlantCalc</title>
+    <meta name="description" content="Free online Cooling Tower Performance Calculator. Computes Range, Approach, Effectiveness, Cycles of Concentration (CoC), Evaporation loss, Blowdown rate, and Makeup water demand.">
+    <meta name="author" content="PowerPlantCalc">
+    
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="p58uC_qEWbH1fKPQ_C6j6-V4pfZL39CfyICOZpLp498" />
+    
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL for SEO -->
+    <link rel="canonical" href="https://powerplantcalc.com/cooling-tower-calculator">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Cooling Tower Performance Calculator | PowerPlantCalc">
+    <meta property="og:description" content="Calculate Cooling Tower Range, Approach, Efficiency, CoC, Evaporation Loss, Blowdown Rate, and Makeup Water Demand for thermal power plants.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/cooling-tower-calculator">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cooling Tower Performance Calculator | PowerPlantCalc">
+    <meta name="twitter:description" content="High-precision Cooling Tower calculator for power plant engineers. Features Range, Approach, Efficiency %, CoC, and Water Loss evaluations.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
+    
+    <!-- JSON-LD Structured Data Schema Markup -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PowerPlantCalc Cooling Tower Performance Calculator",
+        "url": "https://powerplantcalc.com/cooling-tower-calculator",
+        "description": "High-precision cooling tower performance solver evaluating Range, Approach, Efficiency, Cycles of Concentration (CoC), and Water Losses.",
+        "applicationCategory": "EngineeringApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "publisher": {
+          "@type": "Organization",
+          "name": "PowerPlantCalc",
+          "url": "https://powerplantcalc.com"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the difference between Cooling Tower Range and Approach?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cooling Tower Range is the difference between hot inlet water temperature and cold outlet water temperature (T_hot - T_cold). Approach is the difference between cold outlet water temperature and ambient wet-bulb temperature (T_cold - T_wb)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are Cycles of Concentration (CoC) calculated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cycles of Concentration (CoC) equal the ratio of dissolved solids (Chloride, Silica, or TDS) in circulating basin water compared to raw makeup water (CoC = TDS_basin / TDS_makeup)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you calculate cooling tower evaporation loss?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Evaporation loss is calculated as E = 0.00085 × Circulating Flow (Q) × Range (°C). Approximately 0.15% of circulating flow evaporates per 1°C temperature drop."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
+
+    <!-- Optimized Font Preconnect & Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools (Home)</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Calculator</a>
+                <a href="/cooling-tower-calculator" class="nav-link active">🌊 Cooling Tower</a>
+                <a href="/about" class="nav-link">ℹ️ About Us</a>
+                <a href="/contact" class="nav-link">✉️ Contact Us</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">Thermal Engineering Tool</div>
+            </div>
+            <h1>Cooling Tower Performance Calculator</h1>
+            <p>Calculate Cooling Tower Range, Approach, Effectiveness (%), Cycles of Concentration (CoC), and Evaporation & Blowdown Losses</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">🌊 Cooling Tower Range</span>
+                <span class="seo-tag">🎯 Approach Temperature</span>
+                <span class="seo-tag">⚡ Effectiveness (%)</span>
+                <span class="seo-tag">🔄 Cycles of Concentration (CoC)</span>
+                <span class="seo-tag">💧 Evaporation & Blowdown Loss</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Interactive Calculator Section -->
+            <section class="card input-card" aria-label="Calculation Controls">
+
+                <div class="grid">
+                    <div class="input-group">
+                        <label for="mode">CoC Calculation Mode</label>
+                        <select id="mode">
+                            <option value="direct" selected>Direct CoC Input Value</option>
+                            <option value="chemistry">Water Chemistry (TDS / Chloride Ratio)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="unitTemp">Temperature Unit</label>
+                        <select id="unitTemp"></select>
+                    </div>
+                </div>
+
+                <div class="grid">
+
+                    <div class="input-group">
+                        <label for="inputThot">Hot Water Inlet Temp (Thot)</label>
+                        <div class="input-with-unit">
+                            <input id="inputThot" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="40">
+                            <span class="static-unit">Temp</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputTcold">Cold Water Outlet Temp (Tcold)</label>
+                        <div class="input-with-unit">
+                            <input id="inputTcold" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="32">
+                            <span class="static-unit">Temp</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputTwb">Ambient Wet-Bulb Temp (Twb)</label>
+                        <div class="input-with-unit">
+                            <input id="inputTwb" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="28">
+                            <span class="static-unit">Temp</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="inputFlow">Circulating Water Flow (Q)</label>
+                        <div class="input-with-unit">
+                            <input id="inputFlow" type="number" step="any" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" value="2500">
+                            <select id="unitFlow"></select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CoC Input Switcher -->
+                <div id="directCocGroup" class="grid">
+                    <div class="input-group full-width">
+                        <label for="inputCoc">Cycles of Concentration (CoC)</label>
+                        <input id="inputCoc" type="number" step="0.1" inputmode="decimal" value="4.0" placeholder="4.0">
+                    </div>
+                </div>
+
+                <div id="chemistryGroup" class="grid" style="display: none;">
+                    <div class="input-group">
+                        <label for="inputTdsBasin">Basin Water TDS / Chloride (mg/L)</label>
+                        <input id="inputTdsBasin" type="number" step="any" inputmode="decimal" value="1200">
+                    </div>
+                    <div class="input-group">
+                        <label for="inputTdsMakeup">Raw Makeup Water TDS / Chloride (mg/L)</label>
+                        <input id="inputTdsMakeup" type="number" step="any" inputmode="decimal" value="300">
+                    </div>
+                </div>
+
+                <div class="action-buttons-group">
+                    <button id="calculateBtn" class="primary-btn">
+                        <span>Calculate Performance</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <button id="shareLinkBtn" class="secondary-btn" title="Copy calculation deep-link to share with colleagues">
+                        <span>🔗 Share Link</span>
+                    </button>
+                </div>
+
+            </section>
+
+            <section class="results-header">
+                <div class="results-title-box">
+                    <h2>Cooling Performance Results</h2>
+                    <p class="subtitle">Select target units to convert water loss and heat rejection values</p>
+                </div>
+                <button id="printReportBtn" class="secondary-btn print-btn">
+                    <span>🖨️ Export PDF / Print</span>
+                </button>
+            </section>
+
+            <section class="results" aria-label="Calculation Output Results">
+
+                <div class="result-card key-metric">
+                    <span>Cooling Tower Range (ΔT)</span>
+                    <h2 id="outRange">--</h2>
+                    <small class="static-label">Thot - Tcold</small>
+                </div>
+
+                <div class="result-card key-metric">
+                    <span>Approach Temperature</span>
+                    <h2 id="outApproach">--</h2>
+                    <small class="static-label">Tcold - Twb</small>
+                </div>
+
+                <div class="result-card highlight">
+                    <span>Cooling Effectiveness</span>
+                    <h2 id="outEfficiency">--</h2>
+                    <small class="static-label">Thermal Efficiency %</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Cycles of Concentration (CoC)</span>
+                    <h2 id="outCoc">--</h2>
+                    <small class="static-label">Water Cycles</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Evaporation Loss (E)</span>
+                    <h2 id="outEvap">--</h2>
+                    <select id="unit-flow-out" class="unit-select" aria-label="Evaporation Unit"></select>
+                </div>
+
+                <div class="result-card">
+                    <span>Blowdown Rate (B)</span>
+                    <h2 id="outBlowdown">--</h2>
+                    <small class="static-label">Required Blowdown</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Makeup Water Demand (M)</span>
+                    <h2 id="outMakeup">--</h2>
+                    <small class="static-label">Total Water Demand</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Total Heat Rejection (Q)</span>
+                    <h2 id="outHeat">--</h2>
+                    <select id="unit-heat" class="unit-select" aria-label="Heat Unit"></select>
+                </div>
+
+            </section>
+
+            <!-- Interactive Cooling Diagram Section -->
+            <section class="card chart-card" aria-label="Thermodynamic Diagram">
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <h2>Range vs. Approach Temperature Bar Chart</h2>
+                        <p class="subtitle">Visual representation of Hot Inlet, Cold Outlet, and Ambient Wet-Bulb limit</p>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="coolingChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Technical Documentation Article -->
+            <article class="article-section">
+
+                <header class="article-header">
+                    <h2>Cooling Tower Calculator User Guide & Formulas</h2>
+                    <p class="article-meta">Thermodynamic Range, Approach, CoC & Water Loss Engineering Reference</p>
+                </header>
+
+                <div class="article-content">
+
+                    <h3>1. How to Use the Calculator</h3>
+                    <p>
+                        This calculator evaluates cooling tower performance for power plants, HVAC systems, and industrial processing units. Follow these 4 simple steps:
+                    </p>
+
+                    <div class="guide-steps-grid">
+                        <div class="step-card">
+                            <span class="step-badge">1</span>
+                            <h4>Enter Temperature Readings</h4>
+                            <p>Input Hot Water Inlet Temp (<em>T<sub>hot</sub></em>), Cold Water Outlet Temp (<em>T<sub>cold</sub></em>), and Ambient Wet-Bulb Temp (<em>T<sub>wb</sub></em>).</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">2</span>
+                            <h4>Input Circulating Water Flow</h4>
+                            <p>Enter your cooling tower circulating water flow rate (<em>Q</em>) in m³/hr, GPM, TPH, or LPH.</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">3</span>
+                            <h4>Set Cycles of Concentration (CoC)</h4>
+                            <p>Select direct CoC input (e.g. 4.0) or enter TDS/Chloride readings for Basin vs. Raw Makeup Water.</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">4</span>
+                            <h4>Review Water Loss & Heat Rejection</h4>
+                            <p>Examine calculated Evaporation, Blowdown, Makeup demand, and total heat load rejected.</p>
+                        </div>
+                    </div>
+
+                    <h3>2. Operational Engineering Definitions</h3>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Symbol</th>
+                                    <th>Engineering Application in Power Plants</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Cooling Tower Range</strong></td>
+                                    <td><strong>ΔT</strong></td>
+                                    <td>The temperature difference between hot entering water and cold leaving water. Higher Range indicates higher thermal load removed from steam turbine condensers.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Approach Temperature</strong></td>
+                                    <td><strong>Approach</strong></td>
+                                    <td>The difference between cold leaving water and ambient wet-bulb temperature. Indicates cooling tower thermal adequacy (standard industrial approach is 3°C to 5°C).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cooling Effectiveness</strong></td>
+                                    <td><strong>η (%)</strong></td>
+                                    <td>Percentage ratio of actual cooling range achieved versus theoretical maximum potential cooling.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cycles of Concentration</strong></td>
+                                    <td><strong>CoC</strong></td>
+                                    <td>Ratio of dissolved mineral concentration in circulating basin water compared to raw makeup water. Higher CoC saves makeup water.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>3. Water Loss & Performance Calculation Formulas</h3>
+                    <p>Understanding the mathematical derivations helps plant engineers optimize blowdown and chemical dosing:</p>
+
+                    <div class="guide-steps-grid">
+                        <div class="step-card">
+                            <h4>Cooling Effectiveness (%) Formula</h4>
+                            <div class="formula-box">
+                                <span>η</span> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">T<sub>hot</sub> - T<sub>cold</sub></span>
+                                    <span class="denominator">T<sub>hot</sub> - T<sub>wb</sub></span>
+                                </div> × 100%
+                            </div>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>Evaporation Loss (E) Formula</h4>
+                            <div class="formula-box">
+                                <span>E = 0.00085 × Q × (T<sub>hot</sub> - T<sub>cold</sub>)</span>
+                            </div>
+                            <p>Approximately 0.15% of circulating flow evaporates per 1°C of cooling range achieved.</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>Blowdown Rate (B) Formula</h4>
+                            <div class="formula-box">
+                                <span>B</span> = 
+                                <div class="math-fraction">
+                                    <span class="numerator">Evaporation Loss (E)</span>
+                                    <span class="denominator">CoC - 1</span>
+                                </div>
+                            </div>
+                            <p>Blowdown prevents scale accumulation by bleeding off concentrated dissolved minerals.</p>
+                        </div>
+
+                        <div class="step-card">
+                            <h4>Total Makeup Water Demand (M)</h4>
+                            <div class="formula-box">
+                                <span>M = Evaporation (E) + Blowdown (B) + Drift Loss</span>
+                            </div>
+                            <p>Maintains constant water level in the cooling tower cold water basin.</p>
+                        </div>
+                    </div>
+
+                    <h3>4. Frequently Asked Questions (FAQ)</h3>
+                    <div class="faq-container">
+                        <div class="faq-item">
+                            <h4>Q: Can a cooling tower cool water below ambient wet-bulb temperature?</h4>
+                            <p>No. Ambient wet-bulb temperature (T<sub>wb</sub>) is the theoretical thermodynamic limit for evaporative cooling. A cooling tower can never cool water below T<sub>wb</sub>.</p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: Why is increasing Cycles of Concentration (CoC) important?</h4>
+                            <p>Increasing CoC from 2.0 to 4.0 or 5.0 drastically reduces blowdown discharge and fresh makeup water consumption, saving raw water treatment costs.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+        </main>
+
+        <footer class="site-footer">
+            <p>
+                © <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools | 
+                <a href="/about" class="footer-link">About Us</a> | 
+                <a href="/contact" class="footer-link">Contact Us</a> | 
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a> | 
+                <a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="toast-popup" aria-live="polite">Link copied to clipboard!</div>
+
+    <script type="module" src="/src/cooling-tower.js"></script>
+
+</body>
+
+</html>
