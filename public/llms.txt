@@ -1,0 +1,14 @@
+# PowerPlantCalc — Power Plant Engineering Suite
+
+> High-precision, free online thermodynamic calculators and IAPWS-IF97 water and steam property tools for thermal power station engineers, operators, and students.
+
+## Tools & Calculators
+
+- [Steam Properties & Enthalpy Calculator](https://powerplantcalc.com/steam-calculator): IAPWS-IF97 thermodynamic steam and water property solver with interactive Mollier (h-s) and T-s diagrams. Evaluates enthalpy, entropy, superheat, quality, specific volume, and 12+ transport metrics across all 5 IAPWS regions.
+
+## Site Pages & Documentation
+
+- [About PowerPlantCalc](https://powerplantcalc.com/about): Mission, author credentials (Barun Pandit, B.Tech in Mechanical Engineering, DCS Control Room Engineer), and cross-functional peer review network.
+- [Contact Us](https://powerplantcalc.com/contact): Technical support, feedback, and engineering feature requests.
+- [Privacy Policy](https://powerplantcalc.com/privacy-policy): LocalStorage preferences and privacy standards.
+- [Terms & Conditions](https://powerplantcalc.com/terms-and-conditions): Usage terms and legal guidelines.
