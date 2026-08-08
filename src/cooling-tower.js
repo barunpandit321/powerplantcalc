@@ -132,6 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const TwbC = uTemp.toBase(valTwb);
         const flowM3H = uFlow.toBase(valFlow);
 
+        // Update static unit labels
+        document.querySelectorAll(".static-unit").forEach(el => {
+            el.textContent = uTemp.name;
+        });
+
         // Calculate Range & Approach in °C
         const rangeC = ThotC - TcoldC;
         const approachC = TcoldC - TwbC;

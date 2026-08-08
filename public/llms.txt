@@ -5,6 +5,7 @@
 ## Tools & Calculators
 
 - [Steam Properties & Enthalpy Calculator](https://powerplantcalc.com/steam-calculator): IAPWS-IF97 thermodynamic steam and water property solver with interactive Mollier (h-s) and T-s diagrams. Evaluates enthalpy, entropy, superheat, quality, specific volume, and 12+ transport metrics across all 5 IAPWS regions.
+- [Cooling Tower Performance Calculator](https://powerplantcalc.com/cooling-tower-calculator): Evaluates Cooling Tower Range, Approach Temperature, Effectiveness (%), Cycles of Concentration (CoC), Evaporation Loss, Blowdown Rate, and Makeup Water Demand.
 
 ## Site Pages & Documentation
 

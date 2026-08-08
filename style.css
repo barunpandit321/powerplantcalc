@@ -473,6 +473,27 @@ header p {
     overflow: hidden;
 }
 
+.static-unit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 45%;
+    max-width: 45%;
+    min-width: 0;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 46px;
+    box-sizing: border-box;
+}
+
 .input-group input,
 .input-group select {
     padding: 12px 12px;
