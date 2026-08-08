@@ -1523,6 +1523,30 @@ header p {
         font-weight: 700;
         box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
     }
+
+    /* Mobile UX: Compact header & zero-scroll tool positioning */
+    header {
+        margin-bottom: 10px;
+    }
+
+    header .header-top {
+        margin-bottom: 2px;
+    }
+
+    header h1 {
+        font-size: 1.25rem;
+        margin-bottom: 2px;
+    }
+
+    header p {
+        font-size: 0.8rem;
+        line-height: 1.35;
+        margin-bottom: 4px;
+    }
+
+    .seo-tags-bar {
+        display: none; /* Hidden on mobile screens for instant tool access; 100% indexed in HTML DOM by Google crawlers */
+    }
 }
 
 /* Table Responsive Scroll Indicator Cue */
