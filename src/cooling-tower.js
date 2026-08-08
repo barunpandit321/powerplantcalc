@@ -143,13 +143,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const efficiency = (rangeC / (rangeC + approachC)) * 100;
 
         // Calculate CoC
-        let coc = 4.0;
+        let coc = 3.5;
         if (modeSelect.value === "direct") {
-            coc = parseFloat(inputCoc.value) || 4.0;
+            coc = parseFloat(inputCoc.value) || 3.5;
         } else {
-            const tdsB = parseFloat(inputTdsBasin.value) || 1200;
+            const tdsB = parseFloat(inputTdsBasin.value) || 1050;
             const tdsM = parseFloat(inputTdsMakeup.value) || 300;
-            coc = tdsM > 0 ? tdsB / tdsM : 4.0;
+            coc = tdsM > 0 ? tdsB / tdsM : 3.5;
         }
 
         // Water Losses (m³/hr)
