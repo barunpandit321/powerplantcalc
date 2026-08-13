@@ -239,8 +239,8 @@
                         </label>
 
                         <div class="input-with-unit">
-                            <input id="inputThot" type="number" step="any" inputmode="decimal" value="40" aria-describedby="thot-help">
-                            <span class="static-unit">°C</span>
+                            <input id="inputThot" type="number" step="any" inputmode="decimal" value="40">
+                            <select id="unitThot" aria-label="Hot water inlet temperature unit"></select>
                         </div>
                     </div>
 
@@ -252,7 +252,7 @@
 
                         <div class="input-with-unit">
                             <input id="inputTcold" type="number" step="any" inputmode="decimal" value="32">
-                            <span class="static-unit">°C</span>
+                            <select id="unitTcold" aria-label="Cold water outlet temperature unit"></select>
                         </div>
                     </div>
 
@@ -264,7 +264,7 @@
 
                         <div class="input-with-unit">
                             <input id="inputTwb" type="number" step="any" inputmode="decimal" value="28">
-                            <span class="static-unit">°C</span>
+                            <select id="unitTwb" aria-label="Ambient wet-bulb temperature unit"></select>
                         </div>
                     </div>
 
@@ -308,7 +308,7 @@
                             Basin Water TDS / Chloride
                         </label>
 
-                        <input id="inputTdsBasin" type="number" step="any" inputmode="decimal" value="1200">
+                        <input id="inputTdsBasin" type="number" step="any" inputmode="decimal" value="1050">
                         <small>mg/L</small>
 
                     </div>
@@ -355,7 +355,7 @@
                     <h2 id="results-heading">Cooling Tower Results</h2>
 
                     <p class="subtitle">
-                        Review the calculated temperature performance, water losses and heat rejection.
+                        Review calculated temperature performance, water losses and heat rejection.
                     </p>
 
                 </div>
@@ -372,14 +372,14 @@
                 <div class="result-card key-metric">
                     <span>Cooling Tower Range</span>
                     <h2 id="outRange">--</h2>
-                    <small class="static-label">T<sub>hot</sub> − T<sub>cold</sub></small>
+                    <select id="unit-range" class="unit-select" aria-label="Cooling tower range output unit"></select>
                 </div>
 
 
                 <div class="result-card key-metric">
                     <span>Approach Temperature</span>
                     <h2 id="outApproach">--</h2>
-                    <small class="static-label">T<sub>cold</sub> − T<sub>wb</sub></small>
+                    <select id="unit-approach" class="unit-select" aria-label="Approach temperature output unit"></select>
                 </div>
 
 

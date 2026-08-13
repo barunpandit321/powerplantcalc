@@ -5,7 +5,15 @@ import { CoolingChart } from "./cooling-chart.js";
 const TEMP_UNITS = {
     C: { name: "°C", toBase: t => t, fromBase: t => t },
     F: { name: "°F", toBase: t => (t - 32) * (5 / 9), fromBase: t => t * (9 / 5) + 32 },
-    K: { name: "K", toBase: t => t - 273.15, fromBase: t => t + 273.15 }
+    K: { name: "K", toBase: t => t - 273.15, fromBase: t => t + 273.15 },
+    R: { name: "°R", toBase: t => (t - 491.67) * (5 / 9), fromBase: t => t * (9 / 5) + 491.67 }
+};
+
+const DELTA_TEMP_UNITS = {
+    C: { name: "°C", factor: 1 },
+    F: { name: "°F", factor: 1.8 },
+    K: { name: "K", factor: 1 },
+    R: { name: "°R", factor: 1.8 }
 };
 
 const FLOW_UNITS = {
@@ -38,6 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputTdsMakeup = document.getElementById("inputTdsMakeup");
 
     const unitTemp = document.getElementById("unitTemp");
+    const unitThot = document.getElementById("unitThot");
+    const unitTcold = document.getElementById("unitTcold");
+    const unitTwb = document.getElementById("unitTwb");
     const unitFlow = document.getElementById("unitFlow");
 
     const chemistryGroup = document.getElementById("chemistryGroup");
@@ -57,11 +68,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const outMakeup = document.getElementById("outMakeup");
     const outHeat = document.getElementById("outHeat");
 
+    const unitRangeSelect = document.getElementById("unit-range");
+    const unitApproachSelect = document.getElementById("unit-approach");
     const unitHeatSelect = document.getElementById("unit-heat");
     const unitFlowOutSelect = document.getElementById("unit-flow-out");
 
     // Populate Selects
     populateSelect(unitTemp, TEMP_UNITS, "C");
+    populateSelect(unitThot, TEMP_UNITS, "C");
+    populateSelect(unitTcold, TEMP_UNITS, "C");
+    populateSelect(unitTwb, TEMP_UNITS, "C");
+
+    populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, "C");
+    populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, "C");
+
     populateSelect(unitFlow, FLOW_UNITS, "m3h");
     populateSelect(unitFlowOutSelect, FLOW_UNITS, "m3h");
 
@@ -86,6 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Global Master Temperature Unit Select
+    if (unitTemp) {
+        unitTemp.addEventListener("change", () => {
+            const val = unitTemp.value;
+            if (unitThot) unitThot.value = val;
+            if (unitTcold) unitTcold.value = val;
+            if (unitTwb) unitTwb.value = val;
+            if (unitRangeSelect) unitRangeSelect.value = val;
+            if (unitApproachSelect) unitApproachSelect.value = val;
+            calculate();
+        });
+    }
+
     // Toggle Mode
     modeSelect.addEventListener("change", () => {
         if (modeSelect.value === "direct") {
@@ -104,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (el) el.addEventListener("input", calculate);
     });
 
-    [unitTemp, unitFlow, unitHeatSelect, unitFlowOutSelect].forEach(el => {
+    [unitThot, unitTcold, unitTwb, unitFlow, unitHeatSelect, unitFlowOutSelect, unitRangeSelect, unitApproachSelect].forEach(el => {
         if (el) el.addEventListener("change", calculate);
     });
 
@@ -118,7 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
     calculate();
 
     function calculate() {
-        const uTemp = TEMP_UNITS[unitTemp.value] || TEMP_UNITS.C;
+        const uThot = TEMP_UNITS[unitThot.value] || TEMP_UNITS.C;
+        const uTcold = TEMP_UNITS[unitTcold.value] || TEMP_UNITS.C;
+        const uTwb = TEMP_UNITS[unitTwb.value] || TEMP_UNITS.C;
         const uFlow = FLOW_UNITS[unitFlow.value] || FLOW_UNITS.m3h;
 
         const valThot = parseFloat(inputThot.value) || 40;
@@ -126,21 +161,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const valTwb = parseFloat(inputTwb.value) || 28;
         const valFlow = parseFloat(inputFlow.value) || 2500;
 
-        // Convert to Base (°C and m³/hr)
-        const ThotC = uTemp.toBase(valThot);
-        const TcoldC = uTemp.toBase(valTcold);
-        const TwbC = uTemp.toBase(valTwb);
+        // Convert all temperatures to Base (°C) for core calculations
+        const ThotC = uThot.toBase(valThot);
+        const TcoldC = uTcold.toBase(valTcold);
+        const TwbC = uTwb.toBase(valTwb);
         const flowM3H = uFlow.toBase(valFlow);
-
-        // Update static unit labels
-        document.querySelectorAll(".static-unit").forEach(el => {
-            el.textContent = uTemp.name;
-        });
 
         // Calculate Range & Approach in °C
         const rangeC = ThotC - TcoldC;
         const approachC = TcoldC - TwbC;
-        const efficiency = (rangeC / (rangeC + approachC)) * 100;
+        const efficiency = (rangeC + approachC) > 0 ? (rangeC / (rangeC + approachC)) * 100 : 0;
 
         // Calculate CoC
         let coc = 3.5;
@@ -153,23 +183,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Water Losses (m³/hr)
-        // Evaporation loss E = 0.00085 * Q * Range(°C)
         const evapM3H = 0.00085 * flowM3H * rangeC;
         const blowdownM3H = coc > 1 ? evapM3H / (coc - 1) : 0;
         const driftM3H = 0.0005 * flowM3H; // 0.05% drift loss
         const makeupM3H = evapM3H + blowdownM3H + driftM3H;
 
         // Heat Rejection: Q_heat (MWth) = m_dot (kg/s) * Cp (4.186 kJ/kg°C) * Range(°C) / 1000
-        // flow m³/hr = flow * 1000 kg/hr = (flow * 1000 / 3600) kg/s
         const mdotKgS = (flowM3H * 1000) / 3600;
         const heatMW = (mdotKgS * 4.1868 * rangeC) / 1000; // MWth
 
         // Output Formatting
+        const uRange = DELTA_TEMP_UNITS[unitRangeSelect.value] || DELTA_TEMP_UNITS.C;
+        const uApproach = DELTA_TEMP_UNITS[unitApproachSelect.value] || DELTA_TEMP_UNITS.C;
         const outFlowConv = FLOW_UNITS[unitFlowOutSelect.value] || FLOW_UNITS.m3h;
         const outHeatConv = HEAT_UNITS[unitHeatSelect.value] || HEAT_UNITS.mw;
 
-        outRange.textContent = `${rangeC.toFixed(2)} °C / ${(rangeC * 1.8).toFixed(2)} °F`;
-        outApproach.textContent = `${approachC.toFixed(2)} °C / ${(approachC * 1.8).toFixed(2)} °F`;
+        outRange.textContent = `${(rangeC * uRange.factor).toFixed(2)} ${uRange.name}`;
+        outApproach.textContent = `${(approachC * uApproach.factor).toFixed(2)} ${uApproach.name}`;
         outEfficiency.textContent = `${efficiency.toFixed(1)} %`;
         outCoc.textContent = coc.toFixed(2);
 
@@ -209,3 +239,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
