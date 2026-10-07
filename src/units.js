@@ -48,7 +48,9 @@ export const UNITS = {
         { id: "MPa_a", label: "MPa (abs)", toBase: v => v, fromBase: v => v },
         { id: "kPa_g", label: "kPa (gauge)", toBase: v => (v + 101.325) * 0.001, fromBase: v => (v * 1000) - 101.325 },
         { id: "kPa_a", label: "kPa (abs)", toBase: v => v * 0.001, fromBase: v => v * 1000 },
-        { id: "atm_a", label: "atm (abs)", toBase: v => v * 0.101325, fromBase: v => v / 0.101325 }
+        { id: "atm_a", label: "atm (abs)", toBase: v => v * 0.101325, fromBase: v => v / 0.101325 },
+        { id: "ata_a", label: "ata (kg/cm² abs)", toBase: v => v * 0.0980665, fromBase: v => v / 0.0980665 },
+        { id: "atg_g", label: "atü / atg (gauge)", toBase: v => (v + 1.033227) * 0.0980665, fromBase: v => (v / 0.0980665) - 1.033227 }
     ],
 
     [UNIT_TYPES.TEMPERATURE]: [

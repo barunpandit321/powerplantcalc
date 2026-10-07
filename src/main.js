@@ -514,6 +514,83 @@ calculateBtn.addEventListener("click", () => {
     }
 });
 
+// 1-Click Operating Presets
+const OPERATING_PRESETS = {
+    "hp-superheat": {
+        name: "70 barg @ 490°C (HP Superheat)",
+        mode: "PT",
+        val1: "70",
+        unit1: "bar_g",
+        val2: "490",
+        unit2: "C"
+    },
+    "mp-process": {
+        name: "15 bar (a) @ 250°C (MP Process)",
+        mode: "PT",
+        val1: "15",
+        unit1: "bar_a",
+        val2: "250",
+        unit2: "C"
+    },
+    "boiler-drum": {
+        name: "9 barg Saturated (Boiler Drum)",
+        mode: "PX",
+        val1: "9",
+        unit1: "bar_g",
+        val2: "1.0",
+        unit2: "frac"
+    },
+    "wet-lp": {
+        name: "10 bar (a) @ x=0.85 (Wet Steam)",
+        mode: "PX",
+        val1: "10",
+        unit1: "bar_a",
+        val2: "0.85",
+        unit2: "frac"
+    },
+    "condenser-vac": {
+        name: "2 inHg (a) @ 101.1°F (Condenser)",
+        mode: "PT",
+        val1: "2",
+        unit1: "inHg_a",
+        val2: "101.1",
+        unit2: "F"
+    },
+    "us-plant": {
+        name: "400 psig @ 662°F (US Plant)",
+        mode: "PT",
+        val1: "400",
+        unit1: "psi_g",
+        val2: "662",
+        unit2: "F"
+    }
+};
+
+function applyPreset(presetKey) {
+    const p = OPERATING_PRESETS[presetKey];
+    if (!p) return;
+
+    modeSelect.value = p.mode;
+    updateInputMode();
+
+    if (unit1Select) unit1Select.value = p.unit1;
+    if (unit2Select) unit2Select.value = p.unit2;
+    if (input1) input1.value = p.val1;
+    if (input2) input2.value = p.val2;
+
+    saveUserPreferences();
+    calculateBtn.click();
+    showToast(`⚡ Loaded Preset: ${p.name}`);
+}
+
+// Preset button handlers
+document.querySelectorAll(".preset-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const presetKey = btn.getAttribute("data-preset");
+        if (presetKey) applyPreset(presetKey);
+    });
+});
+
 // Restore mode if saved
 const savedPrefs = loadUserPreferences();
 if (savedPrefs && savedPrefs.mode) {

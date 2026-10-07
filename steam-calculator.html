@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary SEO Title & Meta Tags -->
-    <title>Steam Enthalpy & Properties Calculator | PowerPlantCalc</title>
-    <meta name="description" content="Free online Superheated Steam Enthalpy and Thermodynamic Properties Calculator based on IAPWS-IF97 standard. Features interactive Mollier h-s & T-s diagrams, supports kg/cm², bar, psi, inHg, mmHg, °C, °F, kcal/kg, and Btu/lb.">
+    <title>Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc</title>
+    <meta name="description" content="Calculate superheated and wet steam enthalpy, specific volume, specific heat Cp, entropy, superheat, and Tsat using IAPWS-IF97 steam tables. Supports bar, barg, psi, psig, ata, inHg vacuum, °C, °F, and kcal/kg.">
     <meta name="author" content="PowerPlantCalc">
     
     <!-- Google Search Console Verification Meta Tag -->
@@ -24,16 +24,16 @@
 
     <!-- Open Graph / Facebook Social Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Steam Enthalpy & Properties Calculator | PowerPlantCalc">
-    <meta property="og:description" content="Calculate enthalpy, entropy, density, specific volume, superheat, dryness fraction, and transport properties of water and steam using IAPWS-IF97 equations with interactive Mollier charts.">
+    <meta property="og:title" content="Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc">
+    <meta property="og:description" content="High-precision IAPWS-IF97 steam tables and calculator. Computes enthalpy, specific volume, specific heat Cp, entropy, Tsat, dryness fraction x, and Mollier charts.">
     <meta property="og:site_name" content="PowerPlantCalc">
     <meta property="og:url" content="https://powerplantcalc.com/steam-calculator">
     <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Steam Enthalpy & Properties Calculator | PowerPlantCalc">
-    <meta name="twitter:description" content="High-precision thermodynamic calculator for power plant engineers. Features interactive h-s and T-s charts, supports kg/cm², bar, psi, inHg, kcal/kg, Btu/lb.">
+    <meta name="twitter:title" content="Steam Enthalpy & Properties Calculator (IAPWS-IF97) | PowerPlantCalc">
+    <meta name="twitter:description" content="Calculate steam enthalpy, specific volume, specific heat Cp, entropy, and superheat across all 5 IAPWS-IF97 regions with interactive Mollier charts.">
     <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
     
     <!-- JSON-LD Structured Data Schema Markup -->
@@ -81,26 +81,42 @@
           },
           {
             "@type": "Question",
-            "name": "What is the difference between gauge pressure and absolute pressure?",
+            "name": "How do you calculate the Specific Heat Capacity (Cp) of steam at given pressure and temperature?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Gauge pressure measures pressure relative to atmospheric pressure (P_abs = P_gauge + P_atm), whereas absolute pressure measures total pressure relative to a perfect vacuum. Standard atmospheric pressure equals 1.0332 kg/cm² = 1.01325 bar = 14.696 psi."
+              "text": "Isobaric specific heat capacity Cp = (∂h/∂T)_P measures the energy required to raise the temperature of 1 kg of steam by 1 K at constant pressure. For low-pressure superheated steam, Cp is approximately 2.0 to 2.2 kJ/(kg·K) (0.48 to 0.52 kcal/kg·°C or Btu/lb·°F), but increases dramatically near the saturation line and supercritical critical point."
             }
           },
           {
             "@type": "Question",
-            "name": "Why is International Table calorie (kcal_IT) standard used in power plant steam tables?",
+            "name": "How do you calculate wet steam enthalpy using dryness fraction (x)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Power plant steam tables use the International Table Calorie standard defined as 1 kcal_IT = 4.1868 kJ to prevent enthalpy calculation discrepancies in high-pressure thermodynamic balances."
+              "text": "In two-phase wet steam, specific enthalpy is determined using the dryness fraction x: h = h_f + x · h_fg, where h_f is saturated liquid enthalpy and h_fg is latent heat of vaporization. For example, wet steam at 10 bar with x = 0.85 has an enthalpy of 2475.8 kJ/kg (591.3 kcal/kg)."
             }
           },
           {
             "@type": "Question",
-            "name": "How is the Mollier Enthalpy-Entropy (h-s) calculation used in turbines?",
+            "name": "How do you find steam enthalpy and Tsat in condenser vacuum (e.g. 2 inHg abs)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "In steam turbines, steam expands isentropically (s = constant) from high pressure to condenser vacuum pressure. Calculating initial and final enthalpy allows engineers to derive theoretical turbine work output and heat rate efficiency."
+              "text": "In steam turbine condensers operating under vacuum, pressure is commonly measured in inches of mercury. An absolute pressure of 2 inHg (abs) corresponds to 0.0677 bar (abs) (6.77 kPa). At this vacuum level, the saturation boiling temperature Tsat is 38.4°C (101.1°F), and saturated vapor enthalpy h_g is approximately 2571 kJ/kg (1105 Btu/lb)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How to convert gauge pressure (barg, psig) and technical atmosphere (ata) to absolute pressure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Thermodynamic steam tables require absolute pressure: P_abs = P_gauge + P_atm. Standard atmospheric pressure is 1.01325 bar = 14.696 psi = 1.0332 kg/cm². Technical atmosphere absolute (ata) equals 1 kg/cm² (abs) = 0.09807 MPa, whereas technical atmosphere gauge is designated as atü or atg."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is steam desuperheating / attemperator spray water calculated?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Spray water mass flow required to reduce steam temperature from inlet enthalpy h_1 to outlet enthalpy h_2 is calculated by heat balance: m_spray = m_steam · (h_1 - h_2) / (h_2 - h_water), where h_water is spray water enthalpy."
             }
           }
         ]
@@ -168,16 +184,31 @@
 
             <div class="seo-tags-bar">
                 <span class="seo-tag">♨️ Steam Table Calculator</span>
+                <span class="seo-tag">⚡ Specific Heat (Cp)</span>
+                <span class="seo-tag">💧 Wet Steam Dryness Fraction (x)</span>
+                <span class="seo-tag">💨 Condenser Vacuum inHg</span>
                 <span class="seo-tag">📊 Mollier Diagram (h-s)</span>
                 <span class="seo-tag">🔥 Superheated Steam Enthalpy</span>
-                <span class="seo-tag">💧 Saturated Steam Table</span>
-                <span class="seo-tag">⚡ IAPWS-IF97 Benchmark</span>
+                <span class="seo-tag">📏 Specific Volume & Density</span>
             </div>
         </header>
 
         <main>
             <!-- Interactive Calculator Section -->
             <section class="card input-card" aria-label="Calculation Controls">
+
+                <!-- 1-Click Common Plant Operating Presets -->
+                <div class="presets-toolbar" aria-label="Common Plant Operating Presets">
+                    <span class="presets-label">⚡ 1-Click Common Operating Presets:</span>
+                    <div class="presets-buttons-wrap">
+                        <button type="button" class="preset-btn" data-preset="hp-superheat" title="70 bar (g) at 490°C Superheated Turbine Steam">🔥 70 barg @ 490°C (HP Superheat)</button>
+                        <button type="button" class="preset-btn" data-preset="mp-process" title="15 bar (a) at 250°C Process Steam">⚙️ 15 bar @ 250°C (MP Process)</button>
+                        <button type="button" class="preset-btn" data-preset="boiler-drum" title="9 barg Saturated Steam in Boiler Drum">🏭 9 barg Saturated (Boiler Drum)</button>
+                        <button type="button" class="preset-btn" data-preset="wet-lp" title="10 bar (a) Wet Steam with Dryness Fraction x = 0.85">💧 10 bar @ x=0.85 (Wet Steam)</button>
+                        <button type="button" class="preset-btn" data-preset="condenser-vac" title="2 inHg (a) at 101.1°F Turbine Condenser Vacuum">💨 2 inHg (a) @ 101.1°F (Condenser)</button>
+                        <button type="button" class="preset-btn" data-preset="us-plant" title="400 psig at 662°F US Industrial Power Station">🇺🇸 400 psig @ 662°F (US Plant)</button>
+                    </div>
+                </div>
 
                 <div class="input-group full-width">
                     <label for="mode">Calculation Mode</label>
@@ -607,6 +638,45 @@
                             <h4>Q: How is the Mollier Enthalpy-Entropy (h-s) calculation used in turbines?</h4>
                             <p>
                                 In steam turbines, steam expands isentropically (s = constant) from high pressure to condenser vacuum pressure. By calculating initial enthalpy h₁ and final enthalpy h₂ using <strong>Enthalpy + Entropy (h, s) mode</strong>, engineers calculate theoretical turbine work (W = h₁ - h₂) and heat rate efficiency.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How do you calculate the Specific Heat Capacity (Cp) of steam at given pressure and temperature?</h4>
+                            <p>
+                                Isobaric heat capacity <strong>C<sub>p</sub> = (∂h/∂T)<sub>P</sub></strong> represents the thermal energy required to raise steam temperature by 1°C at constant pressure. For low-pressure superheated steam, C<sub>p</sub> averages between 2.0 and 2.2 kJ/(kg·K) (approx. 0.48 to 0.52 kcal/kg·°C or Btu/lb·°F). However, near saturation and the supercritical critical point, C<sub>p</sub> rises sharply. Our calculator computes true differential C<sub>p</sub> directly via IAPWS-IF97 fundamental equations.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How do you calculate wet steam enthalpy using dryness fraction (x)?</h4>
+                            <p>
+                                For two-phase wet steam (Region 4), specific enthalpy is computed using:
+                                <strong>h = h<sub>f</sub> + x · h<sub>fg</sub></strong>
+                                Where <em>h<sub>f</sub></em> is saturated liquid enthalpy and <em>h<sub>fg</sub></em> is latent heat of vaporization. For example, for steam at 10 bar with dryness fraction x = 0.85: h<sub>f</sub> = 762.8 kJ/kg and h<sub>fg</sub> = 2015.3 kJ/kg, producing an enthalpy of <strong>2475.8 kJ/kg (591.3 kcal/kg)</strong>. Select <em>Pressure + Vapor Quality (P, x)</em> mode above to calculate wet steam properties automatically.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How do you find steam enthalpy and Tsat in condenser vacuum (e.g. 2 inHg abs)?</h4>
+                            <p>
+                                Steam turbine surface condensers operate in deep vacuum. An absolute pressure of 2 inHg (abs) corresponds to 0.0677 bar (abs) (6.77 kPa). At this vacuum, saturation boiling temperature T<sub>sat</sub> is <strong>38.4°C (101.1°F)</strong>, and saturated vapor enthalpy h<sub>g</sub> is approx. <strong>2571 kJ/kg (1105 Btu/lb)</strong>.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How to convert gauge pressure (barg, psig) and technical atmosphere (ata) to absolute pressure?</h4>
+                            <p>
+                                All steam tables require absolute pressure: <strong>P<sub>abs</sub> = P<sub>gauge</sub> + P<sub>atm</sub></strong>. Standard atmospheric pressure is 1.01325 bar = 14.696 psi = 1.0332 kg/cm². The technical unit <strong>ata</strong> denotes technical atmosphere absolute (1 ata = 1 kg/cm² abs = 0.09807 MPa), whereas <strong>atü / atg</strong> denotes technical atmosphere gauge.
+                            </p>
+                        </div>
+
+                        <div class="faq-item">
+                            <h4>Q: How is steam desuperheating / attemperator spray water calculated?</h4>
+                            <p>
+                                Spray water mass flow required to reduce steam temperature from inlet enthalpy h₁ to target outlet enthalpy h₂ is governed by mass and energy balance:
+                                <strong>ṁ<sub>spray</sub> = ṁ<sub>steam</sub> · (h₁ − h₂) / (h₂ − h<sub>water</sub>)</strong>
+                                Where <em>h<sub>water</sub></em> is boiler feedwater or spray water enthalpy.
                             </p>
                         </div>
 

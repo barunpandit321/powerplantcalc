@@ -1655,6 +1655,72 @@ header p {
     .results {
         grid-template-columns: 1fr;
     }
+/* ==========================================
+   Quick Plant Presets Toolbar Styles
+   ========================================== */
+.presets-toolbar {
+    margin-bottom: 22px;
+    padding: 14px 16px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.presets-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.presets-buttons-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.preset-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.preset-btn:hover {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.preset-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .presets-toolbar {
+        padding: 10px 12px;
+        margin-bottom: 16px;
+    }
+
+    .preset-btn {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
 }
 
 /* ==========================================
