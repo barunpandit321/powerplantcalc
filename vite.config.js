@@ -15,7 +15,8 @@ export default defineConfig({
                 terms: resolve(__dirname, "terms-and-conditions.html"),
                 about: resolve(__dirname, "about.html"),
                 cooling: resolve(__dirname, "cooling-tower-calculator.html"),
-                boiler: resolve(__dirname, "boiler-efficiency-calculator.html")
+                boiler: resolve(__dirname, "boiler-efficiency-calculator.html"),
+                pipe: resolve(__dirname, "steam-pipe-calculator.html")
             }
         }
     }

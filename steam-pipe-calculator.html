@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YFS1MY74V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1YFS1MY74V');
+    </script>
+
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Steam Pipe Sizing & Velocity Calculator (ASME B31.1 & B36.10M) — PowerPlantCalc</title>
+    <meta name="description" content="Free online Steam Pipe Sizing & Velocity Calculator based on ASME B31.1, ASME B36.10M dimensions & Darcy-Weisbach pressure drop. Sizes pipes for saturated and superheated steam using IAPWS-IF97 steam tables with instant velocity and friction loss metrics.">
+    <meta name="keywords" content="steam pipe sizing calculator, steam velocity calculator, steam pipe diameter, ASME B31.1 steam velocity, Darcy-Weisbach steam pressure drop, pipe schedule 40 80 steam, saturated steam pipe sizing, superheated steam velocity">
+    <meta name="author" content="PowerPlantCalc">
+
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="p58uC_qEWbH1fKPQ_C6j6-V4pfZL39CfyICOZpLp498" />
+
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/steam-pipe-calculator">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Steam Pipe Sizing & Velocity Calculator (ASME B31.1 & B36.10M)">
+    <meta property="og:description" content="Calculate recommended steam pipe diameter, steam flow velocity, and Darcy-Weisbach pressure drop using ASME B36.10M standard dimensions and IAPWS-IF97 steam properties.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/steam-pipe-calculator">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Steam Pipe Sizing & Velocity Calculator — PowerPlantCalc">
+    <meta name="twitter:description" content="Engineering steam pipe sizing tool adhering to ASME B31.1 and Darcy-Weisbach hydraulics. Evaluate flow velocities, pressure gradients, and standard pipe dimensions.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Structured Data (JSON-LD): WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Steam Pipe Sizing & Velocity Calculator (ASME B31.1)",
+      "url": "https://powerplantcalc.com/steam-pipe-calculator",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Professional steam piping sizing and velocity calculator built on ASME B31.1, ASME B36.10M pipe schedule dimensions, and Darcy-Weisbach / Haaland friction factor formulas with IAPWS-IF97 steam density.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "PowerPlantCalc",
+        "url": "https://powerplantcalc.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD): FAQPage for Google & Bing Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the recommended steam velocity in piping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "According to ASME B31.1 and Spirax Sarco engineering standards, recommended velocities are: Saturated steam: 15 to 30 m/s (3,000 to 6,000 ft/min) with 20 to 25 m/s as the sweet spot to minimize water droplet erosion; Superheated steam: 30 to 50 m/s (6,000 to 10,000 ft/min) because dry superheated steam has no droplets; Vacuum/exhaust steam: 50 to 80 m/s (10,000 to 16,000 ft/min) to accommodate very high specific volumes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does steam pressure affect pipe size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As steam pressure increases, its specific volume decreases significantly (steam becomes denser). Because higher pressure steam occupies much less volumetric space for the same mass flow, a significantly smaller diameter pipe can carry the same mass flow of high-pressure steam at the same velocity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is correct steam pipe sizing critical?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An undersized pipe causes excessive steam velocity, high friction pressure drop, steam starvation at downstream equipment, acoustic noise, and pipe erosion. An oversized pipe increases piping capital cost, insulation expense, and causes higher heat loss through larger surface area, leading to excessive condensate formation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What equation calculates pressure drop in steam pipes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This calculator uses the Darcy-Weisbach equation: ΔP = f × (L/D) × (ρ × V² / 2), where f is the Darcy friction factor computed via the Haaland explicit equation for commercial steel (roughness ε = 0.045 mm), L is pipe length, D is inside diameter, ρ is steam density from IAPWS-IF97, and V is flow velocity."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Optimized Font Preconnect & Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Properties</a>
+                <a href="/cooling-tower-calculator" class="nav-link">🌊 Cooling Tower</a>
+                <a href="/boiler-efficiency-calculator" class="nav-link">🏭 Boiler Efficiency</a>
+                <a href="/steam-pipe-calculator" class="nav-link active">📏 Steam Pipe Sizing</a>
+                <a href="/about" class="nav-link">ℹ️ About</a>
+                <a href="/contact" class="nav-link">✉️ Contact</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">ASME B31.1 & ASME B36.10M Standard</div>
+            </div>
+            <h1>Steam Pipe Sizing & Velocity Calculator</h1>
+            <p>Determine optimal commercial pipe diameter, steam flow velocity, and Darcy-Weisbach frictional pressure drop for saturated and superheated steam lines using IAPWS-IF97 steam formulations.</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">📏 ASME B36.10M Schedule 40/80/160</span>
+                <span class="seo-tag">⚡ Velocity & Pressure Drop Method</span>
+                <span class="seo-tag">💧 IAPWS-IF97 Steam Specific Volume</span>
+                <span class="seo-tag">🌪️ Darcy-Weisbach & Haaland Friction</span>
+            </div>
+        </header>
+
+        <!-- Main Calculator Layout -->
+        <main class="calculator-grid">
+
+            <!-- Interactive Inputs Card -->
+            <section class="card input-card" aria-label="Steam Pipe Sizing Controls">
+
+                <!-- 1-Click Engineering Presets Toolbar -->
+                <div class="presets-toolbar" aria-label="Common Steam Piping Presets">
+                    <span class="presets-label">⚡ 1-Click Engineering Presets:</span>
+                    <div class="presets-buttons-wrap">
+                        <button type="button" class="preset-btn" data-pipe-preset="mp-process" title="Medium Pressure Process Header">🏭 MP Process (10 barg Sat)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="hp-main" title="High Pressure Superheated Main Steam">⚡ HP Superheated (65 barg, 485°C)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="lp-heating" title="Low Pressure Heating & Distribution">🏢 LP Heating (3.5 barg Sat)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="us-600psig" title="US Industrial Boiler Lead">🇺🇸 US 600 psig Boiler Lead</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="turbine-exhaust" title="Turbine Vacuum Exhaust to Condenser">💨 Turbine Exhaust (0.1 bar a)</button>
+                    </div>
+                </div>
+
+                <div class="input-group full-width" style="margin-bottom: 16px;">
+                    <label for="pipePresetSelect">Select Operating Condition Preset</label>
+                    <select id="pipePresetSelect">
+                        <option value="mp-process">🏭 Medium Pressure Process Steam (10 barg, 10,000 kg/h)</option>
+                        <option value="hp-main">⚡ High Pressure Superheated Steam (65 barg, 485°C, 50,000 kg/h)</option>
+                        <option value="lp-heating">🏢 Low Pressure Heating & Distribution (3.5 barg, 2,500 kg/h)</option>
+                        <option value="us-600psig">🇺🇸 US Boiler Outlet Lead (600 psig, 750°F, 50,000 lb/h)</option>
+                        <option value="turbine-exhaust">💨 Turbine Vacuum Exhaust (0.1 bar a, 20,000 kg/h)</option>
+                    </select>
+                </div>
+
+                <div class="grid">
+                    <!-- Steam Flow Rate -->
+                    <div class="input-group">
+                        <label for="inputFlow">Steam Mass Flow Rate</label>
+                        <div class="input-with-unit">
+                            <input id="inputFlow" type="number" step="any" value="10000" min="1">
+                            <select id="unitFlow" aria-label="Steam Flow Unit">
+                                <option value="kg_h">kg/h</option>
+                                <option value="t_h">t/h (MT/hr)</option>
+                                <option value="lb_h">lb/h</option>
+                                <option value="klb_h">k lb/h (Mlb/h)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Operating Pressure -->
+                    <div class="input-group">
+                        <label for="inputPressure">Steam Operating Pressure</label>
+                        <div class="input-with-unit">
+                            <input id="inputPressure" type="number" step="any" value="10" min="0.001">
+                            <select id="unitPressure" aria-label="Pressure Unit">
+                                <option value="bar_g">bar (gauge)</option>
+                                <option value="bar_a">bar (abs)</option>
+                                <option value="psi_g">psi (gauge)</option>
+                                <option value="psi_a">psi (abs)</option>
+                                <option value="kg_cm2_g">kg/cm² (gauge)</option>
+                                <option value="kg_cm2_a">kg/cm² (abs)</option>
+                                <option value="MPa_g">MPa (gauge)</option>
+                                <option value="MPa_a">MPa (abs)</option>
+                                <option value="kPa_g">kPa (gauge)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturated Steam Toggle Checkbox -->
+                <label class="checkbox-group">
+                    <input id="checkSaturated" type="checkbox" checked>
+                    <span>Dry Saturated Steam <small id="satBadgeNotice" style="color: var(--primary); font-weight: 600;">(Auto Calculated Saturation Temp)</small></span>
+                </label>
+
+                <div class="grid">
+                    <!-- Steam Temperature (Enabled when superheated) -->
+                    <div class="input-group" id="tempGroup" style="opacity: 0.5;">
+                        <label for="inputTemp">Steam Temperature (Superheated)</label>
+                        <div class="input-with-unit">
+                            <input id="inputTemp" type="number" step="any" value="184" disabled>
+                            <select id="unitTemp" aria-label="Temperature Unit">
+                                <option value="C">°C</option>
+                                <option value="F">°F</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Target Velocity -->
+                    <div class="input-group">
+                        <label for="inputTargetVel">Target Design Steam Velocity</label>
+                        <div class="input-with-unit">
+                            <input id="inputTargetVel" type="number" step="any" value="25" min="1">
+                            <select id="unitTargetVel" aria-label="Velocity Unit">
+                                <option value="m_s">m/s (meters/sec)</option>
+                                <option value="ft_min">ft/min (feet/min)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Pipe Schedule -->
+                    <div class="input-group">
+                        <label for="selectSchedule">Pipe Wall Thickness Schedule</label>
+                        <select id="selectSchedule" aria-label="Pipe Schedule">
+                            <option value="Sch40">ASME B36.10M Schedule 40 (Standard Wall)</option>
+                            <option value="Sch80">ASME B36.10M Schedule 80 (Extra Strong / HP)</option>
+                            <option value="Sch160">ASME B36.10M Schedule 160 (Heavy Wall / Ultra HP)</option>
+                        </select>
+                    </div>
+
+                    <!-- Pipe Length for Pressure Drop -->
+                    <div class="input-group">
+                        <label for="inputLength">Pipe Equivalent Length (for ΔP)</label>
+                        <div class="input-with-unit">
+                            <input id="inputLength" type="number" step="any" value="100" min="1">
+                            <select id="unitLength" aria-label="Length Unit">
+                                <option value="m">meters (m)</option>
+                                <option value="ft">feet (ft)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Group -->
+                <div class="action-buttons-group">
+                    <button id="calculateBtn" class="calc-btn" type="button">
+                        <span>⚡ Size Steam Pipe</span>
+                    </button>
+                    <button id="shareLinkBtn" class="share-btn" type="button" title="Copy shareable link to clipboard">
+                        <span>🔗 Share</span>
+                    </button>
+                    <button id="printReportBtn" class="print-btn" type="button" title="Print calculation datasheet / Export PDF">
+                        <span>📄 Export PDF</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results" aria-label="Steam Pipe Sizing Calculation Outputs">
+                <!-- Highlight Card: Recommended Size -->
+                <div class="result-card highlight">
+                    <span>Recommended Pipe Size</span>
+                    <h2 id="outRecommendedNps">--</h2>
+                    <small id="outRecommendedId" class="static-label">ASME B36.10M Standard</small>
+                </div>
+
+                <!-- Actual Velocity & Status -->
+                <div class="result-card key-metric">
+                    <span>Actual Steam Velocity</span>
+                    <h2 id="outVelocity">--</h2>
+                    <small id="outVelocityStatus" class="static-label">Evaluating...</small>
+                </div>
+
+                <!-- Friction Pressure Drop Gradient -->
+                <div class="result-card key-metric">
+                    <span>Pressure Drop Gradient</span>
+                    <h2 id="outDpPer100m">--</h2>
+                    <small class="static-label">Darcy-Weisbach Friction</small>
+                </div>
+
+                <!-- Total Line Pressure Drop -->
+                <div class="result-card">
+                    <span>Total Pipe Pressure Drop</span>
+                    <h2 id="outDpTotal">--</h2>
+                    <small class="static-label">For specified line length</small>
+                </div>
+
+                <!-- Minimum Theoretical ID -->
+                <div class="result-card">
+                    <span>Minimum Theoretical ID</span>
+                    <h2 id="outMinId">--</h2>
+                    <small class="static-label">Exact ID at target velocity</small>
+                </div>
+
+                <!-- Specific Volume -->
+                <div class="result-card">
+                    <span>Specific Volume (v)</span>
+                    <h2 id="outSpecVolume">--</h2>
+                    <small class="static-label">IAPWS-IF97 Steam Table</small>
+                </div>
+
+                <!-- Steam Density -->
+                <div class="result-card">
+                    <span>Steam Density (ρ)</span>
+                    <h2 id="outDensity">--</h2>
+                    <small class="static-label">1 / Specific Volume</small>
+                </div>
+
+                <!-- Operating Steam Temperature -->
+                <div class="result-card">
+                    <span>Steam Temperature</span>
+                    <h2 id="outSteamTemp">--</h2>
+                    <small id="outSatSuperheat" class="static-label">Saturation & Superheat</small>
+                </div>
+
+                <!-- Volumetric Flow Rate -->
+                <div class="result-card">
+                    <span>Volumetric Flow Rate (Q)</span>
+                    <h2 id="outVolFlow">--</h2>
+                    <small class="static-label">Actual Volume Flow Rate</small>
+                </div>
+
+                <!-- Reynolds Number -->
+                <div class="result-card">
+                    <span>Reynolds Number (Re)</span>
+                    <h2 id="outReynolds">--</h2>
+                    <small class="static-label">Turbulent Flow Regime</small>
+                </div>
+
+                <!-- Darcy Friction Factor -->
+                <div class="result-card">
+                    <span>Darcy Friction Factor (f)</span>
+                    <h2 id="outFrictionFactor">--</h2>
+                    <small class="static-label">Haaland Explicit Formula</small>
+                </div>
+            </section>
+
+            <!-- Next Larger Pipe Comparison Card -->
+            <div id="nextSizeCard" class="next-size-alert" style="display: none;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                        <strong style="color: var(--primary); font-size: 0.95rem;">💡 Alternative Next Larger Pipe: <span id="outNextNps">--</span></strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                            Velocity drops to <strong id="outNextVelocity" style="color: var(--text-main);">--</strong> with pressure drop of <strong id="outNextDp" style="color: var(--text-main);">--</strong>. Recommended if line runs over 150m or future capacity expansion is expected.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUICK FIELD TOOLKIT STRIP (HIGH VISIBILITY) -->
+            <div class="quick-toolkit-strip" aria-label="Field Piping Instruments and Standards">
+                <div class="toolkit-strip-title">
+                    <span class="toolkit-icon">🛠️</span>
+                    <span>Piping Field Toolkit & Standards:</span>
+                </div>
+                <div class="toolkit-strip-items">
+                    <a href="https://www.amazon.com/s?k=Ultrasonic+Flow+Meter+TDS-100H&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Handheld Ultrasonic Clamp-On Flow Meter">
+                        <span>Ultrasonic Clamp-On Flow Meter</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Fluke 62 MAX Dual Laser IR Thermometer">
+                        <span>Fluke 62 MAX IR Temp Gun</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=ASME+B31.1+Power+Piping+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="ASME B31.1 Power Piping Code">
+                        <span>ASME B31.1 Power Piping Code</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=The+Steam+and+Condensate+Loop+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Spirax Sarco Steam and Condensate Loop Handbook">
+                        <span>Spirax Sarco Steam Loop Handbook</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Canvas Chart Section -->
+            <section class="card chart-card" aria-label="Steam Pipe Velocity & Pressure Drop Chart">
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <h2>Steam Velocity Zone & Hydraulic Performance Gauge</h2>
+                        <p class="subtitle">Linear speed gauge displaying operating velocity relative to ASME / Spirax Sarco optimal limits and Darcy-Weisbach pressure loss</p>
+                    </div>
+                </div>
+
+                <div class="canvas-container" style="height: 220px;">
+                    <canvas id="pipeChart" aria-label="Steam pipe velocity and pressure drop gauge"></canvas>
+                </div>
+            </section>
+
+            <!-- Standard ASME B36.10M Pipe Comparison Table -->
+            <section class="card" aria-label="Commercial Pipe Diameter Comparison Table">
+                <div class="section-title">
+                    <h2>ASME B36.10M Standard Pipe Size Comparison Table</h2>
+                    <p>Hydraulic velocities and pressure drop gradients calculated across standard commercial nominal diameters at your exact steam flow rate:</p>
+                </div>
+
+                <div class="pipe-table-container">
+                    <table class="pipe-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Nominal Pipe Size (NPS / DN)</th>
+                                <th>Internal Diameter (ID)</th>
+                                <th>Steam Velocity</th>
+                                <th>Pressure Drop (ΔP / 100m)</th>
+                                <th>ASME Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Professional Field Gear & Reference Library (Amazon Associates) -->
+            <section class="books-reference-section" aria-label="Professional Steam Piping Diagnostic Instruments and Reference Books">
+                <div class="books-section-header">
+                    <h2>⚙️ Professional Plant Instruments & Piping Reference Handbooks</h2>
+                    <p>Field-calibrated diagnostic instruments and standard reference manuals used by steam piping designers, commissioning engineers, and plant maintenance professionals worldwide.</p>
+                </div>
+
+                <!-- Subsection 1: Field Measurement Instruments -->
+                <div class="gear-subsection">
+                    <div class="gear-subsection-title">
+                        <span>🛠️ Field Diagnostic Instruments (Plant Field Gear)</span>
+                    </div>
+                    <div class="books-grid">
+                        <!-- Instrument 1 -->
+                        <a href="https://www.amazon.com/s?k=Ultrasonic+Flow+Meter+TDS-100H&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">Non-Invasive Flow</span>
+                                </div>
+                                <h3>Handheld Ultrasonic Clamp-On Flow Meter</h3>
+                                <div class="book-author">Fluid Velocity & Steam Verification</div>
+                                <p>Clamp-on transit-time ultrasonic flow meter for measuring pipe flow velocities without cutting pipework or shutting down operating steam systems.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Instrument 2 -->
+                        <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">Pipe Skin Temp</span>
+                                </div>
+                                <h3>Fluke 62 MAX+ Dual Laser IR Thermometer</h3>
+                                <div class="book-author">Fluke Industrial Instrumentation</div>
+                                <p>IP54-rated infrared thermometer (-30°C to 650°C) with dual rotating lasers for pinpoint accuracy on steam traps, header pipe skin, and insulation cladding.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Instrument 3 -->
+                        <a href="https://www.amazon.com/s?k=Digital+Differential+Pressure+Manometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">Differential Pressure</span>
+                                </div>
+                                <h3>Digital Differential Pressure Manometer</h3>
+                                <div class="book-author">Hydraulic Performance Auditor</div>
+                                <p>High-resolution dual-port differential pressure meter to verify actual pipe friction loss across orifice plates, valves, and long pipe headers.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Subsection 2: Authoritative Piping Reference Handbooks -->
+                <div class="gear-subsection">
+                    <div class="gear-subsection-title">
+                        <span>📚 Authoritative Piping Handbooks & ASME Standards</span>
+                    </div>
+                    <div class="books-grid">
+                        <!-- Book 1 -->
+                        <a href="https://www.amazon.com/s?k=Piping+Handbook+Mohinder+Nayyar+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="book-badge">⭐ The Industry Bible</span>
+                                    <span class="book-tag">McGraw-Hill Standard</span>
+                                </div>
+                                <h3>Piping Handbook (7th Edition)</h3>
+                                <div class="book-author">Mohinder L. Nayyar, P.E.</div>
+                                <p>The definitive 2,000-page encyclopedia on piping design, fluid flow hydraulics, ASME codes, material specifications, valve sizing, and steam distribution systems.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Book 2 -->
+                        <a href="https://www.amazon.com/s?k=Design+of+Piping+Systems+M+W+Kellogg&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="book-badge">Classic Authority</span>
+                                    <span class="book-tag">Kellogg Company</span>
+                                </div>
+                                <h3>Design of Piping Systems</h3>
+                                <div class="book-author">The M. W. Kellogg Company</div>
+                                <p>Master reference for thermal expansion analysis, flexibility design, pipe support sizing, and high-temperature steam header routing in utility power plants.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Book 3 -->
+                        <a href="https://www.amazon.com/s?k=Steam+Plant+Operation+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="book-badge">Global Standard</span>
+                                    <span class="book-tag">10th Edition</span>
+                                </div>
+                                <h3>Steam Plant Operation (10th Ed)</h3>
+                                <div class="book-author">Woodruff, Lammers & Lammers</div>
+                                <p>Essential operational textbook covering boiler leads, superheater piping, safety valve relief lines, steam traps, and steam distribution best practices.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Comprehensive SEO Engineering Guide Section -->
+        <article class="article-section" aria-label="Comprehensive Steam Pipe Sizing and Velocity Guide">
+            <header>
+                <h2>Comprehensive Steam Pipe Sizing & Velocity Engineering Guide</h2>
+                <p class="article-meta">Published by PowerPlantCalc Editorial Engineering Team • Based on ASME B31.1, ASME B36.10M, and IAPWS-IF97 Standards</p>
+            </header>
+
+            <section>
+                <h3>1. Introduction to Steam Piping Sizing Principles</h3>
+                <p>
+                    Designing steam distribution networks requires balancing capital investment against operating efficiency and equipment lifespan. In power generation facilities, chemical refineries, pharmaceutical complexes, and district heating networks, steam is transported across thousands of meters of piping under elevated temperatures and pressures. Sizing these lines correctly is vital:
+                </p>
+                <ul>
+                    <li><strong>Undersized Piping:</strong> Results in excessively high steam velocities. This triggers accelerated erosion of pipe walls, valve seats, and elbows from suspended water droplets (even in dry steam, condensation occurs during transit). Furthermore, high velocity causes deafening acoustic noise, destructive water hammer, and steep friction pressure drops that starve downstream turbines or process heat exchangers.</li>
+                    <li><strong>Oversized Piping:</strong> Results in drastically increased capital expenditures for pipe, heavy insulation, oversized structural pipe racks, valves, and steam traps. Additionally, larger surface areas cause greater radiation heat losses to ambient air, creating excessive parasitic condensate.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>2. Two Methods for Sizing Steam Pipes</h3>
+                <p>In industrial engineering practice, two primary methodologies are utilized:</p>
+                <ol>
+                    <li><strong>The Velocity Method:</strong> Sizing based on a recommended maximum velocity limit. This method is the primary standard used for preliminary sizing, short pipe runs (&lt; 100 meters), and boiler lead connections.</li>
+                    <li><strong>The Pressure Drop (ΔP) Method:</strong> Sizing based on an allowable maximum pressure loss per 100 meters (or 100 feet) of equivalent line length. For long-distance transmission headers, pressure drop governs pipe size to ensure sufficient steam pressure arrives at terminal equipment. Typical benchmark limits are <strong>0.1 to 0.2 bar per 100 m</strong> (1 to 2 psi per 100 ft).</li>
+                </ol>
+            </section>
+
+            <section>
+                <h3>3. Recommended Steam Velocity Guidelines (ASME B31.1 & Spirax Sarco)</h3>
+                <p>
+                    Fluid velocity depends on the physical phase of the steam and operating line pressure. The following benchmark velocities are recognized across international power engineering:
+                </p>
+
+                <div class="pipe-table-container">
+                    <table class="pipe-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Steam Service Condition</th>
+                                <th>Recommended Velocity (m/s)</th>
+                                <th>Recommended Velocity (ft/min)</th>
+                                <th>Engineering Considerations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Saturated Steam (Distribution)</strong></td>
+                                <td>15 – 30 m/s</td>
+                                <td>3,000 – 6,000 ft/min</td>
+                                <td>Standard practice. 25 m/s is the ideal economic sweet spot to prevent moisture droplet impingement.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Superheated Steam (Boiler Lead / HP)</strong></td>
+                                <td>30 – 50 m/s</td>
+                                <td>6,000 – 10,000 ft/min</td>
+                                <td>Free from moisture droplets. Higher velocities permissible without erosion risk; smaller pipe saves weight.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Exhaust / Vacuum Steam (Turbine to Condenser)</strong></td>
+                                <td>50 – 80 m/s</td>
+                                <td>10,000 – 16,000 ft/min</td>
+                                <td>Extremely high specific volume (10–30 m³/kg) under vacuum requires high velocity to keep pipe diameter feasible.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wet Steam / Poor Condensate Drainage</strong></td>
+                                <td>12 – 18 m/s</td>
+                                <td>2,400 – 3,600 ft/min</td>
+                                <td>Reduced velocity mandatory to prevent water hammer shockwaves and pipe erosion.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <h3>4. Fundamental Mathematical Equations</h3>
+                
+                <h4>A. Volumetric Flow Rate ($Q$)</h4>
+                <p>From mass flow rate ($\dot{m}$) and specific volume ($v$ from IAPWS-IF97):</p>
+                <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
+                    Q = (\dot{m} / 3600) × v &nbsp;&nbsp;&nbsp; [m³/s]
+                </p>
+
+                <h4>B. Minimum Internal Diameter ($D_{min}$)</h4>
+                <p>By equating volumetric flow rate to the cross-sectional area multiplied by target velocity ($V$):</p>
+                <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
+                    A = Q / V = (π / 4) × D² &nbsp;⟹&nbsp; D_{min} = √( (4 × Q) / (π × V) ) &nbsp;&nbsp;&nbsp; [m]
+                </p>
+
+                <h4>C. Actual Velocity in Standard Pipe ($V_{act}$)</h4>
+                <p>Once the closest standard ASME B36.10M pipe internal diameter ($D_{std}$) is selected:</p>
+                <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
+                    V_{act} = (4 × Q) / (π × D_{std}²) &nbsp;&nbsp;&nbsp; [m/s]
+                </p>
+
+                <h4>D. Darcy-Weisbach Frictional Pressure Drop ($\Delta P$)</h4>
+                <p>The Darcy-Weisbach equation determines line pressure loss accurately for single-phase compressible flow over moderate pressure drops:</p>
+                <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
+                    ΔP = f × (L / D_{std}) × (ρ × V_{act}² / 2) &nbsp;&nbsp;&nbsp; [Pa]
+                </p>
+                <p>
+                    Where:
+                    <br>• $f$ = Darcy friction factor
+                    <br>• $L$ = Equivalent pipe length [m] (including valves and fitting equivalents)
+                    <br>• $\rho$ = Steam density [kg/m³] ($1/v$)
+                </p>
+
+                <h4>E. Haaland Explicit Friction Factor ($f$)</h4>
+                <p>For turbulent flow in commercial steel pipe (absolute roughness $\varepsilon = 0.045\text{ mm}$), the Haaland formula provides an explicit approximation of the Colebrook-White equation with less than 1.5% deviation:</p>
+                <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
+                    1 / √f = -1.8 × log₁₀[ ( (ε / D) / 3.7 )^{1.11} + (6.9 / Re) ]
+                </p>
+                <p>Where the Reynolds Number is $Re = (\rho \times V_{act} \times D) / \mu$, evaluated with dynamic viscosity $\mu$ from IAPWS-IF97 formulation.</p>
+            </section>
+
+            <section>
+                <h3>5. Frequently Asked Questions (FAQ)</h3>
+
+                <div class="faq-item">
+                    <h4>Q: What is the difference between Schedule 40, Schedule 80, and Schedule 160?</h4>
+                    <p>
+                        Under the ASME B36.10M standard, nominal pipe size (NPS) defines a constant outside diameter (OD). The "Schedule" specifies the wall thickness. As the schedule number increases (from Sch 40 to Sch 80 to Sch 160), the wall thickness becomes heavier to withstand higher internal pressures. Consequently, the internal diameter (ID) decreases, which reduces cross-sectional flow area and increases steam velocity for the same nominal pipe size.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: Why does superheated steam allow higher velocities than saturated steam?</h4>
+                    <p>
+                        Saturated steam inherently contains microscopic entrained water droplets and is prone to immediate condensation as heat escapes through insulation. At velocities above 30–35 m/s, these liquid droplets act like abrasive projectiles, cutting through valve trims, turbine blades, and pipe elbows (droplet impingement erosion). Superheated steam contains thermal superheat above the saturation temperature, preventing droplet formation and allowing safe operation at 35 to 50 m/s.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: How do equivalent lengths of valves and fittings affect steam pipe sizing?</h4>
+                    <p>
+                        Friction losses occur not only in straight pipe runs, but also across 90° elbows, tees, isolation valves, and strainers. In piping design, each fitting is converted into an "equivalent length" of straight pipe. For example, a standard 4-inch 90° elbow has an equivalent length of approximately 3.2 meters. Adding these equivalent lengths into your total length ensures realistic pressure drop calculations.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Q: What is the maximum recommended pressure drop for steam headers?</h4>
+                    <p>
+                        For general industrial distribution, an allowable pressure drop gradient of <strong>0.10 to 0.20 bar per 100 meters</strong> (1.0 to 2.5 psi per 100 feet) is standard practice. For short boiler leads (&lt; 30 m), up to 0.35 bar per 100 m may be tolerated to reduce pipe size and weight.
+                    </p>
+                </div>
+            </section>
+        </article>
+
+    </div>
+
+    <!-- Site Global Footer -->
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>PowerPlant<span class="highlight-text">Calc</span></h3>
+                    <p>Authoritative thermodynamics and power engineering calculations grounded in IAPWS-IF97, ASME PTC 4, and ASME B31.1 industrial standards.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Calculators</h4>
+                    <ul>
+                        <li><a href="/steam-calculator">🔥 Steam Properties (IAPWS-IF97)</a></li>
+                        <li><a href="/cooling-tower-calculator">🌊 Cooling Tower Performance</a></li>
+                        <li><a href="/boiler-efficiency-calculator">🏭 Boiler Efficiency (ASME PTC 4)</a></li>
+                        <li><a href="/steam-pipe-calculator">📏 Steam Pipe Sizing (ASME B31.1)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Company & Legal</h4>
+                    <ul>
+                        <li><a href="/about">ℹ️ About Us</a></li>
+                        <li><a href="/contact">✉️ Contact</a></li>
+                        <li><a href="/privacy-policy">🔒 Privacy Policy</a></li>
+                        <li><a href="/terms-and-conditions">📜 Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PowerPlantCalc. All rights reserved. Engineering calculations are for informational and professional guidance purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Pipe Sizing Controller Module -->
+    <script type="module" src="/src/pipe-main.js"></script>
+</body>
+</html>
