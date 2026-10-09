@@ -1898,6 +1898,128 @@ header p {
 }
 
 /* ==========================================
+   In-Flow Contextual Helper Tip Styles
+   ========================================== */
+.field-helper-tip {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.825rem;
+    color: var(--text-main);
+    line-height: 1.45;
+}
+
+.field-helper-tip .helper-icon {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.field-helper-tip .helper-text {
+    flex: 1;
+}
+
+.field-helper-tip .helper-link {
+    color: #f59e0b;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s ease;
+}
+
+.field-helper-tip .helper-link:hover {
+    color: #d97706;
+}
+
+/* ==========================================
+   Quick Field Toolkit Strip (Between Results & Charts)
+   ========================================== */
+.quick-toolkit-strip {
+    margin-top: 20px;
+    margin-bottom: 22px;
+    padding: 12px 16px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.toolkit-strip-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.toolkit-strip-items {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.toolkit-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.toolkit-pill:hover {
+    border-color: #f59e0b;
+    color: #d97706;
+    background: rgba(245, 158, 11, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.18);
+}
+
+.toolkit-pill .pill-arrow {
+    color: #f59e0b;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .quick-toolkit-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+    }
+    
+    .toolkit-strip-items {
+        width: 100%;
+    }
+    
+    .toolkit-pill {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+}
+
+/* ==========================================
    Print / PDF Export Styles
    ========================================== */
 @media print {
