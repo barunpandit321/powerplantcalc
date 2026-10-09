@@ -13,7 +13,8 @@ export class PipeChart {
         const rect = this.canvas.parentElement.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         this.width = rect.width;
-        this.height = Math.max(260, rect.height || 280);
+        const isMobile = this.width < 500;
+        this.height = isMobile ? 220 : Math.max(220, rect.height || 250);
 
         this.canvas.width = this.width * dpr;
         this.canvas.height = this.height * dpr;
@@ -48,9 +49,9 @@ export class PipeChart {
         const idMm = data.idMm || 102.3;
 
         // 1. Header: Sized Pipe Summary
+        const sizeText = isMobile ? `Size: NPS ${nps} (DN${dn}) — ID ${idMm.toFixed(1)}mm` : `Selected Size: NPS ${nps} (DN${dn}) — Internal Diameter: ${idMm.toFixed(1)} mm`;
         this.ctx.font = '600 13px Inter, system-ui, sans-serif';
-        this.ctx.fillStyle = textColor;
-        this.ctx.fillText(`Selected Size: NPS ${nps} (DN${dn}) — Internal Diameter: ${idMm.toFixed(1)} mm`, padX, padTop + 14);
+        const sizeW = this.ctx.measureText(sizeText).width;
 
         // Status pill
         let statusColor = "#10b981";
@@ -60,12 +61,31 @@ export class PipeChart {
         else if (vel > 32) { statusColor = "#f59e0b"; statusText = "High Velocity"; }
 
         this.ctx.font = '700 12px Inter, system-ui, sans-serif';
-        this.ctx.fillStyle = statusColor;
         const statW = this.ctx.measureText(statusText).width;
-        this.ctx.fillText(statusText, this.width - padX - statW, padTop + 14);
+
+        let barY = padTop + 36;
+        if (sizeW + statW + 16 > availW) {
+            // Stack header on narrow screens
+            this.ctx.font = '600 12px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = textColor;
+            this.ctx.fillText(sizeText, padX, padTop + 12);
+
+            this.ctx.font = '700 12px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = statusColor;
+            this.ctx.fillText(statusText, padX, padTop + 28);
+            barY = padTop + 48;
+        } else {
+            this.ctx.font = '600 13px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = textColor;
+            this.ctx.fillText(sizeText, padX, padTop + 14);
+
+            this.ctx.font = '700 12px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = statusColor;
+            this.ctx.fillText(statusText, this.width - padX - statW, padTop + 14);
+            barY = padTop + 36;
+        }
 
         // 2. Velocity Linear Gauge Bar
-        const barY = padTop + 36;
         const barH = 24;
         const maxGaugeVel = 60; // scale up to 60 m/s
 
@@ -111,17 +131,26 @@ export class PipeChart {
         // Gauge Ticks
         this.ctx.font = '500 10px Inter, system-ui, sans-serif';
         this.ctx.fillStyle = mutedColor;
-        this.ctx.fillText("0 m/s", padX, barY + barH + 14);
-        this.ctx.fillText("15 (Low)", padX + z1W - 18, barY + barH + 14);
-        this.ctx.fillText("30 (Optimal)", padX + z1W + z2W - 24, barY + barH + 14);
-        this.ctx.fillText("45 (High)", padX + z1W + z2W + z3W - 20, barY + barH + 14);
-        this.ctx.fillText("60 m/s", this.width - padX - 30, barY + barH + 14);
+        if (isMobile) {
+            this.ctx.fillText("0", padX, barY + barH + 14);
+            this.ctx.fillText("15", padX + z1W - 6, barY + barH + 14);
+            this.ctx.fillText("30", padX + z1W + z2W - 6, barY + barH + 14);
+            this.ctx.fillText("45", padX + z1W + z2W + z3W - 6, barY + barH + 14);
+            this.ctx.fillText("60 m/s", this.width - padX - 28, barY + barH + 14);
+        } else {
+            this.ctx.fillText("0 m/s", padX, barY + barH + 14);
+            this.ctx.fillText("15 (Low)", padX + z1W - 18, barY + barH + 14);
+            this.ctx.fillText("30 (Optimal)", padX + z1W + z2W - 24, barY + barH + 14);
+            this.ctx.fillText("45 (High)", padX + z1W + z2W + z3W - 20, barY + barH + 14);
+            this.ctx.fillText("60 m/s", this.width - padX - 30, barY + barH + 14);
+        }
 
         // 3. Pressure Drop Indicator Section
-        const dpY = barY + barH + 42;
+        const dpY = barY + barH + 38;
         this.ctx.font = '600 13px Inter, system-ui, sans-serif';
         this.ctx.fillStyle = textColor;
-        this.ctx.fillText("Frictional Pressure Drop Gradient (Darcy-Weisbach)", padX, dpY + 12);
+        const dpHeader = isMobile ? "Pressure Drop Gradient (Darcy-Weisbach)" : "Frictional Pressure Drop Gradient (Darcy-Weisbach)";
+        this.ctx.fillText(dpHeader, padX, dpY + 12);
 
         // Pressure Drop Bar
         const dpBarY = dpY + 24;
@@ -146,7 +175,7 @@ export class PipeChart {
         // DP value text
         this.ctx.font = '700 12px Inter, system-ui, sans-serif';
         this.ctx.fillStyle = dp > 0.35 ? "#ef4444" : (dp > 0.2 ? "#f59e0b" : "#10b981");
-        const dpText = `${dp.toFixed(3)} bar / 100m (${(dp * 4.421).toFixed(2)} psi / 100ft)`;
+        const dpText = isMobile ? `${dp.toFixed(3)} bar/100m` : `${dp.toFixed(3)} bar / 100m (${(dp * 4.421).toFixed(2)} psi / 100ft)`;
         const dpTextW = this.ctx.measureText(dpText).width;
         let textX = padX + actualDpW + 10;
         if (textX + dpTextW > this.width - padX) {

@@ -13,7 +13,8 @@ export class BoilerChart {
         const rect = this.canvas.parentElement.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         this.width = rect.width;
-        this.height = Math.max(300, rect.height || 340);
+        const isMobile = this.width < 500;
+        this.height = isMobile ? 330 : Math.max(300, rect.height || 340);
 
         this.canvas.width = this.width * dpr;
         this.canvas.height = this.height * dpr;
@@ -36,42 +37,63 @@ export class BoilerChart {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         const isMobile = this.width < 500;
-        const padX = isMobile ? 16 : 28;
-        const padTop = 20;
+        const padX = isMobile ? 14 : 28;
+        const padTop = 16;
         const availW = this.width - (padX * 2);
 
         const eff = data.efficiency || 83.5;
         const losses = [
-            { name: "Dry Flue Gas (L1)", val: data.L1 || 7.5, color: "#ef4444" },
-            { name: "H₂ in Fuel (L2)", val: data.L2 || 3.8, color: "#f97316" },
-            { name: "Moisture in Fuel & Air (L3+L4)", val: (data.L3 || 2.0) + (data.L4 || 0.3), color: "#eab308" },
-            { name: "Radiation & Convection (L6)", val: data.L6 || 1.8, color: "#a855f7" },
-            { name: "Ash & Incomplete Combustion (L5+L7)", val: (data.L5 || 0.2) + (data.L7 || 0.9), color: "#64748b" }
+            { name: "Dry Flue Gas (L1)", shortName: "Dry Flue Gas (L1)", val: data.L1 || 7.5, color: "#ef4444" },
+            { name: "H₂ in Fuel (L2)", shortName: "H₂ in Fuel (L2)", val: data.L2 || 3.8, color: "#f97316" },
+            { name: "Moisture in Fuel & Air (L3+L4)", shortName: "Moisture in Fuel & Air", val: (data.L3 || 2.0) + (data.L4 || 0.3), color: "#eab308" },
+            { name: "Radiation & Convection (L6)", shortName: "Radiation & Convection", val: data.L6 || 1.8, color: "#a855f7" },
+            { name: "Ash & Incomplete Combustion (L5+L7)", shortName: "Ash & Incomplete Unburnt", val: (data.L5 || 0.2) + (data.L7 || 0.9), color: "#64748b" }
         ];
 
         // 1. Title: Total Energy Balance Bar (100% Heat Input)
-        this.ctx.font = '600 13px Inter, system-ui, sans-serif';
-        this.ctx.fillStyle = textColor;
-        this.ctx.fillText("Overall Heat Balance (100% Fuel Input)", padX, padTop + 14);
+        const titleText = isMobile ? "Overall Heat Balance (100%)" : "Overall Heat Balance (100% Fuel Input)";
+        const effText = isMobile ? `Useful: ${eff.toFixed(1)}%` : `Useful Energy (Efficiency): ${eff.toFixed(1)}%`;
 
-        // Subtitle efficiency tag
-        const effText = `Useful Energy (Efficiency): ${eff.toFixed(1)}%`;
+        this.ctx.font = '600 13px Inter, system-ui, sans-serif';
+        const titleW = this.ctx.measureText(titleText).width;
         this.ctx.font = '700 13px Inter, system-ui, sans-serif';
-        this.ctx.fillStyle = '#10b981';
         const effW = this.ctx.measureText(effText).width;
-        this.ctx.fillText(effText, this.width - padX - effW, padTop + 14);
+
+        let barY = padTop + 26;
+
+        if (titleW + effW + 16 > availW) {
+            // Stack titles vertically on narrow mobile viewports to prevent collision
+            this.ctx.font = '600 12px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = textColor;
+            this.ctx.fillText(titleText, padX, padTop + 12);
+
+            this.ctx.font = '700 12px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = '#10b981';
+            this.ctx.fillText(effText, padX, padTop + 28);
+
+            barY = padTop + 38;
+        } else {
+            // Side-by-side header
+            this.ctx.font = '600 13px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = textColor;
+            this.ctx.fillText(titleText, padX, padTop + 14);
+
+            this.ctx.font = '700 13px Inter, system-ui, sans-serif';
+            this.ctx.fillStyle = '#10b981';
+            this.ctx.fillText(effText, this.width - padX - effW, padTop + 14);
+
+            barY = padTop + 26;
+        }
 
         // 2. Draw Stacked 100% Energy Bar
-        const barY = padTop + 26;
-        const barH = 28;
+        const barH = isMobile ? 22 : 28;
         let curX = padX;
 
         // Useful energy segment (Efficiency)
         const usefulW = (eff / 100) * availW;
         this.ctx.fillStyle = '#10b981';
-        this.drawRoundedRect(this.ctx, curX, barY, usefulW, barH, { tl: 8, bl: 8, tr: 0, br: 0 });
+        this.drawRoundedRect(this.ctx, curX, barY, usefulW, barH, { tl: 6, bl: 6, tr: 0, br: 0 });
         this.ctx.fill();
-
         curX += usefulW;
 
         // Losses segments
@@ -81,55 +103,89 @@ export class BoilerChart {
             const isLast = idx === losses.length - 1;
             this.drawRoundedRect(this.ctx, curX, barY, segW, barH, {
                 tl: 0, bl: 0,
-                tr: isLast ? 8 : 0,
-                br: isLast ? 8 : 0
+                tr: isLast ? 6 : 0,
+                br: isLast ? 6 : 0
             });
             this.ctx.fill();
             curX += segW;
         });
 
         // 3. Section Title: Thermal Losses Breakdown
-        const breakdownY = barY + barH + 34;
+        const breakdownY = barY + barH + (isMobile ? 22 : 30);
         this.ctx.font = '600 13px Inter, system-ui, sans-serif';
         this.ctx.fillStyle = textColor;
-        this.ctx.fillText("Detailed Thermal Losses Breakdown (% Heat Loss)", padX, breakdownY);
+        const breakdownTitle = isMobile ? "Thermal Losses Breakdown (% Loss)" : "Detailed Thermal Losses Breakdown (% Heat Loss)";
+        this.ctx.fillText(breakdownTitle, padX, breakdownY);
 
         // 4. Horizontal Breakdown Bars
-        const startBarY = breakdownY + 16;
-        const rowH = isMobile ? 32 : 36;
-        const maxLossVal = Math.max(12, ...losses.map(l => l.val));
+        const startBarY = breakdownY + 14;
+        const maxLossVal = Math.max(10, ...losses.map(l => l.val));
 
-        losses.forEach((l, idx) => {
-            const y = startBarY + (idx * rowH);
+        if (isMobile) {
+            // High-clarity 2-tier mobile rows: Label & % on top, full-width progress bar below
+            const rowH = 34;
+            losses.forEach((l, idx) => {
+                const y = startBarY + (idx * rowH);
 
-            // Label
-            this.ctx.font = '500 12px Inter, system-ui, sans-serif';
-            this.ctx.fillStyle = textColor;
-            const labelText = isMobile ? l.name.split('(')[0].trim() : l.name;
-            this.ctx.fillText(labelText, padX, y + 14);
+                // Label
+                this.ctx.font = '500 11px Inter, system-ui, sans-serif';
+                this.ctx.fillStyle = textColor;
+                this.ctx.fillText(l.shortName, padX, y + 10);
 
-            // Bar background & progress
-            const labelOffset = isMobile ? 130 : 210;
-            const barStartX = padX + labelOffset;
-            const maxBarW = this.width - padX - barStartX - (isMobile ? 55 : 70);
-            const valW = Math.max(4, (l.val / maxLossVal) * maxBarW);
+                // Percentage value right-aligned
+                this.ctx.font = '700 12px Inter, system-ui, sans-serif';
+                this.ctx.fillStyle = l.color;
+                const valStr = `${l.val.toFixed(2)}%`;
+                const valW = this.ctx.measureText(valStr).width;
+                this.ctx.fillText(valStr, this.width - padX - valW, y + 10);
 
-            // Background track
-            this.ctx.fillStyle = gridColor;
-            this.drawRoundedRect(this.ctx, barStartX, y + 4, maxBarW, 14, 6);
-            this.ctx.fill();
+                // Full-width progress track
+                const pBarY = y + 16;
+                const pBarH = 6;
+                const fillW = Math.max(4, (l.val / maxLossVal) * availW);
 
-            // Progress bar
-            this.ctx.fillStyle = l.color;
-            this.drawRoundedRect(this.ctx, barStartX, y + 4, valW, 14, 6);
-            this.ctx.fill();
+                this.ctx.fillStyle = gridColor;
+                this.drawRoundedRect(this.ctx, padX, pBarY, availW, pBarH, 3);
+                this.ctx.fill();
 
-            // Value text
-            this.ctx.font = '700 12px Inter, system-ui, sans-serif';
-            this.ctx.fillStyle = l.color;
-            const valStr = `${l.val.toFixed(2)}%`;
-            this.ctx.fillText(valStr, barStartX + maxBarW + 10, y + 15);
-        });
+                this.ctx.fillStyle = l.color;
+                this.drawRoundedRect(this.ctx, padX, pBarY, fillW, pBarH, 3);
+                this.ctx.fill();
+            });
+        } else {
+            // Desktop 1-row layout: [ Label ] [ Bar ] [ Value ]
+            const rowH = 36;
+            const labelColW = 220;
+            const valColW = 65;
+            const barStartX = padX + labelColW;
+            const maxBarW = this.width - padX - barStartX - valColW;
+
+            losses.forEach((l, idx) => {
+                const y = startBarY + (idx * rowH);
+
+                // Label
+                this.ctx.font = '500 12px Inter, system-ui, sans-serif';
+                this.ctx.fillStyle = textColor;
+                this.ctx.fillText(l.name, padX, y + 14);
+
+                // Background track
+                const fillW = Math.max(4, (l.val / maxLossVal) * maxBarW);
+                this.ctx.fillStyle = gridColor;
+                this.drawRoundedRect(this.ctx, barStartX, y + 4, maxBarW, 14, 6);
+                this.ctx.fill();
+
+                // Progress bar fill
+                this.ctx.fillStyle = l.color;
+                this.drawRoundedRect(this.ctx, barStartX, y + 4, fillW, 14, 6);
+                this.ctx.fill();
+
+                // Value text
+                this.ctx.font = '700 12px Inter, system-ui, sans-serif';
+                this.ctx.fillStyle = l.color;
+                const valStr = `${l.val.toFixed(2)}%`;
+                this.ctx.fillText(valStr, barStartX + maxBarW + 10, y + 15);
+            });
+        }
     }
 
     drawRoundedRect(ctx, x, y, width, height, radii) {
