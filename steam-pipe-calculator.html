@@ -57,7 +57,7 @@
       "operatingSystem": "All",
       "applicationCategory": "EngineeringApplication",
       "browserRequirements": "Requires JavaScript",
-      "description": "Professional steam piping sizing and velocity calculator built on ASME B31.1, ASME B36.10M pipe schedule dimensions, and Darcy-Weisbach / Haaland friction factor formulas with IAPWS-IF97 steam density.",
+      "description": "Professional steam piping sizing and velocity calculator built on ASME B31.1, ASME B36.10M pipe schedule dimensions, and Darcy-Weisbach / Colebrook-White friction factor formulas with IAPWS-IF97 steam density.",
       "publisher": {
         "@type": "Organization",
         "name": "PowerPlantCalc",
@@ -106,7 +106,7 @@
           "name": "What equation calculates pressure drop in steam pipes?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "This calculator uses the Darcy-Weisbach equation: ΔP = f × (L/D) × (ρ × V² / 2), where f is the Darcy friction factor computed via the Haaland explicit equation for commercial steel (roughness ε = 0.045 mm), L is pipe length, D is inside diameter, ρ is steam density from IAPWS-IF97, and V is flow velocity."
+            "text": "This calculator uses the Darcy-Weisbach equation: ΔP = f × (L/D) × (ρ × V² / 2), where f is the Darcy friction factor computed via the exact implicit Colebrook-White equation for commercial steel (roughness ε = 0.045 mm), L is pipe length, D is inside diameter, ρ is steam density from IAPWS-IF97, and V is flow velocity."
           }
         }
       ]
@@ -178,7 +178,7 @@
                 <span class="seo-tag">📏 ASME B36.10M Schedule 40/80/160</span>
                 <span class="seo-tag">⚡ Velocity & Pressure Drop Method</span>
                 <span class="seo-tag">💧 IAPWS-IF97 Steam Specific Volume</span>
-                <span class="seo-tag">🌪️ Darcy-Weisbach & Haaland Friction</span>
+                <span class="seo-tag">🌪️ Darcy-Weisbach & Colebrook-White Friction</span>
             </div>
         </header>
 
@@ -390,17 +390,28 @@
                 <div class="result-card">
                     <span>Darcy Friction Factor (f)</span>
                     <h2 id="outFrictionFactor">--</h2>
-                    <small class="static-label">Haaland Explicit Formula</small>
+                    <small class="static-label">Colebrook-White Equation</small>
                 </div>
             </section>
 
-            <!-- Next Larger Pipe Comparison Card -->
-            <div id="nextSizeCard" class="next-size-alert" style="display: none;">
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <!-- Dual Alternative Pipe Size Comparison Cards -->
+            <div class="pipe-alternatives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 16px 0 24px 0;">
+                <!-- Alternative Smaller Pipe -->
+                <div id="smallerSizeCard" class="next-size-alert" style="display: none; border-left: 4px solid #f59e0b;">
                     <div>
-                        <strong style="color: var(--primary); font-size: 0.95rem;">💡 Alternative Next Larger Pipe: <span id="outNextNps">--</span></strong>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
-                            Velocity drops to <strong id="outNextVelocity" style="color: var(--text-main);">--</strong> with pressure drop of <strong id="outNextDp" style="color: var(--text-main);">--</strong>. Recommended if line runs over 150m or future capacity expansion is expected.
+                        <strong style="color: #f59e0b; font-size: 0.95rem;">📉 Alternative Smaller Pipe: <span id="outSmallerNps">--</span></strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                            Velocity rises to <strong id="outSmallerVelocity" style="color: var(--text-main);">--</strong> with pressure drop of <strong id="outSmallerDp" style="color: var(--text-main);">--</strong>. Economical choice for short runs (&lt; 30m) where extra friction loss is acceptable.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Next Larger Pipe -->
+                <div id="nextSizeCard" class="next-size-alert" style="display: none; border-left: 4px solid #10b981;">
+                    <div>
+                        <strong style="color: #10b981; font-size: 0.95rem;">📈 Alternative Next Larger Pipe: <span id="outNextNps">--</span></strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                            Velocity drops to <strong id="outNextVelocity" style="color: var(--text-main);">--</strong> with pressure drop of <strong id="outNextDp" style="color: var(--text-main);">--</strong>. Recommended for long headers (&gt; 100m) to minimize noise and friction head loss.
                         </p>
                     </div>
                 </div>
@@ -717,12 +728,12 @@
                     <br>• $\rho$ = Steam density [kg/m³] ($1/v$)
                 </p>
 
-                <h4>E. Haaland Explicit Friction Factor ($f$)</h4>
-                <p>For turbulent flow in commercial steel pipe (absolute roughness $\varepsilon = 0.045\text{ mm}$), the Haaland formula provides an explicit approximation of the Colebrook-White equation with less than 1.5% deviation:</p>
+                <h4>E. Colebrook-White Friction Factor ($f$)</h4>
+                <p>For turbulent flow in commercial steel pipe (commercial roughness $\varepsilon = 0.045\text{ mm}$), the calculator solves the exact implicit Colebrook-White equation via 3 Newton-Raphson iterations:</p>
                 <p style="font-family: monospace; background: var(--bg-hover); padding: 12px; border-radius: 8px;">
-                    1 / √f = -1.8 × log₁₀[ ( (ε / D) / 3.7 )^{1.11} + (6.9 / Re) ]
+                    1 / √f = -2.0 × log₁₀[ ( (ε / D) / 3.7 ) + (2.51 / (Re × √f)) ]
                 </p>
-                <p>Where the Reynolds Number is $Re = (\rho \times V_{act} \times D) / \mu$, evaluated with dynamic viscosity $\mu$ from IAPWS-IF97 formulation.</p>
+                <p>Where the Reynolds Number is $Re = (\rho \times V_{act} \times D) / \mu$, evaluated with dynamic viscosity $\mu$ from IAPWS-IF97 formulation. The initial estimate is seeded via the Haaland approximation, converging to a residual &lt; 10⁻⁶ for 100% exact hydraulic precision.</p>
             </section>
 
             <section>

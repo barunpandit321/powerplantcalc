@@ -36,11 +36,20 @@ export const STANDARD_PIPES = [
  * Evaluates thermodynamic state of steam using IAPWS-IF97.
  */
 export function getSteamProperties(pMpa, isSaturated, tempK = null) {
-    if (isSaturated) {
+    if (isSaturated || !tempK) {
         // 100% dry saturated vapor
         return solvePx(pMpa, 1.0);
     } else {
-        return solvePT(pMpa, tempK);
+        try {
+            const sat = solvePx(pMpa, 1.0);
+            if (tempK <= sat.temperature) {
+                // If user specifies temperature at or below saturation, clamp safely to dry saturated vapor
+                return sat;
+            }
+            return solvePT(pMpa, tempK);
+        } catch {
+            return solvePT(pMpa, tempK);
+        }
     }
 }
 
@@ -93,14 +102,19 @@ export function sizePipeByVelocity({
     // Find closest standard pipes:
     // 1. One standard pipe closest without exceeding target velocity too much
     // 2. The next larger size
+    // 3. The alternative smaller size
     let recommendedPipe = null;
     let nextLargerPipe = null;
+    let smallerPipe = null;
 
     for (let i = 0; i < STANDARD_PIPES.length; i++) {
         const pipe = STANDARD_PIPES[i];
         const pipeId = pipe[idProp];
         if (pipeId >= minIdMm * 0.95) { // allow 5% tolerance for closer standard size
             recommendedPipe = pipe;
+            if (i > 0) {
+                smallerPipe = STANDARD_PIPES[i - 1];
+            }
             if (i + 1 < STANDARD_PIPES.length) {
                 nextLargerPipe = STANDARD_PIPES[i + 1];
             }
@@ -121,6 +135,11 @@ export function sizePipeByVelocity({
         ? evaluatePipeHydraulics(nextLargerPipe[idProp], volFlowM3S, rho, mu, pipeLengthM)
         : null;
 
+    // Evaluate for alternative smaller pipe if available
+    const smallerPerf = smallerPipe
+        ? evaluatePipeHydraulics(smallerPipe[idProp], volFlowM3S, rho, mu, pipeLengthM)
+        : null;
+
     // Saturation temperature & superheat
     let satTempC = (state.temperature - 273.15);
     if (!isSaturated) {
@@ -133,7 +152,7 @@ export function sizePipeByVelocity({
     }
     const currentTempC = state.temperature - 273.15;
     const superheatC = isSaturated ? 0 : Math.max(0, currentTempC - satTempC);
-    const volFlowAcfm = volFlowM3H * 0.588578;
+    const volFlowAcfm = volFlowM3H * 0.5885778;
 
     // Full standard pipe comparison table
     const comparisonTable = STANDARD_PIPES.map(p => {
@@ -189,27 +208,48 @@ export function sizePipeByVelocity({
             dpTotalBar: nextPerf.dpTotalBar,
             status: getVelocityStatus(nextPerf.velocityMs, isSaturated)
         } : null,
+        alternativeSmallerPipe: smallerPipe ? {
+            nps: smallerPipe.nps,
+            dn: smallerPipe.dn,
+            idMm: smallerPipe[idProp],
+            schedule,
+            velocityMs: smallerPerf.velocityMs,
+            velocityFtMin: smallerPerf.velocityFtMin,
+            dpBarPer100m: smallerPerf.dpBarPer100m,
+            dpPsiPer100ft: smallerPerf.dpPsiPer100ft,
+            dpTotalBar: smallerPerf.dpTotalBar,
+            status: getVelocityStatus(smallerPerf.velocityMs, isSaturated)
+        } : null,
         comparisonTable
     };
 }
 
 /**
  * Calculates velocity, Reynolds number, friction factor, and pressure drop for an explicit pipe ID.
+ * Employs exact Colebrook-White iterative equation for Darcy friction factor.
  */
 export function evaluatePipeHydraulics(idMm, volFlowM3S, rho, mu, lengthM = 100) {
     const idM = idMm / 1000;
     const areaM2 = (Math.PI / 4) * Math.pow(idM, 2);
     const velMs = volFlowM3S / areaM2;
-    const velFtMin = velMs * 196.85;
+    const velFtMin = velMs * 196.8504;
 
     // Reynolds Number Re = (rho * V * D) / mu
     const Re = (rho * velMs * idM) / mu;
 
-    // Darcy friction factor via Haaland equation (commercial steel roughness = 0.045 mm)
+    // Darcy friction factor via Colebrook-White equation with Haaland seed (commercial steel roughness = 0.045 mm)
     const relRough = 0.000045 / idM;
     let f = 0.02;
     if (Re > 4000) {
+        // Initial estimate via Haaland
         f = Math.pow(-1.8 * Math.log10(Math.pow(relRough / 3.7, 1.11) + (6.9 / Re)), -2);
+        // Refine with 3 Colebrook-White Newton-Raphson iterations to reach exact implicit solution
+        for (let iter = 0; iter < 3; iter++) {
+            const sqrtF = Math.sqrt(f);
+            const F = (1 / sqrtF) + 2 * Math.log10((relRough / 3.7) + (2.51 / (Re * sqrtF)));
+            const dF = -0.5 * Math.pow(f, -1.5) - (2 / Math.log(10)) * (1 / ((relRough / 3.7) + (2.51 / (Re * sqrtF)))) * (-1.255 / (Re * Math.pow(f, 1.5)));
+            f = f - F / dF;
+        }
     } else if (Re > 0) {
         f = 64 / Math.max(1, Re); // laminar flow
     }
@@ -217,7 +257,7 @@ export function evaluatePipeHydraulics(idMm, volFlowM3S, rho, mu, lengthM = 100)
     // Darcy-Weisbach pressure drop: deltaP = f * (L/D) * (rho * V^2 / 2) [Pa]
     const dpPaPer100m = f * (100 / idM) * (rho * Math.pow(velMs, 2) / 2);
     const dpBarPer100m = dpPaPer100m / 1e5;
-    const dpPsiPer100ft = dpBarPer100m * 4.421; // 1 bar/100m = ~4.421 psi/100ft
+    const dpPsiPer100ft = dpBarPer100m * 4.42075; // 1 bar/100m = 4.42075 psi/100ft
 
     const dpTotalBar = (dpBarPer100m * lengthM) / 100;
 

@@ -121,7 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const outFrictionFactor = document.getElementById("outFrictionFactor");
     const outMinId = document.getElementById("outMinId");
 
-    // Next Larger Pipe Output Elements
+    // Next Larger & Smaller Pipe Output Elements
+    const smallerSizeCard = document.getElementById("smallerSizeCard");
+    const outSmallerNps = document.getElementById("outSmallerNps");
+    const outSmallerVelocity = document.getElementById("outSmallerVelocity");
+    const outSmallerDp = document.getElementById("outSmallerDp");
+
     const nextSizeCard = document.getElementById("nextSizeCard");
     const outNextNps = document.getElementById("outNextNps");
     const outNextVelocity = document.getElementById("outNextVelocity");
@@ -302,10 +307,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (outVolFlow) outVolFlow.textContent = `${res.volFlowM3H.toLocaleString()} m³/h (${res.volFlowAcfm.toLocaleString()} ACFM)`;
             if (outReynolds) outReynolds.textContent = `${rec.reynoldsNumber.toLocaleString()} (Turbulent)`;
-            if (outFrictionFactor) outFrictionFactor.textContent = `${rec.frictionFactor.toFixed(4)} (Haaland)`;
+            if (outFrictionFactor) outFrictionFactor.textContent = `${rec.frictionFactor.toFixed(4)} (Colebrook)`;
             if (outMinId) outMinId.textContent = `${res.minIdMm.toFixed(1)} mm (${res.minIdInch.toFixed(2)}")`;
 
-            // Next Larger Pipe
+            // Alternative Smaller Pipe
+            if (res.alternativeSmallerPipe && smallerSizeCard) {
+                smallerSizeCard.style.display = "block";
+                const smaller = res.alternativeSmallerPipe;
+                if (outSmallerNps) outSmallerNps.textContent = `${smaller.nps} (DN${smaller.dn}) — ID: ${smaller.idMm.toFixed(1)} mm`;
+                if (outSmallerVelocity) outSmallerVelocity.textContent = `${smaller.velocityMs.toFixed(2)} m/s (${smaller.velocityFtMin.toLocaleString()} ft/min)`;
+                if (outSmallerDp) outSmallerDp.textContent = `${smaller.dpBarPer100m.toFixed(3)} bar/100m (${smaller.dpPsiPer100ft.toFixed(2)} psi/100ft)`;
+            } else if (smallerSizeCard) {
+                smallerSizeCard.style.display = "none";
+            }
+
+            // Alternative Next Larger Pipe
             if (res.nextLargerPipe && nextSizeCard) {
                 nextSizeCard.style.display = "block";
                 const next = res.nextLargerPipe;
