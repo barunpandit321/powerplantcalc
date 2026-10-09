@@ -14,7 +14,8 @@ export default defineConfig({
                 contact: resolve(__dirname, "contact.html"),
                 terms: resolve(__dirname, "terms-and-conditions.html"),
                 about: resolve(__dirname, "about.html"),
-                cooling: resolve(__dirname, "cooling-tower-calculator.html")
+                cooling: resolve(__dirname, "cooling-tower-calculator.html"),
+                boiler: resolve(__dirname, "boiler-efficiency-calculator.html")
             }
         }
     }

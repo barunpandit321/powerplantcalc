@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YFS1MY74V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1YFS1MY74V');
+    </script>
+
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Boiler Efficiency Calculator (ASME PTC 4 & Direct Method) — PowerPlantCalc</title>
+    <meta name="description" content="Free online Boiler Efficiency Calculator based on ASME PTC 4, BS 845 & IS 8753 standards. Calculate boiler thermal efficiency using Direct (Input-Output) and Indirect (Heat Loss) methods with fuel presets, flue gas analysis, and IAPWS-IF97 steam tables.">
+    <meta name="keywords" content="boiler efficiency calculator, ASME PTC 4 calculator, indirect method boiler efficiency, heat loss method, dry flue gas loss, evaporation ratio, equivalent evaporation, boiler thermal efficiency">
+    <meta name="author" content="PowerPlantCalc">
+
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="p58uC_qEWbH1fKPQ_C6j6-V4pfZL39CfyICOZpLp498" />
+
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/boiler-efficiency-calculator">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Boiler Efficiency Calculator (ASME PTC 4 & Direct Method)">
+    <meta property="og:description" content="Calculate boiler thermal efficiency using ASME PTC 4 Indirect (Heat Loss) and Direct methods. Features 1-click fuel ultimate analysis presets and energy balance charts.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/boiler-efficiency-calculator">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Boiler Efficiency Calculator — PowerPlantCalc">
+    <meta name="twitter:description" content="High-precision ASME PTC 4 boiler efficiency calculator. Evaluates dry flue gas loss, hydrogen loss, excess air, evaporation ratio, and steam output.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Structured Data (JSON-LD): WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Boiler Efficiency Calculator (ASME PTC 4)",
+      "url": "https://powerplantcalc.com/boiler-efficiency-calculator",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Professional engineering tool to evaluate boiler thermal efficiency using Direct (Input-Output) and Indirect (Heat Loss) methods conforming to ASME PTC 4, BS 845, and IS 8753 standards.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "PowerPlantCalc",
+        "url": "https://powerplantcalc.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Structured Data (JSON-LD): FAQPage for Google & Bing Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between Direct and Indirect boiler efficiency methods?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Direct Method (Input-Output) measures total energy transferred to steam divided by total energy in fuel consumed. The Indirect Method (ASME PTC 4 Heat Loss) calculates efficiency by subtracting all individual thermal losses (dry flue gas, moisture, hydrogen combustion, radiation, and unburnt fuel) from 100%. The indirect method is widely preferred in thermal power plants because it reveals exactly where energy is being lost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good boiler efficiency for industrial and utility boilers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typical modern boiler efficiencies are: Natural gas-fired boilers: 82% to 85% (higher heating value) or 90%+ condensing; Fuel oil boilers: 84% to 88%; Pulverized coal utility boilers: 85% to 89%; Biomass/wood/bagasse boilers: 68% to 76% (due to high fuel moisture)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Dry Flue Gas Loss (L1) calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dry Flue Gas Loss is calculated as L1 = [m_dfg × Cp × (Tg - Ta) / GCV] × 100, where m_dfg is the mass of dry flue gas per kg of fuel, Cp is the specific heat of flue gas (approx 0.24 kcal/kg·°C or 1.005 kJ/kg·K), Tg is the flue gas exit temperature, Ta is the ambient air temperature, and GCV is the gross calorific value of the fuel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Evaporation Ratio in boilers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evaporation Ratio (also known as the Steam-to-Fuel ratio) is the kilograms of steam generated per kilogram of fuel fired. Typical benchmark values are 4 to 6 for coal-fired boilers, 10 to 13 for natural gas, and 12 to 14 for fuel oil."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Optimized Font Preconnect & Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Properties</a>
+                <a href="/cooling-tower-calculator" class="nav-link">🌊 Cooling Tower</a>
+                <a href="/boiler-efficiency-calculator" class="nav-link active">🏭 Boiler Efficiency</a>
+                <a href="/about" class="nav-link">ℹ️ About</a>
+                <a href="/contact" class="nav-link">✉️ Contact</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">ASME PTC 4 & IS 8753 Standard</div>
+            </div>
+            <h1>Boiler Efficiency Calculator (Direct & Indirect Method)</h1>
+            <p>Thermal boiler efficiency calculator evaluating all 7 thermal heat losses, fuel ultimate analysis presets, evaporation ratio, and IAPWS-IF97 steam enthalpy.</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">🏭 ASME PTC 4 Heat Loss</span>
+                <span class="seo-tag">⚡ Direct Input-Output Method</span>
+                <span class="seo-tag">💨 Flue Gas Loss (L1)</span>
+                <span class="seo-tag">💧 Fuel & Hydrogen Moisture Loss</span>
+                <span class="seo-tag">⚖️ Evaporation Ratio (kg/kg)</span>
+                <span class="seo-tag">📊 Sankey Heat Balance Chart</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Method Switcher Tabs -->
+            <div class="chart-tabs" style="margin-bottom: 16px;">
+                <button id="tabIndirect" class="chart-tab-btn active" type="button">
+                    🔥 Indirect Method (ASME PTC 4 Heat Loss — Recommended)
+                </button>
+                <button id="tabDirect" class="chart-tab-btn" type="button">
+                    ⚡ Direct Method (Input-Output & IAPWS-IF97)
+                </button>
+            </div>
+
+            <!-- Interactive Inputs Card -->
+            <section class="card input-card" aria-label="Boiler Calculation Controls">
+
+                <!-- 1-Click Common Fuel Presets Toolbar -->
+                <div class="presets-toolbar" aria-label="Common Fuel Ultimate Analysis Presets">
+                    <span class="presets-label">⚡ 1-Click Fuel Presets:</span>
+                    <div class="presets-buttons-wrap">
+                        <button type="button" class="preset-btn" data-boiler-preset="us-bituminous" title="Standard US Bituminous Coal">🇺🇸 US Bituminous Coal</button>
+                        <button type="button" class="preset-btn" data-boiler-preset="in-coal" title="Indian High-Ash Sub-Bituminous Coal">🇮🇳 Indian Coal (High Ash)</button>
+                        <button type="button" class="preset-btn" data-boiler-preset="natural-gas" title="Industrial Natural Gas (Methane Rich)">🔥 Natural Gas</button>
+                        <button type="button" class="preset-btn" data-boiler-preset="fuel-oil" title="Heavy Fuel Oil / Furnace Oil">🛢️ Fuel Oil (FO)</button>
+                        <button type="button" class="preset-btn" data-boiler-preset="biomass-wood" title="Industrial Wood Pellets & Biomass">🪵 Biomass Wood</button>
+                        <button type="button" class="preset-btn" data-boiler-preset="bagasse" title="Sugar Mill Bagasse">🌾 Bagasse</button>
+                    </div>
+                </div>
+
+                <!-- CONTROLS: INDIRECT METHOD -->
+                <div id="indirectControls">
+                    <div class="input-group full-width" style="margin-bottom: 16px;">
+                        <label for="fuelPreset">Select Fuel Type / Custom Analysis</label>
+                        <select id="fuelPreset">
+                            <option value="us-bituminous">🇺🇸 US Bituminous Coal</option>
+                            <option value="in-coal">🇮🇳 Indian Sub-Bituminous Coal (High Ash)</option>
+                            <option value="natural-gas">🔥 Natural Gas</option>
+                            <option value="fuel-oil">🛢️ Heavy Fuel Oil / Furnace Oil (FO)</option>
+                            <option value="biomass-wood">🪵 Biomass / Wood Pellets</option>
+                            <option value="bagasse">🌾 Sugar Mill Bagasse</option>
+                        </select>
+                    </div>
+
+                    <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main);">1. Fuel Ultimate Analysis & Gross Calorific Value (GCV)</h3>
+                    
+                    <div class="grid">
+                        <div class="input-group">
+                            <label for="inputC">Carbon (C % wt)</label>
+                            <input id="inputC" type="number" step="0.01" value="68.0">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputH">Hydrogen (H₂ % wt)</label>
+                            <input id="inputH" type="number" step="0.01" value="4.8">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputO">Oxygen (O₂ % wt)</label>
+                            <input id="inputO" type="number" step="0.01" value="6.5">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputN">Nitrogen (N₂ % wt)</label>
+                            <input id="inputN" type="number" step="0.01" value="1.3">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputS">Sulfur (S % wt)</label>
+                            <input id="inputS" type="number" step="0.01" value="1.2">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputM">Moisture in Fuel (M % wt)</label>
+                            <input id="inputM" type="number" step="0.01" value="6.2">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputAsh">Ash Content (% wt)</label>
+                            <input id="inputAsh" type="number" step="0.01" value="12.0">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputGcv">Gross Calorific Value (GCV)</label>
+                            <div class="input-with-unit">
+                                <input id="inputGcv" type="number" step="any" value="6500">
+                                <select id="unitGcv" aria-label="GCV Unit"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 0.95rem; margin-top: 18px; margin-bottom: 12px; color: var(--text-main);">2. Combustion Operating Conditions & Flue Gas Analysis</h3>
+
+                    <div class="grid">
+                        <div class="input-group">
+                            <label for="inputTg">Flue Gas Exit Temp (T<sub>g</sub>)</label>
+                            <div class="input-with-unit">
+                                <input id="inputTg" type="number" step="any" value="150">
+                                <select id="unitTemp" aria-label="Temperature Unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputTa">Ambient Combustion Air Temp (T<sub>a</sub>)</label>
+                            <input id="inputTa" type="number" step="any" value="30">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputO2">Flue Gas Oxygen (O₂ % vol)</label>
+                            <input id="inputO2" type="number" step="0.1" value="4.5">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputCo">Flue Gas CO (ppm)</label>
+                            <input id="inputCo" type="number" step="1" value="50">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputL6">Surface Radiation & Convection Loss (L6 %)</label>
+                            <input id="inputL6" type="number" step="0.1" value="1.5">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputL7">Unburnt in Ash Loss (L7 %)</label>
+                            <input id="inputL7" type="number" step="0.1" value="1.0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTROLS: DIRECT METHOD -->
+                <div id="directControls" style="display: none;">
+                    <div class="grid">
+                        <div class="input-group">
+                            <label for="inputSteamFlow">Steam Generation Flow Rate</label>
+                            <div class="input-with-unit">
+                                <input id="inputSteamFlow" type="number" step="any" value="25">
+                                <select id="unitSteamFlow" aria-label="Steam flow unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputFuelFlow">Fuel Consumption Rate</label>
+                            <div class="input-with-unit">
+                                <input id="inputFuelFlow" type="number" step="any" value="3.2">
+                                <select id="unitFuelFlow" aria-label="Fuel flow unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputSteamP">Steam Operating Pressure</label>
+                            <div class="input-with-unit">
+                                <input id="inputSteamP" type="number" step="any" value="40">
+                                <select id="unitSteamP" aria-label="Steam pressure unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputSteamT">Steam Operating Temperature</label>
+                            <div class="input-with-unit">
+                                <input id="inputSteamT" type="number" step="any" value="400">
+                                <select id="unitSteamT" aria-label="Steam temperature unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputFwT">Feedwater Temperature</label>
+                            <div class="input-with-unit">
+                                <input id="inputFwT" type="number" step="any" value="105">
+                                <select id="unitFwT" aria-label="Feedwater temperature unit"></select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="inputDirectGcv">Fuel Gross Calorific Value (GCV)</label>
+                            <div class="input-with-unit">
+                                <input id="inputDirectGcv" type="number" step="any" value="6500">
+                                <select id="unitDirectGcv" aria-label="Fuel GCV unit"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IN-FLOW FIELD TIP -->
+                <div class="field-helper-tip">
+                    <span class="helper-icon">💡</span>
+                    <div class="helper-text">
+                        <strong>Field Tip:</strong> Measuring boiler flue gas temperature or casing heat loss? 
+                        <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="helper-link">
+                            Fluke 62 MAX IR Temp Gun ↗
+                        </a>
+                        or 
+                        <a href="https://www.amazon.com/s?k=Flue+Gas+Combustion+Analyzer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="helper-link">
+                            Flue Gas Combustion Analyzer ↗
+                        </a>
+                    </div>
+                </div>
+
+                <div class="action-buttons-group">
+                    <button id="calculateBtn" class="primary-btn" type="button">
+                        <span>Calculate Boiler Efficiency</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <button id="shareLinkBtn" class="secondary-btn" type="button" title="Copy calculation deep-link to share with colleagues">
+                        <span>🔗 Share Calculation</span>
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- Results Header -->
+            <section class="results-header" aria-labelledby="results-heading">
+                <div class="results-title-box">
+                    <h2 id="results-heading">Boiler Thermal Performance Results</h2>
+                    <p class="subtitle">Evaluated in accordance with ASME PTC 4 and IAPWS-IF97 steam formulations</p>
+                </div>
+                <button id="printReportBtn" class="secondary-btn print-btn" type="button">
+                    <span>🖨️ Export PDF / Print</span>
+                </button>
+            </section>
+
+            <!-- RESULTS: INDIRECT METHOD (ASME PTC 4) -->
+            <section id="indirectResults" class="results" aria-label="Indirect Method Calculation Output">
+                <div class="result-card highlight">
+                    <span>Boiler Efficiency (η)</span>
+                    <h2 id="outEff">--</h2>
+                    <small class="static-label">ASME PTC 4 Heat Loss Method</small>
+                </div>
+
+                <div class="result-card key-metric">
+                    <span>Total Thermal Losses</span>
+                    <h2 id="outLosses">--</h2>
+                    <small class="static-label">Sum of L1 through L7</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Excess Air (EA)</span>
+                    <h2 id="outEA">--</h2>
+                    <small class="static-label">From Flue Gas O₂</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Theoretical Air</span>
+                    <h2 id="outTA">--</h2>
+                    <small class="static-label">Stoichiometric Air Requirement</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Actual Air Supplied</span>
+                    <h2 id="outAAS">--</h2>
+                    <small class="static-label">Total Combustion Air Inflow</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Dry Flue Gas Mass</span>
+                    <h2 id="outDFG">--</h2>
+                    <small class="static-label">Exhaust Gas kg/kg fuel</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L1: Dry Flue Gas Loss</span>
+                    <h2 id="outL1">--</h2>
+                    <small class="static-label">Stack Heat Loss</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L2: H₂ in Fuel Loss</span>
+                    <h2 id="outL2">--</h2>
+                    <small class="static-label">Hydrogen Combustion Vapor</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L3: Fuel Moisture Loss</span>
+                    <h2 id="outL3">--</h2>
+                    <small class="static-label">Latent & Sensible Loss</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L4: Air Moisture Loss</span>
+                    <h2 id="outL4">--</h2>
+                    <small class="static-label">Humidity Vapor in Air</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L5: Incomplete CO Loss</span>
+                    <h2 id="outL5">--</h2>
+                    <small class="static-label">Unburnt CO in Flue Gas</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L6: Radiation Loss</span>
+                    <h2 id="outL6">--</h2>
+                    <small class="static-label">Casing Convection & Radiation</small>
+                </div>
+
+                <div class="result-card">
+                    <span>L7: Unburnt in Ash</span>
+                    <h2 id="outL7">--</h2>
+                    <small class="static-label">Bottom & Fly Ash Carbon</small>
+                </div>
+            </section>
+
+            <!-- RESULTS: DIRECT METHOD -->
+            <section id="directResults" class="results" aria-label="Direct Method Calculation Output" style="display: none;">
+                <div class="result-card highlight">
+                    <span>Boiler Efficiency (η)</span>
+                    <h2 id="outDirectEff">--</h2>
+                    <small class="static-label">Direct Input-Output Ratio</small>
+                </div>
+
+                <div class="result-card key-metric">
+                    <span>Evaporation Ratio</span>
+                    <h2 id="outEvapRatio">--</h2>
+                    <small class="static-label">Steam generated per kg fuel</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Factor of Evaporation (FE)</span>
+                    <h2 id="outFE">--</h2>
+                    <small class="static-label">Relative to 100°C Steam</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Equivalent Evaporation</span>
+                    <h2 id="outEquivEvap">--</h2>
+                    <small class="static-label">From & at 100°C</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Steam Enthalpy (h_s)</span>
+                    <h2 id="outSteamH">--</h2>
+                    <small class="static-label">IAPWS-IF97 Superheated/Sat</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Feedwater Enthalpy (h_w)</span>
+                    <h2 id="outFwH">--</h2>
+                    <small class="static-label">IAPWS-IF97 Subcooled Liquid</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Net Heat Absorbed (Δh)</span>
+                    <h2 id="outNetHeat">--</h2>
+                    <small class="static-label">h_s - h_w</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Total Heat Output</span>
+                    <h2 id="outHeatOutput">--</h2>
+                    <small class="static-label">Energy transferred to steam</small>
+                </div>
+
+                <div class="result-card">
+                    <span>Total Heat Input</span>
+                    <h2 id="outHeatInput">--</h2>
+                    <small class="static-label">Chemical energy in fuel fired</small>
+                </div>
+            </section>
+
+            <!-- QUICK FIELD TOOLKIT STRIP (HIGH VISIBILITY) -->
+            <div class="quick-toolkit-strip" aria-label="Field Instruments and Engineering Standards">
+                <div class="toolkit-strip-title">
+                    <span class="toolkit-icon">🛠️</span>
+                    <span>Boiler Field Toolkit & Standards:</span>
+                </div>
+                <div class="toolkit-strip-items">
+                    <a href="https://www.amazon.com/s?k=Flue+Gas+Combustion+Analyzer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Combustion Flue Gas Analyzer for O2 and CO">
+                        <span>Flue Gas Combustion Analyzer</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Fluke 62 MAX Dual Laser IR Thermometer">
+                        <span>Fluke 62 MAX IR Temp Gun</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=ASME+Steam+Tables+Compact+Edition+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="ASME Steam Tables: Compact Reference Edition">
+                        <span>ASME Steam Tables Handbook</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                    <a href="https://www.amazon.com/s?k=Steam+Plant+Operation+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="toolkit-pill" title="Steam Plant Operation 10th Edition">
+                        <span>Steam Plant Operation (10th Ed)</span>
+                        <span class="pill-arrow">↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Energy Balance Chart Section -->
+            <section class="card chart-card" aria-label="Energy Balance Diagram">
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <h2>Sankey Energy Balance & Heat Loss Distribution</h2>
+                        <p class="subtitle">Visual distribution of 100% fuel thermal input into useful steam energy and individual thermal losses</p>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="boilerChart" aria-label="Boiler energy balance and heat loss chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Professional Field Gear & Reference Library (Amazon Associates) -->
+            <section class="books-reference-section" aria-label="Professional Boiler Testing Instruments and Reference Handbooks">
+                <div class="books-section-header">
+                    <h2>⚙️ Professional Plant Instruments & Reference Handbooks</h2>
+                    <p>Field-calibrated diagnostic tools and standard reference manuals used by boiler commissioning engineers, thermal performance auditors, and plant operators worldwide.</p>
+                </div>
+
+                <!-- Subsection 1: Field Measurement Instruments -->
+                <div class="gear-subsection">
+                    <div class="gear-subsection-title">
+                        <span>🛠️ Field Measurement & Diagnostic Instruments (Plant Field Gear)</span>
+                    </div>
+                    <div class="books-grid">
+                        <!-- Instrument 1 -->
+                        <a href="https://www.amazon.com/s?k=Flue+Gas+Combustion+Analyzer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">O₂ & CO Analysis</span>
+                                </div>
+                                <h3>Digital Flue Gas Combustion Analyzer</h3>
+                                <div class="book-author">Combustion Efficiency Specialist</div>
+                                <p>Handheld multi-gas analyzer measuring exhaust O₂, CO ppm, flue gas temperature, and draft pressure. Critical for tuning excess air ratios and minimizing dry flue gas loss (L1).</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Instrument 2 -->
+                        <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">Boiler Skin Temp</span>
+                                </div>
+                                <h3>Fluke 62 MAX Dual Laser Infrared Thermometer</h3>
+                                <div class="book-author">By Fluke Industrial</div>
+                                <p>Rugged IP54 water-resistant IR temperature scanner (-30°C to 500°C). Perfect for scanning boiler casing insulation for hotspots, flue gas duct skin temperatures, and superheater headers.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Instrument 3 -->
+                        <a href="https://www.amazon.com/s?k=Digital+Differential+Pressure+Manometer+Dual+Port&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="gear-badge">🛠️ Field Instrument</span>
+                                    <span class="book-tag">Boiler Draft & Fan ΔP</span>
+                                </div>
+                                <h3>Digital Dual-Port Differential Pressure Manometer</h3>
+                                <div class="book-author">Precision Electronic Manometer</div>
+                                <p>High-resolution differential pressure gauge for measuring furnace draft pressures, air preheater (APH) draft losses, and forced draft (FD) / induced draft (ID) fan differentials.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Check on Amazon</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Subsection 2: Engineering Handbooks -->
+                <div class="gear-subsection">
+                    <div class="gear-subsection-title">
+                        <span>📚 Recommended Engineering Handbooks (Kindle Soft Copy)</span>
+                    </div>
+                    <div class="books-grid">
+                        <!-- Book 1 -->
+                        <a href="https://www.amazon.com/s?k=Steam+Plant+Operation+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="kindle-badge">📖 Kindle Soft Copy</span>
+                                    <span class="book-tag">#1 Plant Reference</span>
+                                </div>
+                                <h3>Steam Plant Operation (10th Edition)</h3>
+                                <div class="book-author">By Everett B. Woodruff, Herbert B. Lammers, Thomas F. Lammers (McGraw-Hill)</div>
+                                <p>The definitive global standard for thermal power generation. Covers boiler efficiency testing, burner management, draft systems, water tube boilers, and ASME PTC operational guidelines.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Get on Amazon Kindle</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Book 2 -->
+                        <a href="https://www.amazon.com/s?k=ASME+Steam+Tables+Compact+Edition+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="kindle-badge">📖 Kindle Soft Copy</span>
+                                    <span class="book-tag">Official Standard</span>
+                                </div>
+                                <h3>ASME Steam Tables: Compact Reference Edition</h3>
+                                <div class="book-author">By American Society of Mechanical Engineers (ASME)</div>
+                                <p>Official IAPWS-IF97 industrial formulations, property charts, saturation tables, superheated steam matrices, and transport property equations for thermal process engineers.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Get on Amazon Kindle</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Book 3 -->
+                        <a href="https://www.amazon.com/s?k=The+Nalco+Water+Handbook+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="book-card">
+                            <div>
+                                <div class="book-badge-row">
+                                    <span class="kindle-badge">📖 Kindle Soft Copy</span>
+                                    <span class="book-tag">Feedwater & Blowdown</span>
+                                </div>
+                                <h3>The Nalco Water Handbook (4th Edition)</h3>
+                                <div class="book-author">By Nalco Water / Daniel J. Flynn (McGraw-Hill)</div>
+                                <p>Essential reference for boiler water chemistry, deaerator operation, blowdown heat recovery, scaling control, and chemical dosing to maintain peak thermal heat transfer efficiency.</p>
+                            </div>
+                            <div>
+                                <div class="book-action-btn">
+                                    <span>Get on Amazon Kindle</span>
+                                    <span>↗</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="affiliate-disclosure-box">
+                    ⚖️ <strong>Amazon Associate Disclosure:</strong> PowerPlantCalc is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no additional cost to you. Field instruments and digital Kindle editions are fulfilled directly worldwide via Amazon.
+                </div>
+            </section>
+
+            <!-- Technical Guide Article (SEO Optimized) -->
+            <article class="article-section">
+                <header class="article-header">
+                    <h2>Boiler Efficiency Engineering Guide: ASME PTC 4 Formulas & Heat Loss Analysis</h2>
+                    <p class="article-meta">Engineering methodology, thermodynamic formulas, and field test procedures for Direct and Indirect boiler efficiency testing.</p>
+                </header>
+
+                <div class="article-content">
+                    <h3>1. Understanding Boiler Efficiency Testing</h3>
+                    <p>
+                        Boiler efficiency is the percentage of total fuel energy converted into useful thermodynamic heat in the generated steam. In power utilities and process industries, an increase of just 1% in boiler efficiency saves tens of thousands of dollars in annual fuel expenditures and significantly reduces greenhouse gas emissions.
+                    </p>
+                    <p>
+                        There are two recognized international testing methodologies:
+                    </p>
+                    <ul>
+                        <li><strong>Direct Method (Input-Output Method):</strong> Simple and fast, comparing measured energy output in steam against total heat input from fuel fired.</li>
+                        <li><strong>Indirect Method (Heat Loss Method — ASME PTC 4 / IS 8753 / BS 845):</strong> Evaluates individual thermal loss mechanisms. Highly accurate and independent of mass flow measurement errors.</li>
+                    </ul>
+
+                    <h3>2. Direct Method Formulas</h3>
+                    <p>
+                        The direct thermal efficiency is evaluated using:
+                    </p>
+                    <p>
+                        <code>η_direct = [ Q_steam × (h_s - h_w) / (q_fuel × GCV) ] × 100</code>
+                    </p>
+                    <p>
+                        Where:
+                    </p>
+                    <ul>
+                        <li><strong>Q_steam:</strong> Steam flow rate (kg/h or lb/h)</li>
+                        <li><strong>h_s:</strong> Specific enthalpy of generated steam (kJ/kg or Btu/lb), evaluated using IAPWS-IF97 formulations</li>
+                        <li><strong>h_w:</strong> Specific enthalpy of incoming boiler feedwater (kJ/kg or Btu/lb)</li>
+                        <li><strong>q_fuel:</strong> Fuel firing rate (kg/h or lb/h)</li>
+                        <li><strong>GCV:</strong> Gross Calorific Value (Higher Heating Value) of the fuel (kJ/kg, kcal/kg, or Btu/lb)</li>
+                    </ul>
+
+                    <h3>3. Indirect Method Formulas (ASME PTC 4 Heat Loss)</h3>
+                    <p>
+                        The indirect efficiency evaluates each heat loss percentage as a fraction of fuel GCV:
+                    </p>
+                    <p>
+                        <code>η_indirect = 100 - (L1 + L2 + L3 + L4 + L5 + L6 + L7)</code>
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Loss Parameter</th>
+                                    <th>Thermodynamic Cause</th>
+                                    <th>Typical Range (%)</th>
+                                    <th>Optimization Strategy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>L1: Dry Flue Gas Loss</strong></td>
+                                    <td>Sensible heat carried away by hot exhaust stack gases</td>
+                                    <td>5.0% – 9.0%</td>
+                                    <td>Lower excess air O₂ and install an economizer or air preheater (APH).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L2: Hydrogen Combustion Loss</strong></td>
+                                    <td>Latent heat of water vapor formed from chemical combustion of H₂</td>
+                                    <td>3.0% – 5.5% (gas: 9%–11%)</td>
+                                    <td>Fixed by fuel chemistry; condensing economizers recover this latent heat.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L3: Fuel Moisture Loss</strong></td>
+                                    <td>Energy consumed evaporating water contained inside raw fuel</td>
+                                    <td>1.0% – 3.0% (bagasse: 15%+)</td>
+                                    <td>Fuel covered storage, drying, or coal blending.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L4: Air Moisture Loss</strong></td>
+                                    <td>Sensible heating of atmospheric water vapor entering with combustion air</td>
+                                    <td>0.1% – 0.3%</td>
+                                    <td>Minor seasonal fluctuation based on ambient humidity.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L5: Incomplete Combustion (CO)</strong></td>
+                                    <td>Chemical energy lost due to unburnt CO forming instead of CO₂</td>
+                                    <td>0.1% – 1.0%</td>
+                                    <td>Improve burner primary/secondary air mixing and register dampers.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L6: Radiation & Convection</strong></td>
+                                    <td>Heat lost from hot outer boiler casing skin to surrounding boiler room</td>
+                                    <td>0.5% – 2.0%</td>
+                                    <td>Inspect thermal insulation and repair damaged refractory cladding.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>L7: Unburnt in Ash</strong></td>
+                                    <td>Carbon remaining unburnt in bottom ash and electrostatic precipitator fly ash</td>
+                                    <td>0.5% – 2.5%</td>
+                                    <td>Check coal pulverizer fineness (70%+ passing 200 mesh) and overfire air.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>4. Frequently Asked Questions (FAQ)</h3>
+                    <div class="guide-steps-grid">
+                        <div class="step-card">
+                            <span class="step-badge">Q1</span>
+                            <h4>Why is the Indirect Method more accurate than the Direct Method?</h4>
+                            <p>Direct efficiency relies heavily on steam flow meters and fuel weigh-feeders, which typically have a ±2% to ±3% instrumentation calibration drift. In contrast, the indirect method measures flue gas O₂ and temperatures, where a 1% measurement error in flue gas temperature alters calculated efficiency by less than 0.05%!</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">Q2</span>
+                            <h4>What is Evaporation Ratio?</h4>
+                            <p>Evaporation Ratio is the ratio of steam generated to fuel consumed (<code>Q_steam / q_fuel</code>). For quality coal it is typically 4.5 to 5.5 kg steam/kg coal, for natural gas 11 to 13, and for heavy fuel oil 13 to 14.5.</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-badge">Q3</span>
+                            <h4>How much fuel is saved by reducing stack temperature?</h4>
+                            <p>As a proven industrial rule of thumb, every <strong>22°C (40°F) reduction in flue gas exit temperature</strong> achieved by an economizer or air preheater increases overall boiler thermal efficiency by approximately <strong>1.0%</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- Site Footer -->
+        <footer class="site-footer">
+            <p>
+                © <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools | 
+                <a href="/about" class="footer-link">About Us</a> | 
+                <a href="/contact" class="footer-link">Contact Us</a> | 
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a> | 
+                <a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <script type="module" src="/src/boiler-main.js"></script>
+</body>
+
+</html>
