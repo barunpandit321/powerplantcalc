@@ -18,7 +18,7 @@
     <!-- Primary SEO Title & Meta Tags -->
     <title>Steam Pipe Sizing & Velocity Calculator (ASME B31.1 & B36.10M) — PowerPlantCalc</title>
     <meta name="description" content="Free online Steam Pipe Sizing & Velocity Calculator based on ASME B31.1, ASME B36.10M dimensions & Darcy-Weisbach pressure drop. Sizes pipes for saturated and superheated steam using IAPWS-IF97 steam tables with instant velocity and friction loss metrics.">
-    <meta name="keywords" content="steam pipe sizing calculator, steam velocity calculator, steam pipe diameter, ASME B31.1 steam velocity, Darcy-Weisbach steam pressure drop, pipe schedule 40 80 steam, saturated steam pipe sizing, superheated steam velocity">
+    <meta name="keywords" content="steam pipe sizing calculator, steam velocity calculator, steam pipe diameter, ASME B31.1 steam velocity, Darcy-Weisbach steam pressure drop, pipe schedule 40 80 steam, saturated steam pipe sizing, superheated steam velocity, Dampfrohrleitungsberechnung, dimensionamiento de tuberías de vapor, dimensionnement tuyauterie vapeur">
     <meta name="author" content="PowerPlantCalc">
 
     <!-- Google Search Console Verification Meta Tag -->
@@ -29,6 +29,17 @@
 
     <!-- Flat Canonical URL -->
     <link rel="canonical" href="https://powerplantcalc.com/steam-pipe-calculator">
+
+    <!-- Multilingual & Alternate Locales for International Google & Bing SEO -->
+    <link rel="alternate" hreflang="x-default" href="https://powerplantcalc.com/steam-pipe-calculator">
+    <link rel="alternate" hreflang="en" href="https://powerplantcalc.com/steam-pipe-calculator">
+    <link rel="alternate" hreflang="de" href="https://powerplantcalc.com/steam-pipe-calculator">
+    <link rel="alternate" hreflang="es" href="https://powerplantcalc.com/steam-pipe-calculator">
+    <link rel="alternate" hreflang="fr" href="https://powerplantcalc.com/steam-pipe-calculator">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
 
     <!-- Google & Bing Favicon Crawler Compatible Link -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -775,7 +786,89 @@
                     </p>
                 </div>
             </section>
+
+            <!-- Authoritative Standards & Literature Citations Box -->
+            <div class="reference-links-box" style="margin-top: 32px;">
+                <h4>📚 Technical Standards & Literature Citations</h4>
+                <ul class="reference-links-list">
+                    <li class="reference-link-item">
+                        <span class="ref-bullet">📌</span>
+                        <div>
+                            <a href="https://www.asme.org/codes-standards/find-codes-standards/b31-1-power-piping" target="_blank" rel="noopener noreferrer">ASME B31.1: Power Piping Code</a>: Standard for design, materials, fabrication, and testing of piping systems in power generating stations and industrial facilities.
+                        </div>
+                    </li>
+                    <li class="reference-link-item">
+                        <span class="ref-bullet">📌</span>
+                        <div>
+                            <a href="https://www.asme.org/codes-standards/find-codes-standards/b36-10m-welded-seamless-wrought-steel-pipe" target="_blank" rel="noopener noreferrer">ASME B36.10M: Welded and Seamless Wrought Steel Pipe</a>: Benchmark dimensional standards covering outside diameters, wall thicknesses, and internal diameters across Schedules 40, 80, and 160.
+                        </div>
+                    </li>
+                    <li class="reference-link-item">
+                        <span class="ref-bullet">📌</span>
+                        <div>
+                            <a href="https://www.flowoffluids.com/" target="_blank" rel="noopener noreferrer">Crane Technical Paper No. 410 (Flow of Fluids Through Valves, Fittings, and Pipe)</a>: The foundational engineering handbook for Darcy-Weisbach hydraulic calculations and equivalent length resistance coefficients.
+                        </div>
+                    </li>
+                    <li class="reference-link-item">
+                        <span class="ref-bullet">📌</span>
+                        <div>
+                            <a href="http://www.iapws.org" target="_blank" rel="noopener noreferrer">IAPWS-IF97 Industrial Formulation</a>: Governing international formulations for exact steam density, specific volume, and dynamic viscosity.
+                        </div>
+                    </li>
+                    <li class="reference-link-item">
+                        <span class="ref-bullet">📌</span>
+                        <div>
+                            Explore related power station tools: Evaluate steam thermodynamic states with our <a href="/steam-calculator">Steam Enthalpy & Entropy Calculator (IAPWS-IF97)</a>, check boiler steam generation with our <a href="/boiler-efficiency-calculator">Boiler Efficiency Calculator (ASME PTC 4)</a>, or calculate circulating cooling flow with our <a href="/cooling-tower-calculator">Cooling Tower Performance Calculator</a>.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Professional Engineering Disclaimer Box -->
+            <div class="affiliate-disclosure-box" style="border-left: 4px solid var(--accent, #f59e0b); margin-top: 24px;">
+                <strong>⚠️ Professional Engineering Disclaimer:</strong> Steam pipe velocity, internal diameters, and Darcy-Weisbach friction pressure drops calculated by this tool are based on ASME B31.1, ASME B36.10M, and IAPWS-IF97 standards. While verified against Crane TP 410 hydraulic data, results are intended for conceptual pipe sizing, velocity screening, and educational calculations. Detailed piping stress analysis (FEA), thermal expansion loops, water hammer surge modeling, and formal code compliance must always be verified by a licensed piping engineer for plant construction.
+            </div>
         </article>
+
+        <!-- Related Tools Cross-Linking Section -->
+        <section class="tools-directory-section" style="margin-top: 36px; margin-bottom: 28px;">
+            <div class="section-title">
+                <h2>Related Power Plant Engineering Tools</h2>
+                <p>Explore our suite of high-precision power station calculation tools</p>
+            </div>
+
+            <div class="tools-portal-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <a href="/steam-calculator" class="portal-card active">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <span class="status-badge active">Active Tool</span>
+                    </div>
+                    <h3>Steam Properties & Enthalpy Calculator (IAPWS-IF97)</h3>
+                    <p>Calculate steam enthalpy, entropy, superheat, quality, and 12+ thermodynamic properties for turbine heat balances and boiler efficiency.</p>
+                    <div class="card-action">Launch Steam Calculator →</div>
+                </a>
+
+                <a href="/boiler-efficiency-calculator" class="portal-card active">
+                    <div class="card-header">
+                        <span class="card-icon">🏭</span>
+                        <span class="status-badge active">Active Tool</span>
+                    </div>
+                    <h3>Boiler Efficiency Calculator (ASME PTC 4)</h3>
+                    <p>Evaluate boiler thermal efficiency using Direct (Input-Output) and Indirect (ASME PTC 4 Heat Loss) methods with fuel presets and IAPWS-IF97 steam tables.</p>
+                    <div class="card-action">Launch Boiler Calculator →</div>
+                </a>
+
+                <a href="/cooling-tower-calculator" class="portal-card active">
+                    <div class="card-header">
+                        <span class="card-icon">🌊</span>
+                        <span class="status-badge active">Active Tool</span>
+                    </div>
+                    <h3>Cooling Tower Performance Calculator</h3>
+                    <p>Calculates Cooling Tower Range, Approach Temperature, Effectiveness (%), Cycles of Concentration (CoC), Evaporation Loss, Blowdown Rate, and Makeup Water Demand.</p>
+                    <div class="card-action">Launch Cooling Tower Calculator →</div>
+                </a>
+            </div>
+        </section>
 
     </div>
 

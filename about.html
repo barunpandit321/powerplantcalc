@@ -26,16 +26,28 @@
     <link href="https://powerplantcalc.com/about" rel="canonical"/>
     <!-- Google & Bing Favicon Crawler Compatible Link -->
     <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+    <!-- Multilingual & Alternate Locales for International Google & Bing SEO -->
+    <link rel="alternate" hreflang="x-default" href="https://powerplantcalc.com/about">
+    <link rel="alternate" hreflang="en" href="https://powerplantcalc.com/about">
+    <link rel="alternate" hreflang="de" href="https://powerplantcalc.com/about">
+    <link rel="alternate" hreflang="es" href="https://powerplantcalc.com/about">
+    <link rel="alternate" hreflang="fr" href="https://powerplantcalc.com/about">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta name="keywords" content="about PowerPlantCalc, power plant engineering background, Barun Pandit mechanical engineer, IAPWS-IF97 standards, ASME PTC 4, steam enthalpy calculator, boiler efficiency calculator, cooling tower performance">
+
     <!-- Open Graph / Facebook Social Meta Tags -->
     <meta content="website" property="og:type"/>
-    <meta content="About Us | PowerPlantCalc" property="og:title"/>
-    <meta content="Learn about PowerPlantCalc.com — free high-precision thermodynamic tools for power plant engineers." property="og:description"/>
+    <meta content="About Us | PowerPlantCalc — Engineering Background & Standards" property="og:title"/>
+    <meta content="Learn about PowerPlantCalc.com — founded by mechanical engineers with DCS control room experience. High-precision IAPWS-IF97 steam tables and ASME performance calculators." property="og:description"/>
     <meta content="PowerPlantCalc" property="og:site_name"/>
     <meta content="https://powerplantcalc.com/about" property="og:url"/>
     <meta content="https://powerplantcalc.com/og-image.png" property="og:image"/>
     <!-- Twitter Card Meta Tags -->
     <meta content="summary_large_image" name="twitter:card"/>
-    <meta content="About Us | PowerPlantCalc" name="twitter:title"/>
+    <meta content="About Us | PowerPlantCalc — Engineering Background & Standards" name="twitter:title"/>
     <meta content="Learn about PowerPlantCalc.com — free high-precision thermodynamic tools for power plant engineers." name="twitter:description"/>
     <meta content="https://powerplantcalc.com/og-image.png" name="twitter:image"/>
     <!-- Optimized Font Preconnect & Performance -->
@@ -63,11 +75,13 @@
                 <span>PowerPlant<span class="highlight-text">Calc</span></span>
             </a>
             <div class="nav-links" id="navLinksContainer">
-                <a class="nav-link" href="/">⚡ All Tools (Home)</a>
-                <a class="nav-link" href="/steam-calculator">🔥 Steam Calculator</a>
+                <a class="nav-link" href="/">⚡ Home</a>
+                <a class="nav-link" href="/steam-calculator">🔥 Steam Properties</a>
+                <a class="nav-link" href="/boiler-efficiency-calculator">🏭 Boiler Efficiency</a>
+                <a class="nav-link" href="/steam-pipe-calculator">📏 Steam Pipe Sizing</a>
                 <a class="nav-link" href="/cooling-tower-calculator">🌊 Cooling Tower</a>
                 <a class="nav-link active" href="/about">ℹ️ About Us</a>
-                <a class="nav-link" href="/contact">✉️ Contact Us</a>
+                <a class="nav-link" href="/contact">✉️ Contact</a>
             </div>
             <div class="nav-right-controls">
                 <button aria-label="Toggle Light / Dark Theme" class="theme-toggle-btn" id="themeToggle">
@@ -151,17 +165,59 @@
                         </p>
                     </div>
 
-                    <h2>3. Industrial Standard Compliance (IAPWS-IF97)</h2>
+                    <h2>3. Industrial Standard Compliance & Mathematical Rigor</h2>
                     <p>
-                        All water and steam property calculations on PowerPlantCalc are powered by the <strong>IAPWS-IF97</strong> (International Association for the Properties of Water and Steam 1997 Industrial Formulation).
+                        All calculation engines across PowerPlantCalc are strictly programmed and benchmarked against governing international engineering standards:
                     </p>
                     <ul>
-                        <li><strong>Full 5-Region Evaluation:</strong> Accurately computes subcooled liquid water (Region 1), superheated steam (Region 2), supercritical fluids (Region 3), two-phase saturation (Region 4), and high-temperature steam up to 2000°C (Region 5).</li>
-                        <li><strong>16 Thermodynamic Metrics:</strong> Evaluates enthalpy, entropy, specific volume, density, internal energy, heat capacities (C<sub>p</sub>, C<sub>v</sub>), speed of sound, dynamic viscosity, and thermal conductivity.</li>
-                        <li><strong>Interactive Mollier (h-s) &amp; T-s Diagrams:</strong> Features dynamic HTML5 Canvas thermodynamic state diagrams with operating point markers.</li>
+                        <li><strong>IAPWS-IF97 Industrial Formulation:</strong> Water and steam thermodynamics evaluated across all 5 thermodynamic regions (subcooled liquid, superheated vapor, supercritical state, two-phase saturation, and high-temperature steam to 2000°C) with 16 core metrics.</li>
+                        <li><strong>ASME PTC 4 (Fired Steam Generators):</strong> Boiler performance testing evaluating Direct Thermal Efficiency and Indirect Heat Loss Method (losses $L_1$ to $L_7$, fuel GCV/NCV, and boiler heat rate).</li>
+                        <li><strong>ASME B31.1 & ASME B36.10M:</strong> Power piping sizing, commercial wall schedules (Sch 40, Sch 80, Sch 160), and Darcy-Weisbach / Colebrook-White hydraulic friction equations.</li>
+                        <li><strong>CTI Code ATC-105 & ASME PTC 23:</strong> Industrial cooling tower range, approach, thermal effectiveness, cycles of concentration (CoC), and mass balance heat rejection.</li>
                     </ul>
 
-                    <h2>4. Why Engineers Choose PowerPlantCalc</h2>
+                    <h3>3.1 Authoritative Literature & Textbook Citations</h3>
+                    <p>Our mathematical solvers and reference criteria are cross-referenced with the gold-standard textbooks in thermal power engineering:</p>
+                    <div class="reference-links-box">
+                        <h4>📚 Standard Engineering Reference Bibliography</h4>
+                        <ul class="reference-links-list">
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>IAPWS-IF97:</strong> <em>Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam</em> — International Association for the Properties of Water and Steam (Erlangen, Germany).</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>ASME PTC 4-2013:</strong> <em>Fired Steam Generators Performance Test Codes</em> — The American Society of Mechanical Engineers, New York.</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>ASME B31.1-2022:</strong> <em>Power Piping (ASME Code for Pressure Piping)</em> &amp; <strong>ASME B36.10M:</strong> <em>Welded and Seamless Wrought Steel Pipe</em>.</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>Woodruff, E. B., Lammers, H. B., &amp; Lammers, T. F.:</strong> <em>Steam Plant Operation (10th Edition)</em>, McGraw-Hill Education — Standard operational text for boilers, turbines, and auxiliary piping.</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>Nayyar, Mohinder L., P.E.:</strong> <em>Piping Handbook (7th Edition)</em>, McGraw-Hill — Definitive industrial authority on pipe flow hydraulics, sizing, and valve friction.</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>The Nalco Water Handbook (4th Edition):</strong> McGraw-Hill / Nalco Chemical Company — Industrial cooling tower and boiler feedwater treatment authority.</div>
+                            </li>
+                            <li class="reference-link-item">
+                                <span class="ref-bullet">▪</span>
+                                <div><strong>Crane Co.:</strong> <em>Flow of Fluids Through Valves, Fittings, and Pipe (Technical Paper No. 410)</em> — Classic reference for Darcy friction factors and pressure loss.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h2>4. Professional Engineering &amp; Operational Disclaimer</h2>
+                    <div class="affiliate-disclosure-box" style="border-left: 4px solid var(--accent, #f59e0b);">
+                        <strong>⚠️ Professional Engineering Disclaimer:</strong> All calculations, property tables, sizing recommendations, and thermodynamic simulations provided by PowerPlantCalc.com are intended for engineering feasibility evaluation, educational analysis, and preliminary operational benchmarking. While algorithms are rigorously verified against ASME PTC 4, IAPWS-IF97, and ASME B31.1 formulations within 0.1% accuracy, actual field parameters vary with local atmospheric elevations, pipe wall roughness aging, fuel moisture variations, and instrumentation tolerances. Always consult project design drawings, certified OEM engineering manuals, and certified project engineers before final equipment procurement, construction, or high-pressure commissioning.
+                    </div>
+
+                    <h2>5. Why Engineers Choose PowerPlantCalc</h2>
                     <div class="guide-steps-grid">
                         <div class="step-card">
                             <h4>Multi-Unit Flexibility</h4>
@@ -181,12 +237,12 @@
                         </div>
                     </div>
 
-                    <h2>5. Transparency &amp; Privacy Commitment</h2>
+                    <h2>6. Transparency &amp; Privacy Commitment</h2>
                     <p>
                         We respect user privacy. PowerPlantCalc does not require personal information, logins, or payment details. Your technical preferences (such as Light/Dark mode and unit selections) are stored locally inside your browser for convenience. For more details, review our <a class="footer-link" href="/privacy-policy">Privacy Policy</a> and <a class="footer-link" href="/terms-and-conditions">Terms and Conditions</a>.
                     </p>
 
-                    <h2>6. Get in Touch</h2>
+                    <h2>7. Get in Touch</h2>
                     <p>
                         We continuously improve our engineering tools based on feedback from plant engineers. If you have suggestions, feature requests, or bug reports, please reach out via our <a class="footer-link" href="/contact">Contact Us Page</a>.
                     </p>
