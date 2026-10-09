@@ -212,9 +212,15 @@ export function calculateIndirectMethod({
     const totalLosses = L1 + L2 + L3 + L4 + L5 + L6 + L7;
     const efficiency = Math.max(0, Math.min(100, 100 - totalLosses));
 
+    // Boiler Heat Rate: kJ/kWh and Btu/kWh
+    const heatRateKjKwh = efficiency > 0 ? (3600 / (efficiency / 100)) : 0;
+    const heatRateBtuKwh = efficiency > 0 ? (3412.14 / (efficiency / 100)) : 0;
+
     return {
         efficiency: Number(efficiency.toFixed(2)),
         totalLosses: Number(totalLosses.toFixed(2)),
+        heatRateKjKwh: Number(heatRateKjKwh.toFixed(1)),
+        heatRateBtuKwh: Number(heatRateBtuKwh.toFixed(1)),
         theoreticalAir: Number(TA.toFixed(3)),
         excessAir: Number(EA.toFixed(1)),
         actualAir: Number(AAS.toFixed(3)),
@@ -283,8 +289,14 @@ export function calculateDirectMethod({
     // 8. Equivalent Evaporation from and at 100°C (kg/h)
     const equivEvaporationKgH = steamFlowKgH * factorOfEvaporation;
 
+    // 9. Boiler Heat Rate: kJ/kWh and Btu/kWh
+    const heatRateKjKwh = efficiency > 0 ? (3600 / (efficiency / 100)) : 0;
+    const heatRateBtuKwh = efficiency > 0 ? (3412.14 / (efficiency / 100)) : 0;
+
     return {
         efficiency: Number(efficiency.toFixed(2)),
+        heatRateKjKwh: Number(heatRateKjKwh.toFixed(1)),
+        heatRateBtuKwh: Number(heatRateBtuKwh.toFixed(1)),
         steamEnthalpy: Number(h_s.toFixed(2)),
         fwEnthalpy: Number(h_w.toFixed(2)),
         netHeatKjKg: Number(netHeatKjKg.toFixed(2)),

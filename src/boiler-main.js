@@ -268,6 +268,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Update UI Output Cards
             document.getElementById("outEff").textContent = `${res.efficiency.toFixed(2)} %`;
             document.getElementById("outLosses").textContent = `${res.totalLosses.toFixed(2)} %`;
+            const elHeatRate = document.getElementById("outIndirectHeatRate");
+            if (elHeatRate) elHeatRate.textContent = `${res.heatRateBtuKwh.toLocaleString()} Btu/kWh (${res.heatRateKjKwh.toLocaleString()} kJ/kWh)`;
             document.getElementById("outTA").textContent = `${res.theoreticalAir.toFixed(3)} kg/kg`;
             document.getElementById("outEA").textContent = `${res.excessAir.toFixed(1)} %`;
             document.getElementById("outAAS").textContent = `${res.actualAir.toFixed(3)} kg/kg`;
@@ -341,6 +343,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             document.getElementById("outDirectEff").textContent = `${res.efficiency.toFixed(2)} %`;
+            const elDirectHeatRate = document.getElementById("outDirectHeatRate");
+            if (elDirectHeatRate) elDirectHeatRate.textContent = `${res.heatRateBtuKwh.toLocaleString()} Btu/kWh (${res.heatRateKjKwh.toLocaleString()} kJ/kWh)`;
             document.getElementById("outSteamH").textContent = `${res.steamEnthalpy.toFixed(1)} kJ/kg`;
             document.getElementById("outFwH").textContent = `${res.fwEnthalpy.toFixed(1)} kJ/kg`;
             document.getElementById("outNetHeat").textContent = `${res.netHeatKjKg.toFixed(1)} kJ/kg`;

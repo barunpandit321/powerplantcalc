@@ -2135,3 +2135,90 @@ header p {
     flex-direction: column;
     gap: 8px;
 }
+
+/* ==========================================
+   Engineering Formula Display & Reference Link Boxes
+   ========================================== */
+.formula-callout {
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+}
+
+.formula-callout .formula-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+
+.formula-callout .formula-equation {
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-main);
+    line-height: 1.5;
+    overflow-x: auto;
+}
+
+.formula-callout .formula-subtext {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+.reference-links-box {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 22px 0;
+}
+
+.reference-links-box h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reference-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reference-link-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+}
+
+.reference-link-item .ref-bullet {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.reference-link-item a {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.reference-link-item a:hover {
+    color: #2563eb;
+}
