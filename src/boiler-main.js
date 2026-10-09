@@ -188,6 +188,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Unit conversion listeners
+    if (unitGcv) {
+        unitGcv.addEventListener("change", () => {
+            if (fuelPresetSelect) applyFuelPreset(fuelPresetSelect.value);
+            calculateIndirect();
+        });
+    }
+
+    if (unitTemp) {
+        let prevTempUnit = unitTemp.value;
+        unitTemp.addEventListener("change", () => {
+            const newUnit = unitTemp.value;
+            const tg = parseFloat(inputTg.value) || 160;
+            const ta = parseFloat(inputTa.value) || 30;
+            if (prevTempUnit === "C" && newUnit === "F") {
+                inputTg.value = (tg * 1.8 + 32).toFixed(0);
+                inputTa.value = (ta * 1.8 + 32).toFixed(0);
+            } else if (prevTempUnit === "F" && newUnit === "C") {
+                inputTg.value = ((tg - 32) / 1.8).toFixed(0);
+                inputTa.value = ((ta - 32) / 1.8).toFixed(0);
+            }
+            prevTempUnit = newUnit;
+            calculateIndirect();
+        });
+    }
+
     // Calculation handlers
     calculateBtn.addEventListener("click", () => {
         if (currentMethod === "indirect") {
