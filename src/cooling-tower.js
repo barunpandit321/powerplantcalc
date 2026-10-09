@@ -1,5 +1,8 @@
 import { initNavbar } from "./navbar.js";
 import { CoolingChart } from "./cooling-chart.js";
+import { detectUserZone, getCoolingDefaultsForZone, prioritizeUnits } from "./geo.js";
+
+const COOLING_STORAGE_KEY = "cooling_calculator_user_units_v1";
 
 // Unit Conversion Tables
 const TEMP_UNITS = {
@@ -73,37 +76,71 @@ document.addEventListener("DOMContentLoaded", () => {
     const unitHeatSelect = document.getElementById("unit-heat");
     const unitFlowOutSelect = document.getElementById("unit-flow-out");
 
-    // Populate Selects
-    populateSelect(unitTemp, TEMP_UNITS, "C");
-    populateSelect(unitThot, TEMP_UNITS, "C");
-    populateSelect(unitTcold, TEMP_UNITS, "C");
-    populateSelect(unitTwb, TEMP_UNITS, "C");
+    // Detect Regional Defaults (US vs Europe vs India)
+    const zone = detectUserZone();
+    const geoDefaults = getCoolingDefaultsForZone(zone);
 
-    populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, "C");
-    populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, "C");
+    // Load saved preferences if any
+    let savedPrefs = null;
+    try {
+        const raw = localStorage.getItem(COOLING_STORAGE_KEY);
+        if (raw) savedPrefs = JSON.parse(raw);
+    } catch (e) { }
 
-    populateSelect(unitFlow, FLOW_UNITS, "m3h");
-    populateSelect(unitFlowOutSelect, FLOW_UNITS, "m3h");
+    const activeTempUnit = (savedPrefs && savedPrefs.temp) || geoDefaults.temp;
+    const activeFlowUnit = (savedPrefs && savedPrefs.flow) || geoDefaults.flow;
+    const activeFlowOutUnit = (savedPrefs && savedPrefs.flowOut) || geoDefaults.flowOut;
+    const activeHeatUnit = (savedPrefs && savedPrefs.heat) || geoDefaults.heat;
+    const activeRangeUnit = (savedPrefs && savedPrefs.rangeUnit) || geoDefaults.rangeUnit;
+    const activeApproachUnit = (savedPrefs && savedPrefs.approachUnit) || geoDefaults.approachUnit;
 
-    if (unitHeatSelect) {
-        Object.keys(HEAT_UNITS).forEach(k => {
+    // Populate Selects with Regional Ordering (Zone priority at top)
+    populateSelect(unitTemp, TEMP_UNITS, activeTempUnit, "temperature");
+    populateSelect(unitThot, TEMP_UNITS, activeTempUnit, "temperature");
+    populateSelect(unitTcold, TEMP_UNITS, activeTempUnit, "temperature");
+    populateSelect(unitTwb, TEMP_UNITS, activeTempUnit, "temperature");
+
+    populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, activeRangeUnit, "temperature");
+    populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, activeApproachUnit, "temperature");
+
+    populateSelect(unitFlow, FLOW_UNITS, activeFlowUnit, "flow");
+    populateSelect(unitFlowOutSelect, FLOW_UNITS, activeFlowOutUnit, "flow");
+    populateSelect(unitHeatSelect, HEAT_UNITS, activeHeatUnit, "heat");
+
+    function populateSelect(sel, table, defaultVal, unitType) {
+        if (!sel) return;
+        sel.innerHTML = "";
+        const rawList = Object.keys(table).map(k => ({ id: k, name: table[k].name }));
+        const list = unitType ? prioritizeUnits(rawList, zone, unitType) : rawList;
+        list.forEach(item => {
             const opt = document.createElement("option");
-            opt.value = k;
-            opt.textContent = HEAT_UNITS[k].name;
-            unitHeatSelect.appendChild(opt);
+            opt.value = item.id;
+            opt.textContent = item.name;
+            if (item.id === defaultVal) opt.selected = true;
+            sel.appendChild(opt);
         });
     }
 
-    function populateSelect(sel, table, defaultVal) {
-        if (!sel) return;
-        sel.innerHTML = "";
-        Object.keys(table).forEach(k => {
-            const opt = document.createElement("option");
-            opt.value = k;
-            opt.textContent = table[k].name;
-            if (k === defaultVal) opt.selected = true;
-            sel.appendChild(opt);
-        });
+    function saveCoolingPreferences() {
+        try {
+            const prefs = {
+                temp: unitTemp ? unitTemp.value : "C",
+                flow: unitFlow ? unitFlow.value : "m3h",
+                flowOut: unitFlowOutSelect ? unitFlowOutSelect.value : "m3h",
+                heat: unitHeatSelect ? unitHeatSelect.value : "mw",
+                rangeUnit: unitRangeSelect ? unitRangeSelect.value : "C",
+                approachUnit: unitApproachSelect ? unitApproachSelect.value : "C"
+            };
+            localStorage.setItem(COOLING_STORAGE_KEY, JSON.stringify(prefs));
+        } catch (e) { }
+    }
+
+    // Set regional initial input values if not previously set
+    if (!savedPrefs) {
+        if (inputThot) inputThot.value = geoDefaults.thot;
+        if (inputTcold) inputTcold.value = geoDefaults.tcold;
+        if (inputTwb) inputTwb.value = geoDefaults.twb;
+        if (inputFlow) inputFlow.value = geoDefaults.flowVal;
     }
 
     // Global Master Temperature Unit Select
@@ -115,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (unitTwb) unitTwb.value = val;
             if (unitRangeSelect) unitRangeSelect.value = val;
             if (unitApproachSelect) unitApproachSelect.value = val;
+            saveCoolingPreferences();
             calculate();
         });
     }
@@ -131,14 +169,20 @@ document.addEventListener("DOMContentLoaded", () => {
         calculate();
     });
 
-    calculateBtn.addEventListener("click", calculate);
+    calculateBtn.addEventListener("click", () => {
+        saveCoolingPreferences();
+        calculate();
+    });
 
     [inputThot, inputTcold, inputTwb, inputFlow, inputCoc, inputTdsBasin, inputTdsMakeup].forEach(el => {
         if (el) el.addEventListener("input", calculate);
     });
 
     [unitThot, unitTcold, unitTwb, unitFlow, unitHeatSelect, unitFlowOutSelect, unitRangeSelect, unitApproachSelect].forEach(el => {
-        if (el) el.addEventListener("change", calculate);
+        if (el) el.addEventListener("change", () => {
+            saveCoolingPreferences();
+            calculate();
+        });
     });
 
     // Parse URL Params for 1-click sharing

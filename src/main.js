@@ -4,6 +4,7 @@ import { UNITS, UNIT_TYPES, convertToBase, convertFromBase } from "./units.js";
 import { solvePx } from "iapws-if97";
 import { drawThermodynamicChart } from "./chart.js";
 import { initNavbar } from "./navbar.js";
+import { detectUserZone, getSteamDefaultsForZone, prioritizeUnits } from "./geo.js";
 
 const STORAGE_KEY = "steam_calculator_user_units_v1";
 
@@ -80,61 +81,8 @@ function updateChart() {
  * Detects location/locale defaults if no user preferences are saved.
  */
 function detectUserLocaleDefaults() {
-    let timeZone = "";
-    try {
-        timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-    } catch (e) { }
-    const lang = navigator.language || "";
-
-    const isIndia = timeZone.includes("Kolkata") || timeZone.includes("Calcutta") ||
-        timeZone.includes("Colombo") || timeZone.includes("Dhaka") ||
-        lang.endsWith("-IN") || lang.startsWith("hi");
-
-    const isUSA = timeZone.startsWith("America/") || lang === "en-US";
-
-    if (isIndia) {
-        return {
-            pressure: "kg_cm2_g",   // kg/cm² (gauge)
-            temperature: "C",        // °C
-            enthalpy: "kcal_kg",    // kcal/kg (IT)
-            entropy: "kJ_kgK",
-            volume: "m3_kg",
-            density: "kg_m3",
-            speed: "m_s",
-            viscosity: "Pa_s",
-            conductivity: "W_mK",
-            quality: "frac"
-        };
-    }
-
-    if (isUSA) {
-        return {
-            pressure: "psi_g",      // psi (gauge)
-            temperature: "F",        // °F
-            enthalpy: "Btu_lb",     // Btu/lb
-            entropy: "Btu_lbF",
-            volume: "ft3_lb",
-            density: "lb_ft3",
-            speed: "ft_s",
-            viscosity: "cP",
-            conductivity: "Btu_hftF",
-            quality: "frac"
-        };
-    }
-
-    // Default Metric (International)
-    return {
-        pressure: "kg_cm2_g",
-        temperature: "C",
-        enthalpy: "kcal_kg",
-        entropy: "kJ_kgK",
-        volume: "m3_kg",
-        density: "kg_m3",
-        speed: "m_s",
-        viscosity: "Pa_s",
-        conductivity: "W_mK",
-        quality: "frac"
-    };
+    const zone = detectUserZone();
+    return getSteamDefaultsForZone(zone);
 }
 
 /**
@@ -187,8 +135,11 @@ function saveUserPreferences() {
 }
 
 function populateSelectOptions(selectEl, unitType, defaultUnitId) {
+    if (!selectEl) return;
     selectEl.innerHTML = "";
-    const options = UNITS[unitType] || [];
+    const zone = detectUserZone();
+    const rawOptions = UNITS[unitType] || [];
+    const options = prioritizeUnits(rawOptions, zone, unitType);
     options.forEach(opt => {
         const optionEl = document.createElement("option");
         optionEl.value = opt.id;
@@ -204,13 +155,21 @@ function updateInputMode() {
     const mode = modeSelect.value;
     const config = modeConfigs[mode] || modeConfigs.PT;
 
-    label1.textContent = config.label1;
-    label2.textContent = config.label2;
-    input1.placeholder = config.p1;
-    input2.placeholder = config.p2;
-
     const prefs = loadUserPreferences();
     const defaults = detectUserLocaleDefaults();
+
+    let p1Placeholder = config.p1;
+    let p2Placeholder = config.p2;
+
+    if (mode === "PT" && defaults.defaultP1 && defaults.defaultP2) {
+        p1Placeholder = defaults.defaultP1;
+        p2Placeholder = defaults.defaultP2;
+    }
+
+    label1.textContent = config.label1;
+    label2.textContent = config.label2;
+    input1.placeholder = p1Placeholder;
+    input2.placeholder = p2Placeholder;
 
     let targetUnit1 = null;
     let targetUnit2 = null;
@@ -227,8 +186,14 @@ function updateInputMode() {
         input1.value = prefs.inputValues[mode].val1 !== undefined ? prefs.inputValues[mode].val1 : "";
         input2.value = prefs.inputValues[mode].val2 !== undefined ? prefs.inputValues[mode].val2 : "";
     } else {
-        input1.value = "";
-        input2.value = "";
+        // Pre-fill initial defaults if first time
+        if (mode === "PT" && (!prefs || !prefs.inputValues)) {
+            input1.value = p1Placeholder;
+            input2.value = p2Placeholder;
+        } else {
+            input1.value = "";
+            input2.value = "";
+        }
     }
 
     populateSelectOptions(unit1Select, config.unitType1, targetUnit1);
