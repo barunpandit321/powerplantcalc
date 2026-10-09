@@ -2241,3 +2241,30 @@ header p {
 .reference-link-item a:hover {
     color: #2563eb;
 }
+
+/* ==========================================
+   Affiliate & Editorial Transparency Disclosure Box
+   (Compliant with Google Search Essentials & FTC Guidelines)
+   ========================================== */
+.affiliate-disclosure-box {
+    background: var(--bg-hover);
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 18px 0 24px 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.affiliate-disclosure-box strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.affiliate-disclosure-subtext {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
