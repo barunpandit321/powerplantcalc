@@ -747,30 +747,95 @@
                 <p>A <strong>Waste Heat Recovery Boiler (WHRB)</strong>—also designated as a <strong>Heat Recovery Steam Generator (HRSG)</strong> in gas turbine combined cycle facilities—captures sensible thermal energy from industrial exhaust gases to generate high-pressure superheated or saturated process steam without firing supplemental fuel.</p>
 
                 <!-- Engineering Formulas Box -->
-                <div class="formula-box">
-                    <h3>Fundamental WHRB Thermodynamic Energy Balance</h3>
-                    <p>The gross thermal energy recovered from the flue gas stream is governed by the enthalpy drop across the boiler bank according to ASME PTC 4.4:</p>
-                    
-                    <div class="math-formula">
-                        \[\dot{Q}_{recovered} = \dot{m}_{gas} \cdot \bar{C}_{p,gas} \cdot (T_{gas,in} - T_{gas,out}) \cdot (1 - \eta_{casing})\]
+                <div class="card" style="margin-top: 28px; padding: 24px; border: 1px solid var(--border-color); border-radius: 14px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="font-size: 1.5rem;">🔥</span>
+                        <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-main);">Fundamental WHRB Thermodynamic Energy Balance</h3>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
+                        The thermal energy recovered from the exhaust gas stream and the maximum steam generation rate are governed by ASME PTC 4.4 and the Evaporator Pinch Point constraint:
+                    </p>
+
+                    <!-- Formula Callouts Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                        <!-- 1. Total Recovered Heat -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Gross Heat Recovered (Q̇<sub>recovered</sub>)</div>
+                            <div class="formula-equation">
+                                Q̇<sub>recovered</sub> = ṁ<sub>gas</sub> &middot; C̄<sub>p,gas</sub> &middot; (T<sub>gas,in</sub> &minus; T<sub>gas,out</sub>) &middot; (1 &minus; &eta;<sub>casing</sub>)
+                            </div>
+                            <div class="formula-subtext">Total enthalpy extracted from flue gas across all boiler heat exchanger modules (kW or MW).</div>
+                        </div>
+
+                        <!-- 2. Steam Generation Capacity -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Steam Generation Capacity (ṁ<sub>steam</sub>)</div>
+                            <div class="formula-equation">
+                                ṁ<sub>steam</sub> = [ṁ<sub>gas</sub> &middot; C̄<sub>p,gas</sub> &middot; (T<sub>gas,in</sub> &minus; (T<sub>sat</sub> + &Delta;T<sub>pinch</sub>)) &middot; (1 &minus; &eta;<sub>casing</sub>)] / [(h<sub>steam</sub> &minus; h<sub>econ,out</sub>) + B &middot; (h<sub>f</sub> &minus; h<sub>econ,out</sub>)]
+                            </div>
+                            <div class="formula-subtext">Thermodynamic limit derived from the Evaporator Pinch Point energy balance (kg/s or t/h).</div>
+                        </div>
                     </div>
 
-                    <p>The steam generation capacity (\(\dot{m}_{steam}\)) is thermodynamically constrained by the <strong>Evaporator Pinch Point</strong> energy balance:</p>
-
-                    <div class="math-formula">
-                        \[\dot{m}_{steam} = \frac{\dot{m}_{gas} \cdot \bar{C}_{p,gas} \cdot (T_{gas,in} - (T_{sat} + \Delta T_{pinch})) \cdot (1 - \eta_{casing})}{(h_{steam} - h_{econ,out}) + B \cdot (h_f - h_{econ,out})}\]
-                    </div>
-
-                    <div class="formula-legend">
-                        <ul>
-                            <li><strong>\(\dot{m}_{gas}\)</strong>: Flue gas mass flow rate (\(\text{kg/s}\) or \(\text{t/h}\))</li>
-                            <li><strong>\(\bar{C}_{p,gas}\)</strong>: Mean isobaric heat capacity of flue gas (\(\approx 1.05 - 1.15 \text{ kJ/(kg}\cdot\text{K)}\))</li>
-                            <li><strong>\(T_{sat}\)</strong>: Saturation temperature at operating drum pressure via <em>IAPWS-IF97</em></li>
-                            <li><strong>\(\Delta T_{pinch}\)</strong>: Evaporator Pinch Point temperature difference (\(T_{gas,evap,out} - T_{sat}\), typically \(10 - 20^\circ\text{C}\))</li>
-                            <li><strong>\(\Delta T_{approach}\)</strong>: Economizer Approach Point temperature difference (\(T_{sat} - T_{econ,out}\), typically \(5 - 15^\circ\text{C}\))</li>
-                            <li><strong>\(h_{steam}, h_f, h_{econ,out}\)</strong>: Specific enthalpies computed using formulation <em>IAPWS-IF97</em> (\(\text{kJ/kg}\))</li>
-                            <li><strong>\(B\)</strong>: Continuous boiler blowdown fraction (\(\approx 0.01 - 0.03\))</li>
-                        </ul>
+                    <!-- Variable Reference Table -->
+                    <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                        <span>📋</span> Engineering Variable Definitions &amp; Units
+                    </h4>
+                    <div class="table-responsive" style="margin: 0; box-shadow: none; border-radius: 8px;">
+                        <table class="data-table" style="margin: 0; font-size: 0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 14%;">Symbol</th>
+                                    <th style="width: 28%;">Parameter Name</th>
+                                    <th style="width: 18%;">Standard Unit</th>
+                                    <th>Description &amp; Design Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ṁ<sub>gas</sub></strong></td>
+                                    <td>Flue Gas Mass Flow Rate</td>
+                                    <td>kg/s or t/h (lb/hr)</td>
+                                    <td>Total mass flow rate of hot exhaust gas entering the WHRB</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>C̄<sub>p,gas</sub></strong></td>
+                                    <td>Mean Isobaric Heat Capacity</td>
+                                    <td>kJ/(kg&middot;K) (Btu/(lb&middot;&deg;F))</td>
+                                    <td>Gas specific heat capacity (&approx; 1.05 &ndash; 1.15 kJ/(kg&middot;K) based on flue composition)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>T<sub>sat</sub></strong></td>
+                                    <td>Saturation Temperature</td>
+                                    <td>&deg;C or &deg;F</td>
+                                    <td>Drum boiling temperature computed via IAPWS-IF97 steam formulation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>&Delta;T<sub>pinch</sub></strong></td>
+                                    <td>Evaporator Pinch Point</td>
+                                    <td>&deg;C or &deg;F</td>
+                                    <td>Minimum temperature difference: T<sub>gas,evap,out</sub> &minus; T<sub>sat</sub> (typically 10 &ndash; 20&deg;C)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>&Delta;T<sub>approach</sub></strong></td>
+                                    <td>Economizer Approach Point</td>
+                                    <td>&deg;C or &deg;F</td>
+                                    <td>Feedwater subcooling margin: T<sub>sat</sub> &minus; T<sub>econ,out</sub> (typically 5 &ndash; 15&deg;C)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>h<sub>steam</sub>, h<sub>econ,out</sub>, h<sub>f</sub></strong></td>
+                                    <td>Specific Steam &amp; Water Enthalpies</td>
+                                    <td>kJ/kg or Btu/lb</td>
+                                    <td>Specific enthalpies evaluated via IAPWS-IF97 formulation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B</strong></td>
+                                    <td>Blowdown Fraction</td>
+                                    <td>fraction (0.01 &ndash; 0.03)</td>
+                                    <td>Continuous boiler drum blowdown to control total dissolved solids (TDS)</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -778,20 +843,20 @@
                 <div class="guide-steps-grid" style="margin-top: 24px;">
                     <div class="step-card">
                         <div class="step-num">01</div>
-                        <h3>The Pinch Point Constraint (ΔT_pinch)</h3>
-                        <p>The Pinch Point is the minimum temperature difference between the cooled flue gas leaving the evaporator tube bank and the saturated water boiling inside the evaporator at \(T_{sat}\). Selecting a smaller pinch point yields more steam generation but demands exponentially larger heat transfer surface area.</p>
+                        <h3>The Pinch Point Constraint (ΔT<sub>pinch</sub>)</h3>
+                        <p>The Pinch Point is the minimum temperature difference between the cooled flue gas leaving the evaporator tube bank and the saturated water boiling inside the evaporator at <strong>T<sub>sat</sub></strong>. Selecting a smaller pinch point yields more steam generation but demands exponentially larger heat transfer surface area.</p>
                     </div>
 
                     <div class="step-card">
                         <div class="step-num">02</div>
-                        <h3>The Approach Point Margin (ΔT_approach)</h3>
-                        <p>The Approach Point represents the degree of subcooling of water exiting the economizer relative to the drum saturation temperature (\(T_{econ,out} = T_{sat} - \Delta T_{approach}\)). A positive margin (\(5 - 15^\circ\text{C}\)) ensures steam does not generate inside the economizer tubes, preventing water hammer and vapor locking.</p>
+                        <h3>The Approach Point Margin (ΔT<sub>approach</sub>)</h3>
+                        <p>The Approach Point represents the degree of subcooling of water exiting the economizer relative to the drum saturation temperature (<strong>T<sub>econ,out</sub> = T<sub>sat</sub> &minus; &Delta;T<sub>approach</sub></strong>). A positive margin (5 &ndash; 15&deg;C) ensures steam does not generate inside the economizer tubes, preventing water hammer and vapor locking.</p>
                     </div>
 
                     <div class="step-card">
                         <div class="step-num">03</div>
                         <h3>Acid Dew Point & Stack Corrosion</h3>
-                        <p>In fuels containing sulfur (heavy oil, sour gas, or high-sulfur coal), flue gas exit temperature must remain above the sulfuric acid dew point (\(130 - 150^\circ\text{C}\)) to prevent acid condensation on economizer tubes and chimney walls.</p>
+                        <p>In fuels containing sulfur (heavy oil, sour gas, or high-sulfur coal), flue gas exit temperature must remain above the sulfuric acid dew point (130 &ndash; 150&deg;C) to prevent acid condensation on economizer tubes and chimney walls.</p>
                     </div>
                 </div>
 
@@ -821,14 +886,14 @@
                         <details class="faq-item">
                             <summary class="faq-question">Why is the Pinch Point critical in WHRB design?</summary>
                             <div class="faq-answer">
-                                <p>The pinch point defines the thermodynamic bottleneck of heat transfer. Because boiling takes place at a constant temperature (\(T_{sat}\)), the flue gas temperature cannot drop below the saturation temperature. The temperature difference at the exit of the evaporator (\(T_{gas,evap} - T_{sat}\)) governs the maximum heat that can be absorbed by the evaporator and superheater combined.</p>
+                                <p>The pinch point defines the thermodynamic bottleneck of heat transfer. Because boiling takes place at a constant temperature (<strong>T<sub>sat</sub></strong>), the flue gas temperature cannot drop below the saturation temperature. The temperature difference at the exit of the evaporator (<strong>T<sub>gas,evap</sub> &minus; T<sub>sat</sub></strong>) governs the maximum heat that can be absorbed by the evaporator and superheater combined.</p>
                             </div>
                         </details>
 
                         <details class="faq-item">
                             <summary class="faq-question">How does drum pressure affect steam generation?</summary>
                             <div class="faq-answer">
-                                <p>Higher drum pressure raises the saturation temperature (\(T_{sat}\)) according to IAPWS-IF97 steam tables (e.g., \(T_{sat} = 180^\circ\text{C}\) at 10 bar, but \(253^\circ\text{C}\) at 42 bar). A higher \(T_{sat}\) increases the evaporator exit gas temperature, which reduces the amount of sensible heat available above the pinch point, resulting in a lower steam generation rate for the same exhaust gas inlet temperature.</p>
+                                <p>Higher drum pressure raises the saturation temperature (<strong>T<sub>sat</sub></strong>) according to IAPWS-IF97 steam tables (e.g., <strong>T<sub>sat</sub> = 180&deg;C</strong> at 10 bar, but <strong>253&deg;C</strong> at 42 bar). A higher <strong>T<sub>sat</sub></strong> increases the evaporator exit gas temperature, which reduces the amount of sensible heat available above the pinch point, resulting in a lower steam generation rate for the same exhaust gas inlet temperature.</p>
                             </div>
                         </details>
 

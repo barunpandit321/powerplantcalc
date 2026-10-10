@@ -315,49 +315,158 @@
                     <div class="step-card">
                         <div class="step-num">01</div>
                         <h3>Saturation Temperature (T<sub>sat</sub>) & Pressure (P<sub>sat</sub>)</h3>
-                        <p>Saturation defines the thermodynamic state where liquid water and vapor coexist in equilibrium. At any given pressure (\(P_{sat}\)), water boils at an exact saturation temperature (\(T_{sat}\)). In a steam boiler drum, water and steam remain at saturation condition.</p>
+                        <p>Saturation defines the thermodynamic state where liquid water and vapor coexist in equilibrium. At any given pressure (<strong>P<sub>sat</sub></strong>), water boils at an exact saturation temperature (<strong>T<sub>sat</sub></strong>). In a steam boiler drum, water and steam remain at saturation condition.</p>
                     </div>
 
                     <div class="step-card">
                         <div class="step-num">02</div>
                         <h3>Specific Enthalpy (h<sub>f</sub>, h<sub>fg</sub>, h<sub>g</sub>)</h3>
-                        <p><strong>\(h_f\)</strong> is the sensible heat of saturated liquid. <strong>\(h_{fg}\)</strong> is the latent heat of vaporization required to convert 1 kg of boiling water into dry saturated steam at constant pressure without changing temperature. <strong>\(h_g\)</strong> is the total enthalpy of saturated vapor (\(h_g = h_f + h_{fg}\)).</p>
+                        <p><strong>h<sub>f</sub></strong> is the sensible heat of saturated liquid. <strong>h<sub>fg</sub></strong> is the latent heat of vaporization required to convert 1 kg of boiling water into dry saturated steam at constant pressure without changing temperature. <strong>h<sub>g</sub></strong> is the total enthalpy of saturated vapor (<strong>h<sub>g</sub> = h<sub>f</sub> + h<sub>fg</sub></strong>).</p>
                     </div>
 
                     <div class="step-card">
                         <div class="step-num">03</div>
                         <h3>Specific Volume (v<sub>f</sub> & v<sub>g</sub>)</h3>
-                        <p><strong>\(v_f\)</strong> is the volume occupied by 1 kg of saturated water (\(\approx 0.001\text{ m}^3/\text{kg}\)). <strong>\(v_g\)</strong> is the specific volume of saturated vapor. Because steam expands over 1,600 times compared to water at atmospheric pressure, specific volume governs pipe sizing and valve selection.</p>
+                        <p><strong>v<sub>f</sub></strong> is the volume occupied by 1 kg of saturated water (&approx; 0.001 m³/kg). <strong>v<sub>g</sub></strong> is the specific volume of saturated vapor. Because steam expands over 1,600 times compared to water at atmospheric pressure, specific volume governs pipe sizing and valve selection.</p>
                     </div>
 
                     <div class="step-card">
                         <div class="step-num">04</div>
                         <h3>Specific Entropy (s<sub>f</sub> & s<sub>g</sub>)</h3>
-                        <p>Entropy measures the degree of irreversibility and energy dispersion in thermodynamic systems. It serves as the baseline for evaluating isentropic expansion work in steam turbines (\(W_{ideal} = h_1 - h_{2s}\)).</p>
+                        <p>Entropy measures the degree of irreversibility and energy dispersion in thermodynamic systems. It serves as the baseline for evaluating isentropic expansion work in steam turbines (<strong>W<sub>ideal</sub> = h<sub>1</sub> - h<sub>2s</sub></strong>).</p>
                     </div>
                 </div>
 
-                <!-- Engineering Formulas Box -->
-                <div class="formula-box" style="margin-top: 24px;">
-                    <h3>Wet Steam & Enthalpy Calculation Formula</h3>
-                    <p>In wet steam mixtures (two-phase vapor and liquid, such as inside boiler drums and low-pressure turbine exhausts), properties depend on the <strong>dryness fraction (vapor quality, \(x\))</strong>:</p>
+                <!-- Wet Steam Thermodynamic Equations & Variable Table -->
+                <div class="card" style="margin-top: 28px; padding: 24px; border: 1px solid var(--border-color); border-radius: 14px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="font-size: 1.5rem;">♨️</span>
+                        <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-main);">Wet Steam &amp; Two-Phase Mixture Equations</h3>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
+                        In two-phase saturated mixtures (such as inside boiler steam drums, separator vessels, and LP steam turbine exhausts), physical properties depend directly on the <strong>Dryness Fraction (Vapor Quality, <em>x</em>)</strong>:
+                    </p>
 
-                    <div class="math-formula">
-                        \[h_x = h_f + x \cdot h_{fg} = (1 - x) \cdot h_f + x \cdot h_g\]
-                    </div>
-                    <div class="math-formula">
-                        \[v_x = v_f + x \cdot (v_g - v_f) \approx x \cdot v_g\]
-                    </div>
-                    <div class="math-formula">
-                        \[s_x = s_f + x \cdot s_{fg} = s_f + x \cdot \left(\frac{h_{fg}}{T_{sat}}\right)\]
+                    <!-- 2x2 Grid of Formula Callout Cards -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                        
+                        <!-- 1. Enthalpy Formula -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Wet Steam Enthalpy (h<sub>x</sub>)</div>
+                            <div class="formula-equation">
+                                h<sub>x</sub> = h<sub>f</sub> + x &middot; h<sub>fg</sub>
+                            </div>
+                            <div class="formula-equation" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 4px;">
+                                = (1 - x) &middot; h<sub>f</sub> + x &middot; h<sub>g</sub>
+                            </div>
+                            <div class="formula-subtext">Calculates total heat content of the two-phase mixture (kJ/kg or Btu/lb).</div>
+                        </div>
+
+                        <!-- 2. Specific Volume Formula -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Wet Steam Specific Volume (v<sub>x</sub>)</div>
+                            <div class="formula-equation">
+                                v<sub>x</sub> = v<sub>f</sub> + x &middot; (v<sub>g</sub> - v<sub>f</sub>)
+                            </div>
+                            <div class="formula-equation" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 4px;">
+                                &approx; x &middot; v<sub>g</sub> &nbsp; <span style="font-size: 0.8rem; font-weight: normal;">(since v<sub>g</sub> &gg; v<sub>f</sub>)</span>
+                            </div>
+                            <div class="formula-subtext">Calculates volume occupied per unit mass (m³/kg or ft³/lb).</div>
+                        </div>
+
+                        <!-- 3. Entropy Formula -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Wet Steam Entropy (s<sub>x</sub>)</div>
+                            <div class="formula-equation">
+                                s<sub>x</sub> = s<sub>f</sub> + x &middot; s<sub>fg</sub>
+                            </div>
+                            <div class="formula-equation" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 4px;">
+                                = s<sub>f</sub> + x &middot; (h<sub>fg</sub> / T<sub>sat</sub>)
+                            </div>
+                            <div class="formula-subtext">Thermodynamic baseline for evaluating isentropic turbine expansion efficiency.</div>
+                        </div>
+
+                        <!-- 4. Quality (Dryness Fraction) Formula -->
+                        <div class="formula-callout" style="margin: 0;">
+                            <div class="formula-label">Vapor Quality / Dryness Fraction (x)</div>
+                            <div class="formula-equation">
+                                x = (h - h<sub>f</sub>) / h<sub>fg</sub>
+                            </div>
+                            <div class="formula-equation" style="font-size: 0.95rem; color: var(--text-muted); margin-top: 4px;">
+                                = (v - v<sub>f</sub>) / (v<sub>g</sub> - v<sub>f</sub>)
+                            </div>
+                            <div class="formula-subtext">Mass fraction of dry saturated vapor: x = 0 (100% boiling liquid), x = 1 (100% dry vapor).</div>
+                        </div>
+
                     </div>
 
-                    <div class="formula-legend">
-                        <ul>
-                            <li><strong>\(x\)</strong>: Dryness fraction or vapor quality (\(0.0 = 100\%\) liquid, \(1.0 = 100\%\) dry saturated steam)</li>
-                            <li><strong>\(h_x, v_x, s_x\)</strong>: Enthalpy, specific volume, and entropy of wet steam at quality \(x\)</li>
-                            <li><strong>\(T_{sat}\)</strong>: Absolute saturation temperature in Kelvin (\(K = ^\circ\text{C} + 273.15\))</li>
-                        </ul>
+                    <!-- Clean Structured Variables Table -->
+                    <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                        <span>📋</span> Thermodynamic Variable Reference &amp; Units
+                    </h4>
+                    <div class="table-responsive" style="margin: 0; box-shadow: none; border-radius: 8px;">
+                        <table class="data-table" style="margin: 0; font-size: 0.85rem;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 14%;">Symbol</th>
+                                    <th style="width: 28%;">Parameter Name</th>
+                                    <th style="width: 16%;">Metric (SI)</th>
+                                    <th style="width: 16%;">US Customary</th>
+                                    <th>Thermodynamic Definition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>x</strong></td>
+                                    <td>Dryness Fraction (Quality)</td>
+                                    <td>fraction (0 &ndash; 1)</td>
+                                    <td>fraction (0 &ndash; 1)</td>
+                                    <td>Mass ratio of vapor to total two-phase mixture (0 = liquid, 1.0 = vapor)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>h<sub>f</sub></strong></td>
+                                    <td>Saturated Liquid Enthalpy</td>
+                                    <td>kJ/kg</td>
+                                    <td>Btu/lb</td>
+                                    <td>Sensible heat content of boiling water at saturation temperature</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>h<sub>fg</sub></strong></td>
+                                    <td>Latent Heat of Vaporization</td>
+                                    <td>kJ/kg</td>
+                                    <td>Btu/lb</td>
+                                    <td>Energy required for complete phase change from liquid to vapor (h<sub>g</sub> &minus; h<sub>f</sub>)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>h<sub>g</sub></strong></td>
+                                    <td>Dry Saturated Vapor Enthalpy</td>
+                                    <td>kJ/kg</td>
+                                    <td>Btu/lb</td>
+                                    <td>Total enthalpy of 100% dry saturated steam (h<sub>f</sub> + h<sub>fg</sub>)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>v<sub>f</sub> , v<sub>g</sub></strong></td>
+                                    <td>Liquid &amp; Vapor Specific Volume</td>
+                                    <td>m³/kg</td>
+                                    <td>ft³/lb</td>
+                                    <td>Specific volume occupied by boiling liquid (v<sub>f</sub>) and vapor (v<sub>g</sub>)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>s<sub>f</sub> , s<sub>g</sub></strong></td>
+                                    <td>Liquid &amp; Vapor Specific Entropy</td>
+                                    <td>kJ/(kg&middot;K)</td>
+                                    <td>Btu/(lb&middot;&deg;F)</td>
+                                    <td>Reference entropy used for isentropic expansion in steam turbines</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>T<sub>sat</sub></strong></td>
+                                    <td>Saturation Temperature</td>
+                                    <td>Kelvin (K = &deg;C + 273.15)</td>
+                                    <td>Rankine (&deg;R = &deg;F + 459.67)</td>
+                                    <td>Absolute boiling temperature at operating saturation pressure</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -374,16 +483,16 @@
                         </details>
 
                         <details class="faq-item">
-                            <summary class="faq-question">Why does latent heat (h_fg) decrease as pressure increases?</summary>
+                            <summary class="faq-question">Why does latent heat (h<sub>fg</sub>) decrease as pressure increases?</summary>
                             <div class="faq-answer">
-                                <p>At higher pressures, water molecules are packed closer together in the liquid phase, requiring less additional energy to overcome intermolecular bonds and expand into vapor. At the <strong>critical point (220.64 bar / 373.95°C)</strong>, the latent heat \(h_{fg}\) becomes exactly zero, and the boundary between liquid and vapor disappears completely.</p>
+                                <p>At higher pressures, water molecules are packed closer together in the liquid phase, requiring less additional energy to overcome intermolecular bonds and expand into vapor. At the <strong>critical point (220.64 bar / 373.95°C)</strong>, the latent heat <strong>h<sub>fg</sub></strong> becomes exactly zero, and the boundary between liquid and vapor disappears completely.</p>
                             </div>
                         </details>
 
                         <details class="faq-item">
                             <summary class="faq-question">What is gauge pressure vs absolute pressure in steam tables?</summary>
                             <div class="faq-answer">
-                                <p>Physical thermodynamic equations strictly require <strong>Absolute Pressure (psia or bar a)</strong>. Pressure gauges in power plants read <strong>Gauge Pressure (psig or bar g)</strong>, which is the pressure above local atmospheric pressure (\(P_{abs} = P_{gauge} + 1.01325\text{ bar}\) or \(P_{abs} = P_{gauge} + 14.7\text{ psi}\)). Our steam table includes a convenient "Gauge Press" toggle to switch columns automatically.</p>
+                                <p>Physical thermodynamic equations strictly require <strong>Absolute Pressure (psia or bar a)</strong>. Pressure gauges in power plants read <strong>Gauge Pressure (psig or bar g)</strong>, which is the pressure above local atmospheric pressure (<strong>P<sub>abs</sub> = P<sub>gauge</sub> + 1.01325 bar</strong> or <strong>P<sub>abs</sub> = P<sub>gauge</sub> + 14.696 psi</strong>). Our steam table includes a convenient "Gauge Press" toggle to switch columns automatically.</p>
                             </div>
                         </details>
 
