@@ -40,16 +40,22 @@ export function initNavbar() {
     // Theme Toggle Handler
     function applyTheme(theme) {
         if (theme === "dark") {
-            document.documentElement.removeAttribute("data-theme");
+            document.documentElement.setAttribute("data-theme", "dark");
+            document.documentElement.classList.add("dark");
             if (themeToggleBtn) {
-                themeToggleBtn.querySelector(".theme-icon").textContent = "🌙";
-                themeToggleBtn.querySelector(".theme-text").textContent = "Dark Mode";
+                const icon = themeToggleBtn.querySelector(".theme-icon");
+                const text = themeToggleBtn.querySelector(".theme-text");
+                if (icon) icon.textContent = "🌙";
+                if (text) text.textContent = "Dark Mode";
             }
         } else {
             document.documentElement.setAttribute("data-theme", "light");
+            document.documentElement.classList.remove("dark");
             if (themeToggleBtn) {
-                themeToggleBtn.querySelector(".theme-icon").textContent = "☀️";
-                themeToggleBtn.querySelector(".theme-text").textContent = "Light Mode";
+                const icon = themeToggleBtn.querySelector(".theme-icon");
+                const text = themeToggleBtn.querySelector(".theme-text");
+                if (icon) icon.textContent = "☀️";
+                if (text) text.textContent = "Light Mode";
             }
         }
     }
@@ -59,10 +65,11 @@ export function initNavbar() {
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener("click", () => {
-            const isLight = document.documentElement.getAttribute("data-theme") === "light";
-            const next = isLight ? "dark" : "light";
+            const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+            const next = isDark ? "light" : "dark";
             applyTheme(next);
             localStorage.setItem(THEME_KEY, next);
+            window.dispatchEvent(new CustomEvent("themeChanged", { detail: { theme: next } }));
         });
     }
 

@@ -73,7 +73,7 @@ function showToast(msg) {
  * Render Active Thermodynamic Chart
  */
 function updateChart() {
-    const isDarkMode = document.documentElement.getAttribute("data-theme") !== "light";
+    const isDarkMode = document.documentElement.getAttribute("data-theme") === "dark" || document.documentElement.classList.contains("dark");
     drawThermodynamicChart("steamChart", currentState, activeChartType, isDarkMode);
 }
 
@@ -610,4 +610,9 @@ window.addEventListener("unitSystemChanged", (e) => {
     } else {
         applyPreset("hp-superheat");
     }
+});
+
+// Re-render chart on theme changes
+window.addEventListener("themeChanged", () => {
+    updateChart();
 });

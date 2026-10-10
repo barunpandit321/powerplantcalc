@@ -499,6 +499,11 @@ document.addEventListener("DOMContentLoaded", () => {
         calculate();
     });
 
+    // Re-render pipe chart on theme changes
+    window.addEventListener("themeChanged", () => {
+        calculate();
+    });
+
     // Export PDF / Print
     if (printReportBtn) {
         printReportBtn.addEventListener("click", () => {

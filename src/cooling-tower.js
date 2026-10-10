@@ -409,5 +409,10 @@ document.addEventListener("DOMContentLoaded", () => {
             applyCoolingPreset("eu-2500m3h");
         }
     });
+
+    // Re-render cooling tower chart on theme changes
+    window.addEventListener("themeChanged", () => {
+        calculate();
+    });
 });
 

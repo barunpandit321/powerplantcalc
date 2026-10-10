@@ -440,6 +440,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Re-render boiler chart on theme changes
+    window.addEventListener("themeChanged", () => {
+        if (currentMethod === "indirect") {
+            calculateIndirect();
+        } else {
+            calculateDirect();
+        }
+    });
+
     // Export PDF / Print
     if (printReportBtn) {
         printReportBtn.addEventListener("click", () => {
