@@ -86,6 +86,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function updateCustomUnitLabel() {
+        if (customPointUnit) {
+            if (currentMode === "pressure") customPointUnit.textContent = currentUnitSystem === "US" ? (isGaugePressure ? "psig" : "psia") : (isGaugePressure ? "bar(g)" : "bar(a)");
+            else if (currentMode === "temperature") customPointUnit.textContent = currentUnitSystem === "US" ? "°F" : "°C";
+            else customPointUnit.textContent = currentUnitSystem === "US" ? "°F" : "°C";
+        }
+    }
+
     // Switch Tabs
     function setMode(mode) {
         currentMode = mode;
@@ -98,12 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             superheatedSelectorWrap.style.display = mode === "superheated" ? "flex" : "none";
         }
 
-        if (customPointUnit) {
-            if (mode === "pressure") customPointUnit.textContent = currentUnitSystem === "US" ? (isGaugePressure ? "psig" : "psia") : (isGaugePressure ? "bar(g)" : "bar(a)");
-            else if (mode === "temperature") customPointUnit.textContent = currentUnitSystem === "US" ? "°F" : "°C";
-            else customPointUnit.textContent = currentUnitSystem === "US" ? "°F" : "°C";
-        }
-
+        updateCustomUnitLabel();
         customPointRow = null;
         renderActiveTable();
     }
@@ -162,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (toggleGaugeCheckbox) {
         toggleGaugeCheckbox.addEventListener("change", () => {
             isGaugePressure = toggleGaugeCheckbox.checked;
+            updateCustomUnitLabel();
             renderActiveTable();
         });
     }
@@ -185,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <th>Density (${isUS ? 'lb/ft³' : 'kg/m³'})</th>
                 <th>Enthalpy (${hLabel})</th>
                 <th>Entropy (${sLabel})</th>
-                <th>Specific Heat Cp</th>
+                <th>Specific Heat Cp (${isUS ? 'Btu/(lb·°F)' : 'kJ/(kg·K)'})</th>
                 <th>State Condition</th>
             `;
             return;
@@ -276,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const vConv = isUS ? 16.01846 : 1;
             const hConv = isUS ? (1 / 2.326) : 1;
             const sConv = isUS ? (1 / 4.1868) : 1;
+            const cpConv = isUS ? (1 / 4.1868) : 1;
             const rhoConv = isUS ? 0.06242796 : 1;
 
             if (searchQuery) {
@@ -295,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${(rawRow.rho * rhoConv).toFixed(2)}</td>
                 <td style="font-weight: 600; color: #0284c7;">${(rawRow.h * hConv).toFixed(1)}</td>
                 <td>${(rawRow.s * sConv).toFixed(4)}</td>
-                <td>${(rawRow.cp).toFixed(3)}</td>
+                <td>${(rawRow.cp * cpConv).toFixed(3)}</td>
                 <td>${rawRow.isSat ? '<span class="badge" style="background:#0284c7; color:#fff; font-size:0.75rem;">Saturated Vapor</span>' : '<span style="color:#10b981; font-weight:600; font-size:0.8rem;">Superheated</span>'}</td>
             `;
             tableBody.appendChild(tr);
@@ -359,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Listen to Navbar Global Unit Change
     window.addEventListener("unitSystemChanged", e => {
         currentUnitSystem = e.detail && e.detail.system === "US" ? "US" : "METRIC";
+        updateCustomUnitLabel();
         renderActiveTable();
     });
 
