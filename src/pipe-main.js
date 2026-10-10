@@ -220,7 +220,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (calculateBtn) {
-        calculateBtn.addEventListener("click", () => calculate());
+        calculateBtn.addEventListener("click", () => {
+            calculate();
+            calculateBtn.classList.add("btn-pulse");
+            setTimeout(() => calculateBtn.classList.remove("btn-pulse"), 300);
+
+            if (window.innerWidth <= 768) {
+                const resultsSection = document.querySelector(".results-header") || document.querySelector(".results");
+                if (resultsSection) {
+                    resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+        });
     }
 
     // Main Calculation Function

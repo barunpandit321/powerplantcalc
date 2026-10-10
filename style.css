@@ -527,35 +527,62 @@ header p {
     flex-wrap: wrap;
 }
 
-.primary-btn {
+.primary-btn,
+.calc-btn {
     flex: 1 1 65%;
-    padding: 14px 20px;
-    min-height: 48px;
+    padding: 14px 22px;
+    min-height: 50px;
     border: none;
     border-radius: 10px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
     color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.025rem;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
     transition: all 0.2s ease;
     box-sizing: border-box;
+    letter-spacing: 0.01em;
 }
 
-.primary-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
+.primary-btn:hover,
+.calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(59, 130, 246, 0.55);
+    filter: brightness(1.05);
 }
 
-.secondary-btn {
+.primary-btn:active,
+.calc-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.primary-btn:focus-visible,
+.calc-btn:focus-visible {
+    outline: 3px solid var(--primary-glow);
+    outline-offset: 2px;
+}
+
+@keyframes btnPulseAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.97); filter: brightness(1.15); }
+    100% { transform: scale(1); }
+}
+
+.btn-pulse {
+    animation: btnPulseAnimation 0.25s ease-out;
+}
+
+.secondary-btn,
+.share-btn {
     flex: 0 0 auto;
     padding: 12px 18px;
-    min-height: 48px;
+    min-height: 50px;
     border: 1px solid var(--border-color);
     border-radius: 10px;
     background: var(--bg-input);
@@ -570,10 +597,16 @@ header p {
     transition: all 0.2s ease;
 }
 
-.secondary-btn:hover {
+.secondary-btn:hover,
+.share-btn:hover {
     border-color: var(--primary);
     color: var(--primary);
     transform: translateY(-1px);
+}
+
+.secondary-btn:active,
+.share-btn:active {
+    transform: translateY(0);
 }
 
 .results-header {
@@ -1532,15 +1565,15 @@ header p {
         flex-direction: column;
     }
 
-    .primary-btn, .secondary-btn {
+    .primary-btn, .secondary-btn, .calc-btn, .share-btn {
         width: 100%;
     }
 
-    .primary-btn {
-        min-height: 48px;
-        font-size: 1.025rem;
+    .primary-btn, .calc-btn {
+        min-height: 50px;
+        font-size: 1.05rem;
         font-weight: 700;
-        box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
     }
 
     /* Mobile UX: Compact header & zero-scroll tool positioning */

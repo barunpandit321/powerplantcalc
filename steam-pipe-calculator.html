@@ -311,18 +311,44 @@
                     </div>
                 </div>
 
+                <!-- IN-FLOW FIELD TIP -->
+                <div class="field-helper-tip">
+                    <span class="helper-icon">💡</span>
+                    <div class="helper-text">
+                        <strong>Field Tip:</strong> Sizing steam piping headers or checking line insulation?
+                        <a href="https://www.amazon.com/s?k=Fluke+62+MAX+Infrared+Thermometer&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="helper-link">
+                            Fluke 62 MAX IR Temp Gun ↗
+                        </a>
+                        or
+                        <a href="https://www.amazon.com/s?k=Piping+Handbook+Mohinder+Nayyar+Kindle&tag=powerplantcal-20" target="_blank" rel="noopener noreferrer sponsored" class="helper-link">
+                            Piping Handbook (Nayyar) ↗
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Action Buttons Group -->
                 <div class="action-buttons-group">
-                    <button id="calculateBtn" class="calc-btn" type="button">
-                        <span>⚡ Size Steam Pipe</span>
+                    <button id="calculateBtn" class="primary-btn calc-btn" type="button" aria-label="Calculate steam pipe sizing and velocity">
+                        <span>Calculate Steam Pipe Sizing</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </button>
-                    <button id="shareLinkBtn" class="share-btn" type="button" title="Copy shareable link to clipboard">
-                        <span>🔗 Share</span>
-                    </button>
-                    <button id="printReportBtn" class="print-btn" type="button" title="Print calculation datasheet / Export PDF">
-                        <span>📄 Export PDF</span>
+                    <button id="shareLinkBtn" class="secondary-btn share-btn" type="button" title="Copy calculation deep-link to share with colleagues">
+                        <span>🔗 Share Calculation</span>
                     </button>
                 </div>
+            </section>
+
+            <!-- Results Header -->
+            <section class="results-header" aria-labelledby="results-heading">
+                <div class="results-title-box">
+                    <h2 id="results-heading">Steam Pipe Sizing & Velocity Results</h2>
+                    <p class="subtitle">Evaluated in accordance with ASME B31.1, ASME B36.10M, and IAPWS-IF97 steam formulations</p>
+                </div>
+                <button id="printReportBtn" class="secondary-btn print-btn" type="button" title="Print calculation datasheet / Export PDF">
+                    <span>🖨️ Export PDF / Print</span>
+                </button>
             </section>
 
             <!-- Results Section -->
