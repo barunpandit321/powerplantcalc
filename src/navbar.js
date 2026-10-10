@@ -1,6 +1,4 @@
-/**
- * Shared Site Navbar & Mobile Menu Controller for PowerPlantCalc
- */
+import { detectUserZone, getUserUnitSystem, setUserUnitSystem } from "./geo.js";
 
 const THEME_KEY = "steam_calculator_theme";
 
@@ -8,6 +6,36 @@ export function initNavbar() {
     const themeToggleBtn = document.getElementById("themeToggle");
     const mobileMenuToggle = document.getElementById("mobileMenuToggle");
     const navLinksContainer = document.getElementById("navLinksContainer");
+    const unitToggleBtn = document.getElementById("unitSystemToggle");
+
+    // Unit System (US Customary vs Metric SI) Handler
+    function updateUnitToggleButton(sys) {
+        if (!unitToggleBtn) return;
+        if (sys === "US") {
+            unitToggleBtn.innerHTML = `<span class="unit-flag">🇺🇸</span><span class="unit-text">US (psi, °F)</span>`;
+            unitToggleBtn.setAttribute("title", "Active: US Customary (psi, °F, lb/h, GPM). Click to switch to Metric SI.");
+            unitToggleBtn.setAttribute("aria-label", "Active unit system: US Customary. Click to switch to Metric.");
+            unitToggleBtn.classList.add("us-active");
+        } else {
+            unitToggleBtn.innerHTML = `<span class="unit-flag">🌍</span><span class="unit-text">Metric (SI)</span>`;
+            unitToggleBtn.setAttribute("title", "Active: Metric SI (bar, °C, kg/h, m³/h). Click to switch to US Customary.");
+            unitToggleBtn.setAttribute("aria-label", "Active unit system: Metric SI. Click to switch to US Customary.");
+            unitToggleBtn.classList.remove("us-active");
+        }
+    }
+
+    const initialUnitSystem = getUserUnitSystem();
+    updateUnitToggleButton(initialUnitSystem);
+
+    if (unitToggleBtn) {
+        unitToggleBtn.addEventListener("click", () => {
+            const current = getUserUnitSystem();
+            const next = current === "US" ? "METRIC" : "US";
+            setUserUnitSystem(next);
+            updateUnitToggleButton(next);
+            window.dispatchEvent(new CustomEvent("unitSystemChanged", { detail: { system: next } }));
+        });
+    }
 
     // Theme Toggle Handler
     function applyTheme(theme) {

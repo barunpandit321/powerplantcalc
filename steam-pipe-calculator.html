@@ -163,6 +163,11 @@
             </div>
 
             <div class="nav-right-controls">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Switch between US Customary and Metric units" title="Switch Unit System (US Imperial / Metric SI)">
+                    <span class="unit-flag">🇺🇸</span>
+                    <span class="unit-text">US (psi, °F)</span>
+                </button>
+
                 <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
                     <span class="theme-icon">☀️</span>
                     <span class="theme-text">Light Mode</span>
@@ -183,7 +188,7 @@
                 <div class="badge">ASME B31.1 & ASME B36.10M Standard</div>
             </div>
             <h1>Steam Pipe Sizing & Velocity Calculator</h1>
-            <p>Determine optimal commercial pipe diameter, steam flow velocity, and Darcy-Weisbach frictional pressure drop for saturated and superheated steam lines using IAPWS-IF97 steam formulations.</p>
+            <p>Determine optimal commercial pipe diameter, steam flow velocity, and Darcy-Weisbach frictional pressure drop for saturated and superheated steam lines using IAPWS-IF97 steam formulations. Native support for US Customary (NPS, psi, ft/min, lb/h) and Metric SI.</p>
 
             <div class="seo-tags-bar">
                 <span class="seo-tag">📏 ASME B36.10M Schedule 40/80/160</span>
@@ -203,22 +208,25 @@
                 <div class="presets-toolbar" aria-label="Common Steam Piping Presets">
                     <span class="presets-label">⚡ 1-Click Engineering Presets:</span>
                     <div class="presets-buttons-wrap">
-                        <button type="button" class="preset-btn" data-pipe-preset="mp-process" title="Medium Pressure Process Header">🏭 MP Process (10 barg Sat)</button>
-                        <button type="button" class="preset-btn" data-pipe-preset="hp-main" title="High Pressure Superheated Main Steam">⚡ HP Superheated (65 barg, 485°C)</button>
-                        <button type="button" class="preset-btn" data-pipe-preset="lp-heating" title="Low Pressure Heating & Distribution">🏢 LP Heating (3.5 barg Sat)</button>
-                        <button type="button" class="preset-btn" data-pipe-preset="us-600psig" title="US Industrial Boiler Lead">🇺🇸 US 600 psig Boiler Lead</button>
-                        <button type="button" class="preset-btn" data-pipe-preset="turbine-exhaust" title="Turbine Vacuum Exhaust to Condenser">💨 Turbine Exhaust (0.1 bar a)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="us-600psig" title="US Industrial Boiler Lead (600 psig, 750°F, 50k lb/h)">🇺🇸 US 600 psig Lead (750°F)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="us-150psig" title="US Industrial Process Steam (150 psig Sat, 25k lb/h)">🇺🇸 US 150 psig Process</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="us-15psig" title="US Low Pressure Heating Steam (15 psig Sat, 5k lb/h)">🇺🇸 US 15 psig Heating</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="mp-process" title="Medium Pressure Process Header (10 barg, 10k kg/h)">🏭 MP Process (10 barg Sat)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="hp-main" title="High Pressure Superheated Main Steam (65 barg, 485°C)">⚡ HP Superheated (65 barg)</button>
+                        <button type="button" class="preset-btn" data-pipe-preset="turbine-exhaust" title="Turbine Vacuum Exhaust (1.5 inHg a)">💨 Turbine Exhaust (1.5 inHg a)</button>
                     </div>
                 </div>
 
                 <div class="input-group full-width" style="margin-bottom: 16px;">
                     <label for="pipePresetSelect">Select Operating Condition Preset</label>
                     <select id="pipePresetSelect">
-                        <option value="mp-process">🏭 Medium Pressure Process Steam (10 barg, 10,000 kg/h)</option>
-                        <option value="hp-main">⚡ High Pressure Superheated Steam (65 barg, 485°C, 50,000 kg/h)</option>
-                        <option value="lp-heating">🏢 Low Pressure Heating & Distribution (3.5 barg, 2,500 kg/h)</option>
                         <option value="us-600psig">🇺🇸 US Boiler Outlet Lead (600 psig, 750°F, 50,000 lb/h)</option>
-                        <option value="turbine-exhaust">💨 Turbine Vacuum Exhaust (0.1 bar a, 20,000 kg/h)</option>
+                        <option value="us-150psig">🇺🇸 US Medium Pressure Process Steam (150 psig Sat, 25,000 lb/h)</option>
+                        <option value="us-15psig">🇺🇸 US Low Pressure Heating Steam (15 psig Sat, 5,000 lb/h)</option>
+                        <option value="mp-process">🏭 Medium Pressure Process Steam (10 barg Sat, 10,000 kg/h)</option>
+                        <option value="hp-main">⚡ High Pressure Superheated Steam (65 barg, 485°C, 50,000 kg/h)</option>
+                        <option value="lp-heating">🏢 Low Pressure Heating & Distribution (3.5 barg Sat, 2,500 kg/h)</option>
+                        <option value="turbine-exhaust">💨 Turbine Vacuum Exhaust (1.5 inHg a / 0.1 bar a, 20,000 lb/h)</option>
                     </select>
                 </div>
 

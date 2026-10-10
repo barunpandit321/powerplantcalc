@@ -4,7 +4,31 @@
  * and sets default units + reorders dropdown options accordingly.
  */
 
+export const UNIT_SYSTEM_KEY = "ppc_user_unit_system";
+
+export function getUserUnitSystem() {
+    try {
+        const val = localStorage.getItem(UNIT_SYSTEM_KEY);
+        if (val === "US" || val === "METRIC") return val;
+    } catch (e) { }
+    return detectUserZone() === "US" ? "US" : "METRIC";
+}
+
+export function setUserUnitSystem(sys) {
+    try {
+        localStorage.setItem(UNIT_SYSTEM_KEY, sys);
+    } catch (e) { }
+}
+
 export function detectUserZone() {
+    // 0. Manual preference stored in localStorage takes top priority
+    try {
+        const manualPref = localStorage.getItem(UNIT_SYSTEM_KEY);
+        if (manualPref === "US" || manualPref === "IMPERIAL") return "US";
+        if (manualPref === "EU" || manualPref === "METRIC") return "EU";
+        if (manualPref === "IN") return "IN";
+    } catch (e) { }
+
     let timeZone = "";
     try {
         timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
@@ -21,32 +45,43 @@ export function detectUserZone() {
 
     if (isIndia) return "IN";
 
-    // 2. US / North America Detection (Imperial Units: psi, °F, Btu/lb, GPM, TR)
-    const usKeyZones = [
-        "New_York", "Chicago", "Denver", "Los_Angeles", "Phoenix", "Anchorage",
-        "Honolulu", "Detroit", "Indianapolis", "Boise", "Toronto", "Vancouver",
-        "Edmonton", "Winnipeg", "Montreal", "Halifax", "Calgary", "Regina"
-    ];
-
+    // 2. Latin America Check (to avoid false-positive on America/ timezones)
     const latinZones = [
         "Sao_Paulo", "Buenos_Aires", "Santiago", "Bogota", "Lima", "Mexico_City",
-        "Caracas", "Montevideo", "Asuncion", "La_Paz", "Guayaquil", "Panama"
+        "Caracas", "Montevideo", "Asuncion", "La_Paz", "Guayaquil", "Panama", "Havana", "Santo_Domingo"
     ];
-
     const isLatin = latinZones.some(lz => timeZone.includes(lz));
 
-    const isUS = (!isLatin && usKeyZones.some(z => timeZone.includes(z))) ||
+    // 3. US & North America Detection (Imperial Units: psi, °F, Btu/lb, GPM, TR)
+    // 50% or more of site visitors are from the US: provide robust recognition across all 50 states
+    const isUSTimeZone = !isLatin && (
         timeZone.startsWith("US/") ||
         timeZone.startsWith("Canada/") ||
-        (!isLatin && timeZone.startsWith("America/") && (
+        timeZone.includes("New_York") || timeZone.includes("Detroit") ||
+        timeZone.includes("Kentucky") || timeZone.includes("Indiana") ||
+        timeZone.includes("Chicago") || timeZone.includes("Menominee") ||
+        timeZone.includes("North_Dakota") || timeZone.includes("Denver") ||
+        timeZone.includes("Boise") || timeZone.includes("Phoenix") ||
+        timeZone.includes("Los_Angeles") || timeZone.includes("Anchorage") ||
+        timeZone.includes("Juneau") || timeZone.includes("Sitka") ||
+        timeZone.includes("Metlakatla") || timeZone.includes("Yakutat") ||
+        timeZone.includes("Nome") || timeZone.includes("Adak") ||
+        timeZone.includes("Honolulu") || timeZone.includes("Puerto_Rico") ||
+        (timeZone.startsWith("America/") && (
             timeZone.includes("Eastern") || timeZone.includes("Central") ||
-            timeZone.includes("Mountain") || timeZone.includes("Pacific")
-        )) ||
-        lang === "en-us" || lang === "en-ca";
+            timeZone.includes("Mountain") || timeZone.includes("Pacific") ||
+            timeZone.includes("Toronto") || timeZone.includes("Vancouver") ||
+            timeZone.includes("Edmonton") || timeZone.includes("Calgary") ||
+            timeZone.includes("Montreal") || timeZone.includes("Winnipeg")
+        ))
+    );
 
-    if (isUS) return "US";
+    const isUSLocale = lang === "en-us" || lang === "en-ca" ||
+        languages.some(l => l.startsWith("en-us") || l.startsWith("en-ca"));
 
-    // 3. Europe Detection (bar, °C, kJ/kg, m³/hr, MW)
+    if (isUSTimeZone || isUSLocale) return "US";
+
+    // 4. Europe Detection (bar, °C, kJ/kg, m³/hr, MW)
     const isEurope = timeZone.startsWith("Europe/") ||
         timeZone === "WET" || timeZone === "CET" || timeZone === "EET" ||
         timeZone.startsWith("Atlantic/Reykjavik") ||
@@ -58,7 +93,10 @@ export function detectUserZone() {
 
     if (isEurope) return "EU";
 
-    // 4. Default International Metric (Europe standard bar, °C, kJ/kg)
+    // 5. If language is general English and zone is unmapped/UTC, default to US Customary (50%+ target audience)
+    if (lang.startsWith("en")) return "US";
+
+    // 6. Default International Metric
     return "EU";
 }
 

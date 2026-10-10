@@ -394,6 +394,44 @@ header {
     transform: translateY(-1px);
 }
 
+.unit-system-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    width: auto;
+    min-height: 34px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.unit-system-toggle-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+.unit-system-toggle-btn.us-active {
+    border-color: rgba(59, 130, 246, 0.45);
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--primary);
+}
+
+.unit-flag {
+    font-size: 1rem;
+    line-height: 1;
+}
+
 .theme-icon {
     font-size: 1rem;
     line-height: 1;
@@ -1527,14 +1565,16 @@ header p {
         gap: 8px;
     }
 
-    .theme-toggle-btn {
+    .theme-toggle-btn,
+    .unit-system-toggle-btn {
         font-size: 0.75rem;
         padding: 4px 10px;
         min-height: 32px;
         border-radius: 16px;
     }
 
-    .theme-toggle-btn .theme-text {
+    .theme-toggle-btn .theme-text,
+    .unit-system-toggle-btn .unit-text {
         display: none;
     }
 

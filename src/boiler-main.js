@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
 
     const chart = new BoilerChart("boilerChart");
-    const userZone = detectUserZone();
+    let currentZone = detectUserZone();
 
     // Mode tabs: 'indirect' vs 'direct'
     let currentMethod = "indirect";
@@ -61,10 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const printReportBtn = document.getElementById("printReportBtn");
 
     // Populate units based on Geo-zone
-    populateDropdowns();
+    populateDropdowns(currentZone);
 
     // Set Default Preset (US Bituminous or Indian Coal depending on zone)
-    applyFuelPreset(userZone === "US" ? "us-bituminous" : "in-coal");
+    applyFuelPreset(currentZone === "US" ? "us-bituminous" : "in-coal");
 
     // Tab switching
     if (tabIndirect && tabDirect) {
@@ -130,50 +130,70 @@ document.addEventListener("DOMContentLoaded", () => {
         else inputGcv.value = p.gcvKcal;
 
         inputO2.value = p.defaultO2;
-        inputTg.value = p.defaultTg;
-        inputTa.value = 30;
+        const isF = unitTemp && unitTemp.value === "F";
+        inputTg.value = isF ? Math.round(p.defaultTg * 1.8 + 32) : p.defaultTg;
+        inputTa.value = isF ? 85 : 30;
         inputCo.value = 50;
         inputL6.value = p.defaultL6;
         inputL7.value = p.defaultL7;
     }
 
-    function populateDropdowns() {
+    function populateDropdowns(zone = currentZone) {
+        const isUS = zone === "US";
+
         // GCV units
         const gcvOptions = [
+            { id: "Btu_lb", label: "Btu/lb" },
             { id: "kcal_kg", label: "kcal/kg" },
-            { id: "kJ_kg", label: "kJ/kg" },
-            { id: "Btu_lb", label: "Btu/lb" }
+            { id: "kJ_kg", label: "kJ/kg" }
         ];
-        populateSelect(unitGcv, gcvOptions, userZone === "US" ? "Btu_lb" : "kcal_kg");
-        populateSelect(unitDirectGcv, gcvOptions, userZone === "US" ? "Btu_lb" : "kcal_kg");
+        populateSelect(unitGcv, gcvOptions, isUS ? "Btu_lb" : "kcal_kg");
+        populateSelect(unitDirectGcv, gcvOptions, isUS ? "Btu_lb" : "kcal_kg");
 
         // Temp units
         const tempOptions = [
-            { id: "C", label: "°C" },
-            { id: "F", label: "°F" }
+            { id: "F", label: "°F" },
+            { id: "C", label: "°C" }
         ];
-        populateSelect(unitTemp, tempOptions, userZone === "US" ? "F" : "C");
-        populateSelect(unitSteamT, tempOptions, userZone === "US" ? "F" : "C");
-        populateSelect(unitFwT, tempOptions, userZone === "US" ? "F" : "C");
+        populateSelect(unitTemp, tempOptions, isUS ? "F" : "C");
+        populateSelect(unitSteamT, tempOptions, isUS ? "F" : "C");
+        populateSelect(unitFwT, tempOptions, isUS ? "F" : "C");
 
         // Pressure units
         const pOptions = [
+            { id: "psi_g", label: "psig" },
             { id: "bar_g", label: "bar (gauge)" },
             { id: "bar_a", label: "bar (abs)" },
             { id: "kg_cm2_g", label: "kg/cm² (gauge)" },
-            { id: "psi_g", label: "psig" },
             { id: "MPa_g", label: "MPa (gauge)" }
         ];
-        populateSelect(unitSteamP, pOptions, userZone === "US" ? "psi_g" : "bar_g");
+        populateSelect(unitSteamP, pOptions, isUS ? "psi_g" : "bar_g");
 
         // Flow units
         const flowOptions = [
+            { id: "lbh", label: "lb/h" },
             { id: "tph", label: "t/h (metric tons/hr)" },
-            { id: "kgh", label: "kg/h" },
-            { id: "lbh", label: "lb/h" }
+            { id: "kgh", label: "kg/h" }
         ];
-        populateSelect(unitSteamFlow, flowOptions, userZone === "US" ? "lbh" : "tph");
-        populateSelect(unitFuelFlow, flowOptions, userZone === "US" ? "lbh" : "tph");
+        populateSelect(unitSteamFlow, flowOptions, isUS ? "lbh" : "tph");
+        populateSelect(unitFuelFlow, flowOptions, isUS ? "lbh" : "tph");
+
+        // Configure Direct inputs
+        if (isUS) {
+            if (inputSteamFlow) inputSteamFlow.value = "50000";
+            if (inputFuelFlow) inputFuelFlow.value = "6000";
+            if (inputSteamP) inputSteamP.value = "600";
+            if (inputSteamT) inputSteamT.value = "750";
+            if (inputFwT) inputFwT.value = "220";
+            if (inputDirectGcv) inputDirectGcv.value = "12000";
+        } else {
+            if (inputSteamFlow) inputSteamFlow.value = "25";
+            if (inputFuelFlow) inputFuelFlow.value = "3.2";
+            if (inputSteamP) inputSteamP.value = "40";
+            if (inputSteamT) inputSteamT.value = "400";
+            if (inputFwT) inputFwT.value = "105";
+            if (inputDirectGcv) inputDirectGcv.value = "6000";
+        }
     }
 
     function populateSelect(selectEl, options, defaultId) {
@@ -342,17 +362,47 @@ document.addEventListener("DOMContentLoaded", () => {
                 fuelGcvKjKg
             });
 
+            const isUS = currentZone === "US";
+            const heatOutMMBtu = res.heatOutputGjH * 0.947817;
+            const heatInMMBtu = res.heatInputGjH * 0.947817;
+            const equivLbH = res.equivEvaporationKgH * 2.20462;
+            const steamHBtu = res.steamEnthalpy * 0.429923;
+            const fwHBtu = res.fwEnthalpy * 0.429923;
+            const netHeatBtu = res.netHeatKjKg * 0.429923;
+
             document.getElementById("outDirectEff").textContent = `${res.efficiency.toFixed(2)} %`;
             const elDirectHeatRate = document.getElementById("outDirectHeatRate");
             if (elDirectHeatRate) elDirectHeatRate.textContent = `${res.heatRateBtuKwh.toLocaleString()} Btu/kWh (${res.heatRateKjKwh.toLocaleString()} kJ/kWh)`;
-            document.getElementById("outSteamH").textContent = `${res.steamEnthalpy.toFixed(1)} kJ/kg`;
-            document.getElementById("outFwH").textContent = `${res.fwEnthalpy.toFixed(1)} kJ/kg`;
-            document.getElementById("outNetHeat").textContent = `${res.netHeatKjKg.toFixed(1)} kJ/kg`;
-            document.getElementById("outHeatOutput").textContent = `${res.heatOutputGjH.toFixed(2)} GJ/h`;
-            document.getElementById("outHeatInput").textContent = `${res.heatInputGjH.toFixed(2)} GJ/h`;
-            document.getElementById("outEvapRatio").textContent = `${res.evaporationRatio.toFixed(2)} kg/kg`;
+
+            document.getElementById("outSteamH").textContent = isUS
+                ? `${steamHBtu.toFixed(1)} Btu/lb (${res.steamEnthalpy.toFixed(1)} kJ/kg)`
+                : `${res.steamEnthalpy.toFixed(1)} kJ/kg (${steamHBtu.toFixed(1)} Btu/lb)`;
+
+            document.getElementById("outFwH").textContent = isUS
+                ? `${fwHBtu.toFixed(1)} Btu/lb (${res.fwEnthalpy.toFixed(1)} kJ/kg)`
+                : `${res.fwEnthalpy.toFixed(1)} kJ/kg (${fwHBtu.toFixed(1)} Btu/lb)`;
+
+            document.getElementById("outNetHeat").textContent = isUS
+                ? `${netHeatBtu.toFixed(1)} Btu/lb (${res.netHeatKjKg.toFixed(1)} kJ/kg)`
+                : `${res.netHeatKjKg.toFixed(1)} kJ/kg (${netHeatBtu.toFixed(1)} Btu/lb)`;
+
+            document.getElementById("outHeatOutput").textContent = isUS
+                ? `${heatOutMMBtu.toFixed(2)} MMBtu/h (${res.heatOutputGjH.toFixed(2)} GJ/h)`
+                : `${res.heatOutputGjH.toFixed(2)} GJ/h (${heatOutMMBtu.toFixed(2)} MMBtu/h)`;
+
+            document.getElementById("outHeatInput").textContent = isUS
+                ? `${heatInMMBtu.toFixed(2)} MMBtu/h (${res.heatInputGjH.toFixed(2)} GJ/h)`
+                : `${res.heatInputGjH.toFixed(2)} GJ/h (${heatInMMBtu.toFixed(2)} MMBtu/h)`;
+
+            document.getElementById("outEvapRatio").textContent = isUS
+                ? `${res.evaporationRatio.toFixed(2)} lb/lb (${res.evaporationRatio.toFixed(2)} kg/kg)`
+                : `${res.evaporationRatio.toFixed(2)} kg/kg (${res.evaporationRatio.toFixed(2)} lb/lb)`;
+
             document.getElementById("outFE").textContent = `${res.factorOfEvaporation.toFixed(3)}`;
-            document.getElementById("outEquivEvap").textContent = `${res.equivEvaporationKgH.toFixed(0)} kg/h`;
+
+            document.getElementById("outEquivEvap").textContent = isUS
+                ? `${equivLbH.toFixed(0)} lb/h (${res.equivEvaporationKgH.toFixed(0)} kg/h)`
+                : `${res.equivEvaporationKgH.toFixed(0)} kg/h (${equivLbH.toFixed(0)} lb/h)`;
 
             // Chart update for direct method
             const directLosses = Math.max(0, 100 - res.efficiency);
@@ -375,6 +425,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial calculation
     calculateIndirect();
+
+    // Listen for Global Unit System Changes from Navbar
+    window.addEventListener("unitSystemChanged", (e) => {
+        currentZone = e.detail && e.detail.system === "US" ? "US" : "EU";
+        populateDropdowns(currentZone);
+        const defaultPreset = currentZone === "US" ? "us-bituminous" : "in-coal";
+        if (fuelPresetSelect) fuelPresetSelect.value = defaultPreset;
+        applyFuelPreset(defaultPreset);
+        if (currentMethod === "indirect") {
+            calculateIndirect();
+        } else {
+            calculateDirect();
+        }
+    });
 
     // Export PDF / Print
     if (printReportBtn) {

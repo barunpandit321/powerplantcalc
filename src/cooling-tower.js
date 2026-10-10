@@ -77,8 +77,67 @@ document.addEventListener("DOMContentLoaded", () => {
     const unitFlowOutSelect = document.getElementById("unit-flow-out");
 
     // Detect Regional Defaults (US vs Europe vs India)
-    const zone = detectUserZone();
-    const geoDefaults = getCoolingDefaultsForZone(zone);
+    let currentZone = detectUserZone();
+    const geoDefaults = getCoolingDefaultsForZone(currentZone);
+
+    // 1-Click Operating Presets
+    const COOLING_PRESETS = {
+        "us-10000gpm": {
+            temp: "F",
+            thot: "105",
+            tcold: "85",
+            twb: "78",
+            flow: "10000",
+            flowUnit: "gpm",
+            flowOutUnit: "gpm",
+            heatUnit: "tr",
+            coc: "3.5"
+        },
+        "us-2500gpm": {
+            temp: "F",
+            thot: "95",
+            tcold: "85",
+            twb: "78",
+            flow: "2500",
+            flowUnit: "gpm",
+            flowOutUnit: "gpm",
+            heatUnit: "tr",
+            coc: "4.0"
+        },
+        "us-1000gpm": {
+            temp: "F",
+            thot: "95",
+            tcold: "85",
+            twb: "75",
+            flow: "1000",
+            flowUnit: "gpm",
+            flowOutUnit: "gpm",
+            heatUnit: "tr",
+            coc: "4.5"
+        },
+        "eu-2500m3h": {
+            temp: "C",
+            thot: "40",
+            tcold: "32",
+            twb: "28",
+            flow: "2500",
+            flowUnit: "m3h",
+            flowOutUnit: "m3h",
+            heatUnit: "mw",
+            coc: "3.5"
+        },
+        "eu-500m3h": {
+            temp: "C",
+            thot: "38",
+            tcold: "30",
+            twb: "26",
+            flow: "500",
+            flowUnit: "m3h",
+            flowOutUnit: "m3h",
+            heatUnit: "mw",
+            coc: "4.0"
+        }
+    };
 
     // Load saved preferences if any
     let savedPrefs = null;
@@ -94,20 +153,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeRangeUnit = (savedPrefs && savedPrefs.rangeUnit) || geoDefaults.rangeUnit;
     const activeApproachUnit = (savedPrefs && savedPrefs.approachUnit) || geoDefaults.approachUnit;
 
-    // Populate Selects with Regional Ordering (Zone priority at top)
-    populateSelect(unitTemp, TEMP_UNITS, activeTempUnit, "temperature");
-    populateSelect(unitThot, TEMP_UNITS, activeTempUnit, "temperature");
-    populateSelect(unitTcold, TEMP_UNITS, activeTempUnit, "temperature");
-    populateSelect(unitTwb, TEMP_UNITS, activeTempUnit, "temperature");
+    function populateAllSelects(zone) {
+        populateSelect(unitTemp, TEMP_UNITS, activeTempUnit, "temperature", zone);
+        populateSelect(unitThot, TEMP_UNITS, activeTempUnit, "temperature", zone);
+        populateSelect(unitTcold, TEMP_UNITS, activeTempUnit, "temperature", zone);
+        populateSelect(unitTwb, TEMP_UNITS, activeTempUnit, "temperature", zone);
 
-    populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, activeRangeUnit, "temperature");
-    populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, activeApproachUnit, "temperature");
+        populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, activeRangeUnit, "temperature", zone);
+        populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, activeApproachUnit, "temperature", zone);
 
-    populateSelect(unitFlow, FLOW_UNITS, activeFlowUnit, "flow");
-    populateSelect(unitFlowOutSelect, FLOW_UNITS, activeFlowOutUnit, "flow");
-    populateSelect(unitHeatSelect, HEAT_UNITS, activeHeatUnit, "heat");
+        populateSelect(unitFlow, FLOW_UNITS, activeFlowUnit, "flow", zone);
+        populateSelect(unitFlowOutSelect, FLOW_UNITS, activeFlowOutUnit, "flow", zone);
+        populateSelect(unitHeatSelect, HEAT_UNITS, activeHeatUnit, "heat", zone);
+    }
 
-    function populateSelect(sel, table, defaultVal, unitType) {
+    populateAllSelects(currentZone);
+
+    function populateSelect(sel, table, defaultVal, unitType, zone = currentZone) {
         if (!sel) return;
         sel.innerHTML = "";
         const rawList = Object.keys(table).map(k => ({ id: k, name: table[k].name }));
@@ -135,12 +197,53 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) { }
     }
 
+    function applyCoolingPreset(presetKey) {
+        const p = COOLING_PRESETS[presetKey];
+        if (!p) return;
+
+        if (unitTemp) unitTemp.value = p.temp;
+        if (unitThot) unitThot.value = p.temp;
+        if (unitTcold) unitTcold.value = p.temp;
+        if (unitTwb) unitTwb.value = p.temp;
+        if (unitRangeSelect) unitRangeSelect.value = p.temp;
+        if (unitApproachSelect) unitApproachSelect.value = p.temp;
+
+        if (unitFlow) unitFlow.value = p.flowUnit;
+        if (unitFlowOutSelect) unitFlowOutSelect.value = p.flowOutUnit;
+        if (unitHeatSelect) unitHeatSelect.value = p.heatUnit;
+
+        if (inputThot) inputThot.value = p.thot;
+        if (inputTcold) inputTcold.value = p.tcold;
+        if (inputTwb) inputTwb.value = p.twb;
+        if (inputFlow) inputFlow.value = p.flow;
+        if (inputCoc) inputCoc.value = p.coc;
+
+        document.querySelectorAll("[data-cooling-preset]").forEach(btn => {
+            if (btn.getAttribute("data-cooling-preset") === presetKey) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+
+        saveCoolingPreferences();
+        calculate();
+    }
+
+    document.querySelectorAll("[data-cooling-preset]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const key = btn.getAttribute("data-cooling-preset");
+            if (key) applyCoolingPreset(key);
+        });
+    });
+
     // Set regional initial input values if not previously set
     if (!savedPrefs) {
-        if (inputThot) inputThot.value = geoDefaults.thot;
-        if (inputTcold) inputTcold.value = geoDefaults.tcold;
-        if (inputTwb) inputTwb.value = geoDefaults.twb;
-        if (inputFlow) inputFlow.value = geoDefaults.flowVal;
+        if (currentZone === "US") {
+            applyCoolingPreset("us-10000gpm");
+        } else {
+            applyCoolingPreset("eu-2500m3h");
+        }
     }
 
     // Global Master Temperature Unit Select
@@ -282,5 +385,29 @@ document.addEventListener("DOMContentLoaded", () => {
             window.print();
         });
     }
+
+    // Listen for Global Unit System Changes from Navbar
+    window.addEventListener("unitSystemChanged", (e) => {
+        currentZone = e.detail && e.detail.system === "US" ? "US" : "EU";
+        const defaults = getCoolingDefaultsForZone(currentZone);
+
+        populateSelect(unitTemp, TEMP_UNITS, defaults.temp, "temperature", currentZone);
+        populateSelect(unitThot, TEMP_UNITS, defaults.temp, "temperature", currentZone);
+        populateSelect(unitTcold, TEMP_UNITS, defaults.temp, "temperature", currentZone);
+        populateSelect(unitTwb, TEMP_UNITS, defaults.temp, "temperature", currentZone);
+
+        populateSelect(unitRangeSelect, DELTA_TEMP_UNITS, defaults.rangeUnit, "temperature", currentZone);
+        populateSelect(unitApproachSelect, DELTA_TEMP_UNITS, defaults.approachUnit, "temperature", currentZone);
+
+        populateSelect(unitFlow, FLOW_UNITS, defaults.flow, "flow", currentZone);
+        populateSelect(unitFlowOutSelect, FLOW_UNITS, defaults.flowOut, "flow", currentZone);
+        populateSelect(unitHeatSelect, HEAT_UNITS, defaults.heat, "heat", currentZone);
+
+        if (currentZone === "US") {
+            applyCoolingPreset("us-10000gpm");
+        } else {
+            applyCoolingPreset("eu-2500m3h");
+        }
+    });
 });
 

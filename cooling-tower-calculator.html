@@ -184,6 +184,10 @@
             </div>
 
             <div class="nav-right-controls">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
+                    <span class="unit-flag">🇺🇸</span>
+                    <span class="unit-system-text">US (psi, °F)</span>
+                </button>
 
                 <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle light and dark theme">
                     <span class="theme-icon">☀️</span>
@@ -230,6 +234,18 @@
 
             <!-- Calculator -->
             <section class="card input-card" aria-labelledby="calculator-heading">
+
+                <!-- 1-Click Cooling Tower Operating Presets -->
+                <div class="presets-toolbar" aria-label="Common Cooling Tower Operating Presets" style="margin-bottom: 20px;">
+                    <span class="presets-label">⚡ 1-Click Common Presets:</span>
+                    <div class="presets-buttons-wrap">
+                        <button type="button" class="preset-btn" data-cooling-preset="us-10000gpm" title="10,000 GPM US Power Plant Cooling Tower (105°F / 85°F @ 78°F WB)">🇺🇸 10,000 GPM Power Plant</button>
+                        <button type="button" class="preset-btn" data-cooling-preset="us-2500gpm" title="2,500 GPM US Industrial Process (95°F / 85°F @ 78°F WB)">🇺🇸 2,500 GPM Industrial</button>
+                        <button type="button" class="preset-btn" data-cooling-preset="us-1000gpm" title="1,000 GPM US HVAC Chiller Tower (95°F / 85°F @ 75°F WB)">🇺🇸 1,000 GPM HVAC</button>
+                        <button type="button" class="preset-btn" data-cooling-preset="eu-2500m3h" title="2,500 m³/h International Thermal Station (40°C / 32°C @ 28°C WB)">🌍 2,500 m³/h Power Plant</button>
+                        <button type="button" class="preset-btn" data-cooling-preset="eu-500m3h" title="500 m³/h Process Plant (38°C / 30°C @ 26°C WB)">⚙️ 500 m³/h Process</button>
+                    </div>
+                </div>
 
                 <h2 id="calculator-heading">Cooling Tower Inputs</h2>
 

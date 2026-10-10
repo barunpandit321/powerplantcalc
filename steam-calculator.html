@@ -185,6 +185,11 @@
             </div>
 
             <div class="nav-right-controls">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
+                    <span class="unit-flag">🇺🇸</span>
+                    <span class="unit-system-text">US (psi, °F)</span>
+                </button>
+
                 <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
                     <span class="theme-icon">☀️</span>
                     <span class="theme-text">Light Mode</span>
@@ -225,12 +230,14 @@
                 <div class="presets-toolbar" aria-label="Common Plant Operating Presets">
                     <span class="presets-label">⚡ 1-Click Common Operating Presets:</span>
                     <div class="presets-buttons-wrap">
+                        <button type="button" class="preset-btn" data-preset="us-600psig" title="600 psig at 750°F US Industrial Superheated Steam">🇺🇸 600 psig @ 750°F (US Superheat)</button>
+                        <button type="button" class="preset-btn" data-preset="us-150sat" title="150 psig Saturated Steam (US Process)">🇺🇸 150 psig Sat (US Process)</button>
+                        <button type="button" class="preset-btn" data-preset="condenser-vac" title="1.5 inHg (a) Condenser Vacuum (US Standard)">🇺🇸 1.5 inHg Condenser</button>
+                        <button type="button" class="preset-btn" data-preset="us-plant" title="400 psig at 662°F US Industrial Power Station">🇺🇸 400 psig @ 662°F (US Plant)</button>
                         <button type="button" class="preset-btn" data-preset="hp-superheat" title="70 bar (g) at 490°C Superheated Turbine Steam">🔥 70 barg @ 490°C (HP Superheat)</button>
                         <button type="button" class="preset-btn" data-preset="mp-process" title="15 bar (a) at 250°C Process Steam">⚙️ 15 bar @ 250°C (MP Process)</button>
                         <button type="button" class="preset-btn" data-preset="boiler-drum" title="9 barg Saturated Steam in Boiler Drum">🏭 9 barg Saturated (Boiler Drum)</button>
                         <button type="button" class="preset-btn" data-preset="wet-lp" title="10 bar (a) Wet Steam with Dryness Fraction x = 0.85">💧 10 bar @ x=0.85 (Wet Steam)</button>
-                        <button type="button" class="preset-btn" data-preset="condenser-vac" title="2 inHg (a) at 101.1°F Turbine Condenser Vacuum">💨 2 inHg (a) @ 101.1°F (Condenser)</button>
-                        <button type="button" class="preset-btn" data-preset="us-plant" title="400 psig at 662°F US Industrial Power Station">🇺🇸 400 psig @ 662°F (US Plant)</button>
                     </div>
                 </div>
 

@@ -481,6 +481,38 @@ calculateBtn.addEventListener("click", () => {
 
 // 1-Click Operating Presets
 const OPERATING_PRESETS = {
+    "us-600psig": {
+        name: "600 psig @ 750°F (US Superheat)",
+        mode: "PT",
+        val1: "600",
+        unit1: "psi_g",
+        val2: "750",
+        unit2: "F"
+    },
+    "us-150sat": {
+        name: "150 psig Saturated (US Process)",
+        mode: "PX",
+        val1: "150",
+        unit1: "psi_g",
+        val2: "1.0",
+        unit2: "frac"
+    },
+    "condenser-vac": {
+        name: "1.5 inHg (a) @ 91.7°F (Condenser)",
+        mode: "PT",
+        val1: "1.5",
+        unit1: "inHg_a",
+        val2: "91.7",
+        unit2: "F"
+    },
+    "us-plant": {
+        name: "400 psig @ 662°F (US Plant)",
+        mode: "PT",
+        val1: "400",
+        unit1: "psi_g",
+        val2: "662",
+        unit2: "F"
+    },
     "hp-superheat": {
         name: "70 barg @ 490°C (HP Superheat)",
         mode: "PT",
@@ -512,22 +544,6 @@ const OPERATING_PRESETS = {
         unit1: "bar_a",
         val2: "0.85",
         unit2: "frac"
-    },
-    "condenser-vac": {
-        name: "2 inHg (a) @ 101.1°F (Condenser)",
-        mode: "PT",
-        val1: "2",
-        unit1: "inHg_a",
-        val2: "101.1",
-        unit2: "F"
-    },
-    "us-plant": {
-        name: "400 psig @ 662°F (US Plant)",
-        mode: "PT",
-        val1: "400",
-        unit1: "psi_g",
-        val2: "662",
-        unit2: "F"
     }
 };
 
@@ -576,3 +592,22 @@ resetResults();
 if (input1.value && input2.value) {
     calculateBtn.click();
 }
+
+// Listen for Global Unit System Changes from Navbar
+window.addEventListener("unitSystemChanged", (e) => {
+    const sys = e.detail && e.detail.system === "US" ? "US" : "EU";
+    try {
+        const prefs = loadUserPreferences() || {};
+        delete prefs.outputUnits;
+        delete prefs.inputUnits;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    } catch (err) {}
+
+    initOutputUnitDropdowns();
+
+    if (sys === "US") {
+        applyPreset("us-600psig");
+    } else {
+        applyPreset("hp-superheat");
+    }
+});
