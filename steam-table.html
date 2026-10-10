@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Anti-flicker early theme initialization script (runs synchronously before render) -->
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('steam_calculator_theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YFS1MY74V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1YFS1MY74V');
+    </script>
+
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>Steam Table (IAPWS-IF97 Saturated Steam) | PowerPlantCalc</title>
+    <meta name="description" content="Free interactive Steam Tables based on IAPWS-IF97 standards. Saturated steam table by pressure and temperature, superheated steam matrix, instant search, and Excel export.">
+    <meta name="keywords" content="steam table, saturated steam table, steam table by pressure, steam table by temperature, superheated steam table, IAPWS-IF97 steam table, Dampftafel, tabla de vapor, table de vapeur">
+    <meta name="author" content="PowerPlantCalc">
+
+    <!-- Active Search Engine Indexing Meta Tag -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/steam-table">
+
+    <!-- Multilingual & Alternate Locales for International Google & Bing SEO -->
+    <link rel="alternate" hreflang="x-default" href="https://powerplantcalc.com/steam-table">
+    <link rel="alternate" hreflang="en" href="https://powerplantcalc.com/steam-table">
+    <link rel="alternate" hreflang="de" href="https://powerplantcalc.com/steam-table">
+    <link rel="alternate" hreflang="es" href="https://powerplantcalc.com/steam-table">
+    <link rel="alternate" hreflang="fr" href="https://powerplantcalc.com/steam-table">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="es_ES">
+    <meta property="og:locale:alternate" content="fr_FR">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Facebook Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Steam Table (IAPWS-IF97 Saturated Steam) | PowerPlantCalc">
+    <meta property="og:description" content="Interactive IAPWS-IF97 steam tables. Saturated water and steam by pressure and temperature, superheated steam matrix, custom point interpolation, and Excel CSV export.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/steam-table">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Steam Table (IAPWS-IF97 Saturated Steam) | PowerPlantCalc">
+    <meta name="twitter:description" content="Complete online IAPWS-IF97 steam tables. Saturated steam by pressure & temperature, enthalpy, specific volume, entropy, and instant search.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Structured Data (JSON-LD): WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "IAPWS-IF97 Interactive Steam Tables",
+      "url": "https://powerplantcalc.com/steam-table",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Interactive thermodynamic steam tables based on IAPWS-IF97 formulations. Complete saturated steam tables by pressure and temperature, and superheated steam lookup."
+    }
+    </script>
+
+    <!-- Optimized Font Preconnect & Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Calculator</a>
+                <a href="/steam-table" class="nav-link active">📖 Steam Table</a>
+                <a href="/cooling-tower-calculator" class="nav-link">🌊 Cooling Tower</a>
+                <a href="/boiler-efficiency-calculator" class="nav-link">🏭 Boiler Efficiency</a>
+                <a href="/steam-pipe-calculator" class="nav-link">📏 Steam Pipe Sizing</a>
+                <a href="/about" class="nav-link">ℹ️ About</a>
+                <a href="/contact" class="nav-link">✉️ Contact</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
+                    <span class="unit-flag">🇺🇸</span>
+                    <span class="unit-text">US (psi, °F)</span>
+                </button>
+
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">IAPWS-IF97 Formulation • ASME Thermodynamic Standard</div>
+            </div>
+            <h1>IAPWS-IF97 Steam Tables (Saturated & Superheated)</h1>
+            <p>Complete thermodynamic reference tables for water and steam. Search saturation properties by pressure or temperature, inspect superheated steam, or evaluate custom points with zero manual interpolation.</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">📖 Saturated Steam by Pressure</span>
+                <span class="seo-tag">🌡️ Saturated Steam by Temperature</span>
+                <span class="seo-tag">⚡ Superheated Steam Matrix</span>
+                <span class="seo-tag">🔍 Instant Live Filter</span>
+                <span class="seo-tag">📊 Excel & CSV Export</span>
+                <span class="seo-tag">🇺🇸 US Customary & Metric SI</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Cross-Link Banner to Single Point Calculator -->
+            <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bg-hover); padding: 12px 18px; border-radius: 10px; border: 1px solid var(--border-color);">
+                <span style="font-size: 0.9rem; color: var(--text-muted);">
+                    ⚡ Need to evaluate an exact state with Mollier diagrams, viscosity, and sonic velocity?
+                </span>
+                <a href="/steam-calculator" class="telemetry-btn" style="text-decoration: none;">
+                    Launch Single-Point Steam Calculator →
+                </a>
+            </div>
+
+            <!-- Table Mode Selector Tabs -->
+            <div class="chart-tabs" style="margin-bottom: 16px;">
+                <button id="tabPressure" class="chart-tab-btn active" type="button">
+                    🔥 Saturated Steam by Pressure (P<sub>sat</sub>)
+                </button>
+                <button id="tabTemperature" class="chart-tab-btn" type="button">
+                    🌡️ Saturated Steam by Temperature (T<sub>sat</sub>)
+                </button>
+                <button id="tabSuperheated" class="chart-tab-btn" type="button">
+                    ⚡ Superheated Steam Matrix (P vs T)
+                </button>
+            </div>
+
+            <!-- Main Interactive Table Card -->
+            <section class="card" style="padding: 0; overflow: hidden; margin-bottom: 24px;" aria-label="Steam Table Data Grid">
+                
+                <!-- Table Controls Toolbar -->
+                <div class="table-toolbar">
+                    <!-- Live Search Box -->
+                    <div class="table-search-box">
+                        <span>🔍</span>
+                        <input type="text" id="tableSearchInput" placeholder="Filter by pressure or temp (e.g. 10, 150)..." aria-label="Filter steam table rows">
+                    </div>
+
+                    <!-- Custom Point Evaluator -->
+                    <div class="custom-point-bar">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Custom Value:</span>
+                        <div class="custom-point-box">
+                            <input type="number" id="customPointInput" placeholder="e.g. 15.5" step="any">
+                            <span class="unit-tag" id="customPointUnit">bar</span>
+                        </div>
+                        <button type="button" id="customPointBtn" class="telemetry-btn" style="padding: 5px 12px;">
+                            Evaluate
+                        </button>
+                    </div>
+
+                    <!-- Superheated Pressure Selector (Visible only in Superheated Mode) -->
+                    <div id="superheatedSelectorWrap" style="display: none; align-items: center; gap: 8px;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Pressure:</span>
+                        <select id="selectShPressure" style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); font-weight: 600; outline: none;"></select>
+                    </div>
+
+                    <!-- Actions Group (Gauge Toggle, Copy, CSV, Print) -->
+                    <div class="table-actions-group">
+                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="toggleGauge">
+                            <span>Gauge Press</span>
+                        </label>
+
+                        <button type="button" id="btnCopyExcel" class="telemetry-btn" title="Copy table for Excel or Google Sheets">
+                            📋 Copy (Excel)
+                        </button>
+                        <button type="button" id="btnDownloadCsv" class="telemetry-btn" title="Download CSV file">
+                            📥 CSV
+                        </button>
+                        <button type="button" id="btnPrintTable" class="telemetry-btn" title="Print table">
+                            🖨️ Print
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Content Wrapper with Sticky Header -->
+                <div class="steam-table-wrapper">
+                    <table class="data-table" id="steamTableElement" style="margin: 0; width: 100%;">
+                        <thead>
+                            <tr id="steamTableHeaderRow">
+                                <!-- Headers rendered dynamically by table-main.js -->
+                            </tr>
+                        </thead>
+                        <tbody id="steamTableBody">
+                            <!-- Rows rendered dynamically by table-main.js -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Table Footer Status Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; background: var(--bg-hover); border-top: 1px solid var(--border-color);">
+                    <span id="rowCountBadge" class="row-count-badge">Calculating rows...</span>
+                    <span style="font-size: 0.78rem; color: var(--text-muted);">Standard Formulation: IAPWS-IF97 (Tolerance &lt; 0.001%)</span>
+                </div>
+            </section>
+
+            <!-- TECHNICAL REFERENCE & ENGINEERING DOCUMENTATION -->
+            <article class="seo-guide-section" aria-label="Steam Tables Thermodynamic Guide">
+                <h2>Understanding Industrial Steam Tables (IAPWS-IF97)</h2>
+                <p><strong>Steam tables</strong> are fundamental reference tables that tabulate the physical and thermodynamic properties of water (liquid) and steam (vapor) across a range of pressures and temperatures. Modern steam engineering calculations are based on the <strong>IAPWS-IF97</strong> formulation (International Association for the Properties of Water and Steam), adopted by ASME, ISO, and power engineering societies worldwide.</p>
+
+                <!-- Property Definitions Grid -->
+                <div class="guide-steps-grid" style="margin-top: 24px;">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <h3>Saturation Temperature (T<sub>sat</sub>) & Pressure (P<sub>sat</sub>)</h3>
+                        <p>Saturation defines the thermodynamic state where liquid water and vapor coexist in equilibrium. At any given pressure (\(P_{sat}\)), water boils at an exact saturation temperature (\(T_{sat}\)). In a steam boiler drum, water and steam remain at saturation condition.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <h3>Specific Enthalpy (h<sub>f</sub>, h<sub>fg</sub>, h<sub>g</sub>)</h3>
+                        <p><strong>\(h_f\)</strong> is the sensible heat of saturated liquid. <strong>\(h_{fg}\)</strong> is the latent heat of vaporization required to convert 1 kg of boiling water into dry saturated steam at constant pressure without changing temperature. <strong>\(h_g\)</strong> is the total enthalpy of saturated vapor (\(h_g = h_f + h_{fg}\)).</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <h3>Specific Volume (v<sub>f</sub> & v<sub>g</sub>)</h3>
+                        <p><strong>\(v_f\)</strong> is the volume occupied by 1 kg of saturated water (\(\approx 0.001\text{ m}^3/\text{kg}\)). <strong>\(v_g\)</strong> is the specific volume of saturated vapor. Because steam expands over 1,600 times compared to water at atmospheric pressure, specific volume governs pipe sizing and valve selection.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-num">04</div>
+                        <h3>Specific Entropy (s<sub>f</sub> & s<sub>g</sub>)</h3>
+                        <p>Entropy measures the degree of irreversibility and energy dispersion in thermodynamic systems. It serves as the baseline for evaluating isentropic expansion work in steam turbines (\(W_{ideal} = h_1 - h_{2s}\)).</p>
+                    </div>
+                </div>
+
+                <!-- Engineering Formulas Box -->
+                <div class="formula-box" style="margin-top: 24px;">
+                    <h3>Wet Steam & Enthalpy Calculation Formula</h3>
+                    <p>In wet steam mixtures (two-phase vapor and liquid, such as inside boiler drums and low-pressure turbine exhausts), properties depend on the <strong>dryness fraction (vapor quality, \(x\))</strong>:</p>
+
+                    <div class="math-formula">
+                        \[h_x = h_f + x \cdot h_{fg} = (1 - x) \cdot h_f + x \cdot h_g\]
+                    </div>
+                    <div class="math-formula">
+                        \[v_x = v_f + x \cdot (v_g - v_f) \approx x \cdot v_g\]
+                    </div>
+                    <div class="math-formula">
+                        \[s_x = s_f + x \cdot s_{fg} = s_f + x \cdot \left(\frac{h_{fg}}{T_{sat}}\right)\]
+                    </div>
+
+                    <div class="formula-legend">
+                        <ul>
+                            <li><strong>\(x\)</strong>: Dryness fraction or vapor quality (\(0.0 = 100\%\) liquid, \(1.0 = 100\%\) dry saturated steam)</li>
+                            <li><strong>\(h_x, v_x, s_x\)</strong>: Enthalpy, specific volume, and entropy of wet steam at quality \(x\)</li>
+                            <li><strong>\(T_{sat}\)</strong>: Absolute saturation temperature in Kelvin (\(K = ^\circ\text{C} + 273.15\))</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Frequently Asked Questions (FAQ) Accordion -->
+                <section class="faq-accordion-section" aria-label="Steam Table Frequently Asked Questions" style="margin-top: 30px;">
+                    <h2 class="faq-main-title">Frequently Asked Questions (FAQ)</h2>
+
+                    <div class="faq-accordion">
+                        <details class="faq-item">
+                            <summary class="faq-question">What is the difference between Saturated by Pressure and Saturated by Temperature tables?</summary>
+                            <div class="faq-answer">
+                                <p>Both tables represent the exact same thermodynamic saturation curve. The <strong>Pressure Table</strong> is indexed by round increments of pressure (e.g., 1 bar, 2 bar, 10 bar), which is ideal for plant operators monitoring steam headers and boiler gauges. The <strong>Temperature Table</strong> is indexed by round increments of temperature (e.g., 50°C, 100°C, 150°C), which is ideal when analyzing condenser cooling water or heat exchanger pinch points.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Why does latent heat (h_fg) decrease as pressure increases?</summary>
+                            <div class="faq-answer">
+                                <p>At higher pressures, water molecules are packed closer together in the liquid phase, requiring less additional energy to overcome intermolecular bonds and expand into vapor. At the <strong>critical point (220.64 bar / 373.95°C)</strong>, the latent heat \(h_{fg}\) becomes exactly zero, and the boundary between liquid and vapor disappears completely.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">What is gauge pressure vs absolute pressure in steam tables?</summary>
+                            <div class="faq-answer">
+                                <p>Physical thermodynamic equations strictly require <strong>Absolute Pressure (psia or bar a)</strong>. Pressure gauges in power plants read <strong>Gauge Pressure (psig or bar g)</strong>, which is the pressure above local atmospheric pressure (\(P_{abs} = P_{gauge} + 1.01325\text{ bar}\) or \(P_{abs} = P_{gauge} + 14.7\text{ psi}\)). Our steam table includes a convenient "Gauge Press" toggle to switch columns automatically.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">How does IAPWS-IF97 compare to older IFC-67 steam tables?</summary>
+                            <div class="faq-answer">
+                                <p>IAPWS-IF97 was developed in 1997 to replace the 1967 IFC formulation. It provides vastly improved computational speed (over 50 times faster for turbine simulation routines), continuous derivatives across region boundaries, and exact consistency with the modern International Temperature Scale of 1990 (ITS-90).</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+            </article>
+
+            <!-- Peer Collaboration Banner -->
+            <section class="peer-collaboration-banner" style="margin-top: 24px;">
+                <div class="peer-banner-content">
+                    <span class="peer-banner-icon">💡</span>
+                    <div>
+                        <h3>Excel & Engineering Workflow Integration</h3>
+                        <p>Need these steam table values in your plant design spreadsheets? Click <strong>"📋 Copy (Excel)"</strong> to paste clean tab-delimited rows directly into Microsoft Excel or Google Sheets, or export as CSV.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Site Footer -->
+        <footer class="site-footer">
+            <p>
+                © <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools | 
+                <a href="/about" class="footer-link">About Us</a> | 
+                <a href="/contact" class="footer-link">Contact Us</a> | 
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a> | 
+                <a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- Main Module Script -->
+    <script type="module" src="/src/table-main.js"></script>
+</body>
+
+</html>

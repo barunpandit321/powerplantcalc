@@ -2771,3 +2771,101 @@ header p {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================
+   Interactive Steam Tables Styles
+   ========================================== */
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--bg-hover, rgba(0, 0, 0, 0.02));
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 12px 12px 0 0;
+}
+
+.table-search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 12px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 340px;
+}
+
+.table-search-box input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-size: 0.88rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+.custom-point-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.custom-point-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px 10px;
+}
+
+.custom-point-box input {
+    width: 80px;
+    background: transparent;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-align: right;
+    outline: none;
+}
+
+.custom-point-row {
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-left: 4px solid #10b981;
+}
+
+.table-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.steam-table-wrapper {
+    max-height: 720px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 0 0 12px 12px;
+}
+
+.steam-table-wrapper table th {
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.row-count-badge {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
