@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Anti-flicker early theme initialization script (runs synchronously before render) -->
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('steam_calculator_theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YFS1MY74V"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1YFS1MY74V');
+    </script>
+
+    <!-- Primary SEO Title & Meta Tags -->
+    <title>WHRB Boiler Live Diagram & Steam Calculator | PowerPlantCalc</title>
+    <meta name="description" content="Live interactive WHRB (Waste Heat Recovery Boiler) and HRSG simulator based on ASME PTC 4.4 and IAPWS-IF97 steam formulations. Real-time dynamic diagram, steam generation rate, pinch point, and telemetry streaming.">
+    <meta name="keywords" content="WHRB boiler calculator, waste heat recovery boiler, HRSG live diagram, real time steam generation, pinch point calculator, flue gas heat recovery, gas turbine HRSG, Abhitze-Kessel, caldera de recuperación de calor residual">
+    <meta name="author" content="PowerPlantCalc">
+
+    <!-- CRITICAL SEARCH ENGINE INDEXING DIRECTIVE: NOINDEX as requested by user until review -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Flat Canonical URL -->
+    <link rel="canonical" href="https://powerplantcalc.com/whrb-boiler-calculator">
+
+    <!-- Google & Bing Favicon Crawler Compatible Link -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="WHRB Boiler Live Diagram & Steam Calculator | PowerPlantCalc">
+    <meta property="og:description" content="Real-time interactive Waste Heat Recovery Boiler (WHRB / HRSG) simulator. Live diagram, steam generation, drum hydraulics, and pinch point analysis.">
+    <meta property="og:site_name" content="PowerPlantCalc">
+    <meta property="og:url" content="https://powerplantcalc.com/whrb-boiler-calculator">
+    <meta property="og:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WHRB Boiler Live Diagram & Steam Calculator | PowerPlantCalc">
+    <meta name="twitter:description" content="Real-time interactive Waste Heat Recovery Boiler simulator with live telemetry, animated circuit diagram, and IAPWS-IF97 steam generation physics.">
+    <meta name="twitter:image" content="https://powerplantcalc.com/og-image.png">
+
+    <!-- Structured Data (JSON-LD): WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WHRB Boiler Live Diagram & Steam Generation Calculator",
+      "url": "https://powerplantcalc.com/whrb-boiler-calculator",
+      "operatingSystem": "All",
+      "applicationCategory": "EngineeringApplication",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Interactive thermodynamic simulator for Waste Heat Recovery Boilers (WHRB) and Heat Recovery Steam Generators (HRSG) with real-time animated circuit diagram and IAPWS-IF97 steam calculations."
+    }
+    </script>
+
+    <!-- Optimized Font Preconnect & Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Site Global Navigation Header -->
+    <nav class="site-nav" aria-label="Main Navigation">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
+                    <defs>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>PowerPlant<span class="highlight-text">Calc</span></span>
+            </a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools</a>
+                <a href="/steam-calculator" class="nav-link">🔥 Steam Properties</a>
+                <a href="/cooling-tower-calculator" class="nav-link">🌊 Cooling Tower</a>
+                <a href="/boiler-efficiency-calculator" class="nav-link">🏭 Boiler Efficiency</a>
+                <a href="/steam-pipe-calculator" class="nav-link">📏 Steam Pipe Sizing</a>
+                <a href="/whrb-boiler-calculator" class="nav-link active">♻️ WHRB Boiler</a>
+                <a href="/about" class="nav-link">ℹ️ About</a>
+                <a href="/contact" class="nav-link">✉️ Contact</a>
+            </div>
+
+            <div class="nav-right-controls">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
+                    <span class="unit-flag">🇺🇸</span>
+                    <span class="unit-text">US (psi, °F)</span>
+                </button>
+
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-text">Light Mode</span>
+                </button>
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
+                    <span class="hamburger-icon">☰</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Reviewer Mode Banner (User Explicit Request: noindex tag active) -->
+        <aside class="review-mode-banner" role="status" aria-label="Review Mode Notification">
+            <div class="review-banner-content">
+                <span class="review-icon">🔒</span>
+                <div class="review-text">
+                    <strong>Reviewer Preview Mode:</strong> This page is active with <code>&lt;meta name="robots" content="noindex, nofollow"&gt;</code>. Search engines (Google, Bing) will not index it until your review and correction are complete.
+                </div>
+            </div>
+        </aside>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="badge">ASME PTC 4.4 • IAPWS-IF97 Standard • Real-Time WHRB Simulator</div>
+            </div>
+            <h1>WHRB Boiler Live Diagram & Steam Generation Calculator</h1>
+            <p>Real-time thermodynamic simulator for Waste Heat Recovery Boilers (WHRB / HRSG). Visualizes hot flue gas heat exchange, drum evaporation, pinch point constraint, and live steam generation rates.</p>
+
+            <div class="seo-tags-bar">
+                <span class="seo-tag">♻️ Waste Heat Recovery Boiler (WHRB)</span>
+                <span class="seo-tag">⚡ Live Steam Generation (t/h & klb/h)</span>
+                <span class="seo-tag">♨️ Pinch Point (ΔT_pinch)</span>
+                <span class="seo-tag">💧 Economizer Approach Point</span>
+                <span class="seo-tag">⚪ Steam Drum Level & Two-Phase Flow</span>
+                <span class="seo-tag">🏭 Gas Turbine & Kiln Flue Gas</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- 1-Click Common WHRB Industrial Presets Toolbar -->
+            <div class="presets-toolbar" aria-label="WHRB Boiler Industrial Application Presets" style="margin-bottom: 20px;">
+                <span class="presets-label">⚡ 1-Click WHRB Presets:</span>
+                <div class="presets-buttons-wrap">
+                    <button type="button" class="preset-btn active" data-whrb-preset="gt-combined-cycle" title="25 MW Gas Turbine Combined Cycle HRSG">
+                        🏭 Gas Turbine HRSG (520°C, 42 bar)
+                    </button>
+                    <button type="button" class="preset-btn" data-whrb-preset="cement-kiln" title="Cement Rotary Kiln Preheater Exhaust WHRB">
+                        🧱 Cement Kiln WHRB (340°C, 16 bar)
+                    </button>
+                    <button type="button" class="preset-btn" data-whrb-preset="steel-dri" title="Steel Sponge Iron / DRI Off-Gas WHRB">
+                        ⚙️ Steel DRI Kiln WHRB (580°C, 38 bar)
+                    </button>
+                    <button type="button" class="preset-btn" data-whrb-preset="gas-engine" title="Gas Engine / Jenbacher CHP Exhaust WHRB">
+                        ⚡ Gas Engine WHRB (420°C, 10 bar)
+                    </button>
+                    <button type="button" class="preset-btn" data-whrb-preset="biomass-incinerator" title="Waste-to-Energy Incineration WHRB">
+                        ♻️ Incinerator / Biomass (450°C, 25 bar)
+                    </button>
+                </div>
+            </div>
+
+            <!-- LIVE DIAGRAM SECTION (Centerpiece) -->
+            <section class="card whrb-diagram-card" aria-label="WHRB Boiler Live Diagram">
+                
+                <!-- Telemetry Control Bar -->
+                <div class="telemetry-status-bar">
+                    <div id="streamStatusBadge" class="stream-badge active">
+                        <span class="pulse-dot"></span> LIVE TELEMETRY (ONLINE)
+                    </div>
+                    <div class="telemetry-actions">
+                        <button type="button" id="btnToggleStream" class="telemetry-btn">
+                            ⏸️ Pause Stream
+                        </button>
+                        <button type="button" id="btnResetTrend" class="telemetry-btn" title="Reset rolling trend buffer">
+                            🔄 Reset Trend
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive SVG WHRB Visualizer Viewport -->
+                <div class="whrb-diagram-viewport" id="whrbDiagramContainer">
+                    <svg class="whrb-svg" viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Flue Gas Thermal Gradient (Left: Hot -> Right: Stack) -->
+                            <linearGradient id="gasHeatGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ef4444" stop-opacity="0.85"/>
+                                <stop offset="30%" stop-color="#f97316" stop-opacity="0.75"/>
+                                <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.6"/>
+                                <stop offset="90%" stop-color="#10b981" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#64748b" stop-opacity="0.35"/>
+                            </linearGradient>
+
+                            <!-- Duct Steel Wall Texture -->
+                            <linearGradient id="ductSteel" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#334155"/>
+                                <stop offset="50%" stop-color="#475569"/>
+                                <stop offset="100%" stop-color="#1e293b"/>
+                            </linearGradient>
+
+                            <!-- Steam Drum Steel Cylinder Gradient -->
+                            <linearGradient id="drumMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#94a3b8"/>
+                                <stop offset="30%" stop-color="#cbd5e1"/>
+                                <stop offset="70%" stop-color="#64748b"/>
+                                <stop offset="100%" stop-color="#334155"/>
+                            </linearGradient>
+
+                            <!-- Drum Water Boiling Gradient -->
+                            <linearGradient id="drumWaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8"/>
+                                <stop offset="100%" stop-color="#0284c7"/>
+                            </linearGradient>
+
+                            <!-- Superheater Glowing Steam Gradient -->
+                            <linearGradient id="shSteamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" stop-color="#f59e0b"/>
+                                <stop offset="100%" stop-color="#38bdf8"/>
+                            </linearGradient>
+
+                            <!-- Stack Chimney Gradient -->
+                            <linearGradient id="stackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#475569"/>
+                                <stop offset="40%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#334155"/>
+                            </linearGradient>
+
+                            <!-- Markers for Flow Arrows -->
+                            <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+                            </marker>
+                            <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+                            </marker>
+                            <marker id="arrowOrange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 1 L 8 5 L 0 9 z" fill="#f97316" />
+                            </marker>
+                        </defs>
+
+                        <!-- ================= DUCTWORK CASING ================= -->
+                        <!-- Inlet Diverter & Transition Hood (Left) -->
+                        <polygon points="60,200 160,180 160,380 60,360" fill="url(#ductSteel)" stroke="#1e293b" stroke-width="3"/>
+                        <polygon points="60,200 160,180 160,380 60,360" fill="url(#gasHeatGrad)" opacity="0.6"/>
+
+                        <!-- Bypass Stack Damper (Upwards from inlet) -->
+                        <rect x="90" y="80" width="40" height="120" fill="url(#ductSteel)" stroke="#1e293b" stroke-width="2"/>
+                        <line x1="90" y1="120" x2="130" y2="120" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4 4"/>
+                        <text x="110" y="70" font-size="9" fill="#94a3b8" text-anchor="middle" font-weight="600">BYPASS STACK</text>
+                        <text x="110" y="112" font-size="8" fill="#f59e0b" text-anchor="middle">CLOSED</text>
+
+                        <!-- Main Boiler Horizontal Duct Body -->
+                        <rect x="160" y="180" width="620" height="200" fill="url(#ductSteel)" stroke="#0f172a" stroke-width="3"/>
+                        <rect x="163" y="183" width="614" height="194" fill="url(#gasHeatGrad)"/>
+
+                        <!-- Structural Duct Ribs / Expansion Joints -->
+                        <line x1="290" y1="175" x2="290" y2="385" stroke="#1e293b" stroke-width="4"/>
+                        <line x1="430" y1="175" x2="430" y2="385" stroke="#1e293b" stroke-width="4"/>
+                        <line x1="570" y1="175" x2="570" y2="385" stroke="#1e293b" stroke-width="4"/>
+
+                        <!-- Animated Flue Gas Particles across the Duct -->
+                        <g opacity="0.8">
+                            <circle class="gas-particle" cx="170" cy="230" r="3" fill="#fecaca" />
+                            <circle class="gas-particle" cx="170" cy="270" r="4" fill="#fed7aa" style="animation-delay: 0.8s;"/>
+                            <circle class="gas-particle" cx="170" cy="310" r="3.5" fill="#fef08a" style="animation-delay: 1.6s;"/>
+                            <circle class="gas-particle" cx="170" cy="250" r="4" fill="#fed7aa" style="animation-delay: 2.2s;"/>
+                            <circle class="gas-particle" cx="170" cy="340" r="3" fill="#d1fae5" style="animation-delay: 2.9s;"/>
+                        </g>
+
+                        <!-- Exhaust Stack Chimney (Right) -->
+                        <polygon points="780,380 780,90 850,90 850,380" fill="url(#stackGrad)" stroke="#1e293b" stroke-width="3"/>
+                        <!-- Stack Crown Ring -->
+                        <rect x="770" y="80" width="90" height="12" rx="3" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+                        <!-- Animated Exhaust Gas Plumes rising from stack -->
+                        <g opacity="0.6">
+                            <circle class="smoke-puff" cx="815" cy="70" r="14" fill="#94a3b8"/>
+                            <circle class="smoke-puff" cx="815" cy="55" r="18" fill="#94a3b8" style="animation-delay: 1s;"/>
+                            <circle class="smoke-puff" cx="815" cy="40" r="22" fill="#cbd5e1" style="animation-delay: 2s;"/>
+                        </g>
+
+                        <!-- ================= TUBE BUNDLES INSIDE DUCT ================= -->
+
+                        <!-- SECTION 1: SUPERHEATER (SH) TUBE BUNDLE -->
+                        <g class="tube-bundle" data-station="superheater" style="cursor: pointer;">
+                            <rect x="200" y="190" width="70" height="180" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3" rx="6"/>
+                            <!-- Serpentine Tubes (Stainless Superheater) -->
+                            <path d="M 215 195 L 215 365 M 230 195 L 230 365 M 245 195 L 245 365 M 260 195 L 260 365" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+                            <!-- Upper SH Outlet Header -->
+                            <rect x="205" y="182" width="60" height="12" rx="4" fill="#dc2626" stroke="#991b1b" stroke-width="1.5"/>
+                            <text x="235" y="285" font-size="11" font-weight="700" fill="#fee2e2" text-anchor="middle" transform="rotate(-90 235 285)">SUPERHEATER</text>
+                        </g>
+
+                        <!-- SECTION 2: EVAPORATOR (EVAP) TUBE BUNDLE -->
+                        <g class="tube-bundle" data-station="evaporator" style="cursor: pointer;">
+                            <rect x="330" y="190" width="200" height="180" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3" rx="6"/>
+                            <!-- Vertical Evaporator Riser Tubes -->
+                            <path d="M 350 200 L 350 365 M 370 200 L 370 365 M 390 200 L 390 365 M 410 200 L 410 365 M 430 200 L 430 365 M 450 200 L 450 365 M 470 200 L 470 365 M 490 200 L 490 365 M 510 200 L 510 365" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+                            <!-- Animated Boiling Steam Bubbles rising through tubes -->
+                            <circle class="bubble-anim" cx="370" cy="330" r="3" fill="#ffffff" style="animation-delay: 0.2s;"/>
+                            <circle class="bubble-anim" cx="430" cy="340" r="3.5" fill="#ffffff" style="animation-delay: 0.9s;"/>
+                            <circle class="bubble-anim" cx="470" cy="320" r="3" fill="#ffffff" style="animation-delay: 1.4s;"/>
+                            <circle class="bubble-anim" cx="510" cy="350" r="3.5" fill="#ffffff" style="animation-delay: 0.6s;"/>
+                            <text x="430" y="285" font-size="12" font-weight="700" fill="#fef3c7" text-anchor="middle" letter-spacing="1">EVAPORATOR (BOILING)</text>
+                        </g>
+
+                        <!-- SECTION 3: ECONOMIZER (ECON) TUBE BUNDLE -->
+                        <g class="tube-bundle" data-station="economizer" style="cursor: pointer;">
+                            <rect x="590" y="190" width="140" height="180" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3" rx="6"/>
+                            <!-- Serpentine Finned Tubes -->
+                            <path d="M 610 200 L 610 365 M 635 200 L 635 365 M 660 200 L 660 365 M 685 200 L 685 365 M 710 200 L 710 365" stroke="#10b981" stroke-width="3.5" stroke-linecap="round"/>
+                            <text x="660" y="285" font-size="11" font-weight="700" fill="#d1fae5" text-anchor="middle" letter-spacing="1">ECONOMIZER</text>
+                        </g>
+
+                        <!-- ================= STEAM DRUM & HYDRAULIC CIRCUIT ================= -->
+                        <g data-station="steam-drum" style="cursor: pointer;">
+                            <!-- Steam Drum Body (Upper horizontal cylinder) -->
+                            <rect x="330" y="60" width="200" height="70" rx="35" fill="url(#drumMetal)" stroke="#0f172a" stroke-width="3"/>
+                            
+                            <!-- Drum Water Level (Bottom half liquid) -->
+                            <clipPath id="drumClip">
+                                <rect x="330" y="60" width="200" height="70" rx="35"/>
+                            </clipPath>
+                            <g clip-path="url(#drumClip)">
+                                <rect x="330" y="95" width="200" height="35" fill="url(#drumWaterGrad)"/>
+                                <!-- Gentle animated meniscus wave line -->
+                                <line x1="330" y1="95" x2="530" y2="95" stroke="#38bdf8" stroke-width="2.5"/>
+                            </g>
+
+                            <!-- Internal Cyclones & Chevron Mist Eliminators in Drum Top -->
+                            <rect x="380" y="72" width="100" height="15" rx="3" fill="#475569" stroke="#334155" stroke-width="1"/>
+                            <text x="430" y="83" font-size="8" fill="#e2e8f0" font-weight="600" text-anchor="middle">MIST ELIMINATOR</text>
+                            
+                            <!-- Drum Label -->
+                            <text x="430" y="118" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle">STEAM DRUM</text>
+
+                            <!-- Sight Glass Level Gauge on side of drum -->
+                            <rect x="536" y="80" width="8" height="35" rx="2" fill="#0f172a" stroke="#cbd5e1" stroke-width="1"/>
+                            <rect x="537" y="95" width="6" height="18" fill="#38bdf8"/>
+                        </g>
+
+                        <!-- Lower Mud Drum / Header (Below duct) -->
+                        <rect x="330" y="395" width="200" height="26" rx="12" fill="url(#drumMetal)" stroke="#0f172a" stroke-width="2.5"/>
+                        <text x="430" y="412" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">MUD HEADER / DISTRIBUTOR</text>
+
+                        <!-- Downcomer Pipe (Unheated outside duct, drum -> mud header) -->
+                        <path d="M 335 110 L 305 110 L 305 408 L 330 408" fill="none" stroke="#0284c7" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M 335 110 L 305 110 L 305 408 L 330 408" class="water-flow-line" fill="none" stroke="#38bdf8" stroke-width="3"/>
+                        <text x="290" y="270" font-size="9" fill="#0284c7" font-weight="700" text-anchor="middle" transform="rotate(-90 290 270)">DOWNCOMER</text>
+
+                        <!-- Continuous Blowdown Drain Valve & Pipe -->
+                        <line x1="430" y1="421" x2="430" y2="455" stroke="#64748b" stroke-width="4"/>
+                        <polygon points="424,435 436,445 424,445 436,435" fill="#ef4444"/>
+                        <text x="445" y="450" font-size="8" fill="#94a3b8" font-weight="600">BLOWDOWN (2%)</text>
+
+                        <!-- Saturated Steam Pipe (Drum Top -> Superheater Header) -->
+                        <path d="M 400 60 L 400 35 L 235 35 L 235 182" fill="none" stroke="#0284c7" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M 400 60 L 400 35 L 235 35 L 235 182" class="steam-flow-line" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+                        <text x="320" y="28" font-size="8" fill="#38bdf8" font-weight="600">SATURATED STEAM TO SH</text>
+
+                        <!-- Main Steam Header & Delivery Line (SH -> Process/Turbine) -->
+                        <path d="M 235 182 L 235 140 L 160 140 L 160 20 L 980 20" fill="none" stroke="#0284c7" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M 235 182 L 235 140 L 160 140 L 160 20 L 980 20" class="steam-flow-line" fill="none" stroke="#67e8f9" stroke-width="3"/>
+                        <!-- Main Steam Stop-Check Valve -->
+                        <polygon points="175,15 185,25 175,25 185,15" fill="#38bdf8"/>
+                        <circle cx="180" cy="10" r="3" fill="#cbd5e1"/>
+
+                        <!-- Economizer -> Steam Drum Preheated Water Pipe -->
+                        <path d="M 660 190 L 660 110 L 530 110" fill="none" stroke="#0284c7" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M 660 190 L 660 110 L 530 110" class="water-flow-line" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+
+                        <!-- Feedwater Supply Line & Pump (BFP) -->
+                        <g data-station="bfp" style="cursor: pointer;">
+                            <path d="M 750 440 L 660 440 L 660 370" fill="none" stroke="#0284c7" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M 750 440 L 660 440 L 660 370" class="water-flow-line" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+                            <!-- Boiler Feed Pump (BFP) Symbol -->
+                            <circle cx="710" cy="440" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"/>
+                            <polygon points="702,440 718,432 718,448" fill="#38bdf8"/>
+                            <text x="710" y="468" font-size="9" fill="#0284c7" font-weight="700" text-anchor="middle">FEEDWATER PUMP (BFP)</text>
+                        </g>
+
+                        <!-- Flow Direction Badges -->
+                        <path d="M 80 280 L 130 280" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowOrange)"/>
+                        <text x="105" y="270" font-size="9" font-weight="700" fill="#ef4444" text-anchor="middle">GAS IN</text>
+
+                        <path d="M 815 160 L 815 110" stroke="#64748b" stroke-width="3" marker-end="url(#arrowOrange)"/>
+                        <text x="815" y="180" font-size="9" font-weight="700" fill="#94a3b8" text-anchor="middle">EXHAUST</text>
+
+                        <!-- ================= DIGITAL CALLOUT TELEMETRY BADGES ================= -->
+                        <!-- Station 1: Gas Inlet Tag -->
+                        <foreignObject x="30" y="295" width="135" height="75">
+                            <div id="diagTagGasIn" class="diag-tag-card" data-station="gas-inlet">
+                                <div class="diag-tag-title">🔥 Flue Gas Inlet</div>
+                                <div class="diag-tag-val val-hot">520.0 °C</div>
+                                <div class="diag-tag-sub">180.0 t/h</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 2: Superheater / Main Steam Outlet Tag -->
+                        <foreignObject x="190" y="65" width="135" height="75">
+                            <div id="diagTagSteam" class="diag-tag-card" data-station="superheater">
+                                <div class="diag-tag-title">⚡ Main Steam Out</div>
+                                <div class="diag-tag-val val-steam">21.62 t/h</div>
+                                <div class="diag-tag-sub">42.0 bar • 430.0 °C</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 3: Steam Drum Tag -->
+                        <foreignObject x="545" y="45" width="130" height="75">
+                            <div id="diagTagDrum" class="diag-tag-card" data-station="steam-drum">
+                                <div class="diag-tag-title">⚪ Steam Drum</div>
+                                <div class="diag-tag-val val-cyan">42.0 bar</div>
+                                <div class="diag-tag-sub">Tsat: 253.3 °C</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 4: Evaporator & Pinch Point Tag -->
+                        <foreignObject x="365" y="300" width="130" height="75">
+                            <div id="diagTagEvap" class="diag-tag-card" data-station="evaporator">
+                                <div class="diag-tag-title">♨️ Evaporator Bank</div>
+                                <div class="diag-tag-val val-amber">ΔT Pinch: 15.0 °C</div>
+                                <div class="diag-tag-sub">Gas: 268.3 °C</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 5: Economizer Tag -->
+                        <foreignObject x="680" y="110" width="130" height="75">
+                            <div id="diagTagEcon" class="diag-tag-card" data-station="economizer">
+                                <div class="diag-tag-title">💧 Economizer</div>
+                                <div class="diag-tag-val val-blue">Out: 243.3 °C</div>
+                                <div class="diag-tag-sub">Approach: 10.0 °C</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 6: Stack Exhaust Tag -->
+                        <foreignObject x="840" y="240" width="135" height="75">
+                            <div id="diagTagStack" class="diag-tag-card" data-station="stack">
+                                <div class="diag-tag-title">💨 Stack Exhaust</div>
+                                <div class="diag-tag-val val-cool">198.0 °C</div>
+                                <div class="diag-tag-sub">Recovered: 17.1 MWth</div>
+                            </div>
+                        </foreignObject>
+
+                        <!-- Station 7: BFP Pump Tag -->
+                        <foreignObject x="760" y="390" width="135" height="75">
+                            <div id="diagTagBfp" class="diag-tag-card" data-station="bfp">
+                                <div class="diag-tag-title">🌀 Feedwater Pump</div>
+                                <div class="diag-tag-val val-blue">22.05 t/h</div>
+                                <div class="diag-tag-sub">Inlet: 105.0 °C</div>
+                            </div>
+                        </foreignObject>
+                    </svg>
+                </div>
+
+                <!-- Station Inspection Drawer (Opened on station click) -->
+                <div id="stationInspectionBox" class="station-inspection-box"></div>
+            </section>
+
+            <!-- REAL-TIME KPI SUMMARY METRICS -->
+            <section class="results-grid" aria-label="WHRB Real-Time Key Performance Indicators" style="margin-bottom: 24px;">
+                <!-- KPI 1: Steam Generation Rate -->
+                <div class="result-card primary-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">🚀</span>
+                        <span class="result-label">Live Steam Generation</span>
+                    </div>
+                    <div class="result-value" id="kpiSteamFlow">21.62 t/h</div>
+                    <div class="result-subvalue" id="kpiSteamFlowSub">47,664 lb/h (6.01 kg/s)</div>
+                </div>
+
+                <!-- KPI 2: Thermal Power Recovered -->
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">🔥</span>
+                        <span class="result-label">Thermal Heat Recovered</span>
+                    </div>
+                    <div class="result-value" id="kpiThermalPower">17.13 MWth</div>
+                    <div class="result-subvalue" id="kpiThermalPowerSub">58.45 MMBtu/h (17,130 kW)</div>
+                </div>
+
+                <!-- KPI 3: Stack Gas Exit Temperature -->
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">💨</span>
+                        <span class="result-label">Stack Gas Temperature</span>
+                    </div>
+                    <div class="result-value" id="kpiStackTemp">198.0 °C</div>
+                    <div class="result-subvalue" id="kpiStackTempSub">ΔT Drop: 322.0 °C</div>
+                </div>
+
+                <!-- KPI 4: Feedwater Demand -->
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">💧</span>
+                        <span class="result-label">Feedwater Consumption</span>
+                    </div>
+                    <div class="result-value" id="kpiFeedwaterFlow">22.05 t/h</div>
+                    <div class="result-subvalue">Includes 2.0% blowdown</div>
+                </div>
+
+                <!-- KPI 5: Heat Recovery Efficiency -->
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">📊</span>
+                        <span class="result-label">WHRB Recovery Efficiency</span>
+                    </div>
+                    <div class="result-value" id="kpiEfficiency">64.1 %</div>
+                    <div class="result-subvalue">Vs. 25°C ambient datum</div>
+                </div>
+
+                <!-- KPI 6: Net Steam Enthalpy Rise -->
+                <div class="result-card">
+                    <div class="result-card-header">
+                        <span class="card-icon">⚡</span>
+                        <span class="result-label">Steam Enthalpy Rise (Δh)</span>
+                    </div>
+                    <div class="result-value" id="kpiDeltaH">2838.4 kJ/kg</div>
+                    <div class="result-subvalue">Tsat: <span id="kpiTsat">253.3 °C</span> (IAPWS-IF97)</div>
+                </div>
+            </section>
+
+            <!-- DUAL REAL-TIME CHARTS: TELEMETRY TREND & Q-T PINCH POINT DIAGRAM -->
+            <section class="whrb-charts-grid" aria-label="WHRB Thermodynamic Trend & Q-T Charts">
+                <!-- Chart 1: Live Telemetry Trend -->
+                <div class="card" style="padding: 16px;">
+                    <div class="card-title-bar" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1rem; font-weight: 700; margin: 0;">📈 Live Telemetry Strip Chart (Real-Time Trend)</h3>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Last 40 seconds</span>
+                    </div>
+                    <div class="chart-canvas-box">
+                        <canvas id="trendCanvas" class="whrb-canvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Q-T Pinch Point Diagram -->
+                <div class="card" style="padding: 16px;">
+                    <div class="card-title-bar" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1rem; font-weight: 700; margin: 0;">📉 Q-T Diagram (Flue Gas Cooling vs Steam Heating)</h3>
+                        <span style="font-size: 0.75rem; color: #eab308; font-weight: 600;">Pinch & Approach Points</span>
+                    </div>
+                    <div class="chart-canvas-box">
+                        <canvas id="qtCanvas" class="whrb-canvas"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE OPERATING CONTROLS & SLIDERS CARD -->
+            <section class="card input-card" aria-label="WHRB Boiler Operating Parameters">
+                <div class="card-title-bar" style="margin-bottom: 16px;">
+                    <h2>⚙️ WHRB Operating Inputs & Design Sliders</h2>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">Adjust flue gas parameters or steam conditions to immediately see live steam generation and temperatures react in real time.</p>
+                </div>
+
+                <div class="whrb-inputs-grid">
+                    <!-- Flue Gas Mass Flow -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputGasFlow">Flue Gas Mass Flow</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputGasFlow" value="180" step="5" min="10" max="500">
+                                <span class="unit-tag" id="unitLabelGasFlow">t/h</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeGasFlow" class="whrb-range-slider" min="10" max="500" value="180" step="5">
+                    </div>
+
+                    <!-- Flue Gas Inlet Temperature -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputGasTemp">Flue Gas Inlet Temp</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputGasTemp" value="520" step="5" min="250" max="650">
+                                <span class="unit-tag" id="unitLabelGasTemp">°C</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeGasTemp" class="whrb-range-slider" min="250" max="650" value="520" step="5">
+                    </div>
+
+                    <!-- Steam Drum Pressure -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputSteamPress">Operating Steam Pressure</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputSteamPress" value="42" step="1" min="2" max="100">
+                                <span class="unit-tag" id="unitLabelSteamPress">bar (g)</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeSteamPress" class="whrb-range-slider" min="2" max="100" value="42" step="1">
+                    </div>
+
+                    <!-- Steam Quality / Type -->
+                    <div class="input-slider-group">
+                        <label for="selectSteamType" style="font-size: 0.85rem; font-weight: 600;">Steam State Type</label>
+                        <select id="selectSteamType" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-main); font-weight: 600;">
+                            <option value="superheated" selected>⚡ Superheated Steam (with Superheater)</option>
+                            <option value="saturated">⚪ Saturated Steam (No Superheater)</option>
+                        </select>
+                    </div>
+
+                    <!-- Target Steam Temperature (Superheater) -->
+                    <div class="input-slider-group" id="groupSuperheat">
+                        <div class="input-slider-header">
+                            <label for="inputSteamTemp">Target Steam Temp</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputSteamTemp" value="430" step="5" min="180" max="560">
+                                <span class="unit-tag" id="unitLabelSteamTemp">°C</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeSteamTemp" class="whrb-range-slider" min="180" max="560" value="430" step="5">
+                    </div>
+
+                    <!-- Feedwater Temperature -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputFwTemp">Feedwater Inlet Temp</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputFwTemp" value="105" step="5" min="40" max="160">
+                                <span class="unit-tag" id="unitLabelFwTemp">°C</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeFwTemp" class="whrb-range-slider" min="40" max="160" value="105" step="5">
+                    </div>
+
+                    <!-- Evaporator Pinch Point ΔT -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputPinch" title="Difference between gas leaving evaporator and Tsat">Evaporator Pinch Point (ΔT)</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputPinch" value="15" step="1" min="8" max="35">
+                                <span class="unit-tag" id="unitLabelPinch">°C</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangePinch" class="whrb-range-slider" min="8" max="35" value="15" step="1">
+                    </div>
+
+                    <!-- Economizer Approach Point ΔT -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputApproach" title="Difference between Tsat and water leaving economizer">Econ Approach Point (ΔT)</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputApproach" value="10" step="1" min="5" max="25">
+                                <span class="unit-tag" id="unitLabelApproach">°C</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rangeApproach" class="whrb-range-slider" min="5" max="25" value="10" step="1">
+                    </div>
+
+                    <!-- Boiler Continuous Blowdown -->
+                    <div class="input-slider-group">
+                        <div class="input-slider-header">
+                            <label for="inputBlowdown">Continuous Blowdown</label>
+                            <div class="input-num-with-unit">
+                                <input type="number" id="inputBlowdown" value="2.0" step="0.5" min="0" max="5">
+                                <span class="unit-tag">%</span>
+                            </div>
+                        </div>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);">Standard range: 1.0% to 3.0%</span>
+                    </div>
+                </div>
+
+                <!-- Action Toolbar (Print / Share) -->
+                <div class="presets-toolbar" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" id="shareLinkBtn" class="telemetry-btn">
+                        🔗 Share Configuration Link
+                    </button>
+                    <button type="button" id="printReportBtn" class="telemetry-btn">
+                        🖨️ Print / Export PDF
+                    </button>
+                </div>
+            </section>
+
+            <!-- TECHNICAL REFERENCE & ENGINEERING DOCUMENTATION -->
+            <article class="seo-guide-section" aria-label="WHRB Technical Engineering Reference">
+                <h2>Waste Heat Recovery Boiler (WHRB / HRSG) Engineering Fundamentals</h2>
+                <p>A <strong>Waste Heat Recovery Boiler (WHRB)</strong>—also designated as a <strong>Heat Recovery Steam Generator (HRSG)</strong> in gas turbine combined cycle facilities—captures sensible thermal energy from industrial exhaust gases to generate high-pressure superheated or saturated process steam without firing supplemental fuel.</p>
+
+                <!-- Engineering Formulas Box -->
+                <div class="formula-box">
+                    <h3>Fundamental WHRB Thermodynamic Energy Balance</h3>
+                    <p>The gross thermal energy recovered from the flue gas stream is governed by the enthalpy drop across the boiler bank according to ASME PTC 4.4:</p>
+                    
+                    <div class="math-formula">
+                        \[\dot{Q}_{recovered} = \dot{m}_{gas} \cdot \bar{C}_{p,gas} \cdot (T_{gas,in} - T_{gas,out}) \cdot (1 - \eta_{casing})\]
+                    </div>
+
+                    <p>The steam generation capacity (\(\dot{m}_{steam}\)) is thermodynamically constrained by the <strong>Evaporator Pinch Point</strong> energy balance:</p>
+
+                    <div class="math-formula">
+                        \[\dot{m}_{steam} = \frac{\dot{m}_{gas} \cdot \bar{C}_{p,gas} \cdot (T_{gas,in} - (T_{sat} + \Delta T_{pinch})) \cdot (1 - \eta_{casing})}{(h_{steam} - h_{econ,out}) + B \cdot (h_f - h_{econ,out})}\]
+                    </div>
+
+                    <div class="formula-legend">
+                        <ul>
+                            <li><strong>\(\dot{m}_{gas}\)</strong>: Flue gas mass flow rate (\(\text{kg/s}\) or \(\text{t/h}\))</li>
+                            <li><strong>\(\bar{C}_{p,gas}\)</strong>: Mean isobaric heat capacity of flue gas (\(\approx 1.05 - 1.15 \text{ kJ/(kg}\cdot\text{K)}\))</li>
+                            <li><strong>\(T_{sat}\)</strong>: Saturation temperature at operating drum pressure via <em>IAPWS-IF97</em></li>
+                            <li><strong>\(\Delta T_{pinch}\)</strong>: Evaporator Pinch Point temperature difference (\(T_{gas,evap,out} - T_{sat}\), typically \(10 - 20^\circ\text{C}\))</li>
+                            <li><strong>\(\Delta T_{approach}\)</strong>: Economizer Approach Point temperature difference (\(T_{sat} - T_{econ,out}\), typically \(5 - 15^\circ\text{C}\))</li>
+                            <li><strong>\(h_{steam}, h_f, h_{econ,out}\)</strong>: Specific enthalpies computed using formulation <em>IAPWS-IF97</em> (\(\text{kJ/kg}\))</li>
+                            <li><strong>\(B\)</strong>: Continuous boiler blowdown fraction (\(\approx 0.01 - 0.03\))</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pinch Point & Approach Point Explained -->
+                <div class="guide-steps-grid" style="margin-top: 24px;">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <h3>The Pinch Point Constraint (ΔT_pinch)</h3>
+                        <p>The Pinch Point is the minimum temperature difference between the cooled flue gas leaving the evaporator tube bank and the saturated water boiling inside the evaporator at \(T_{sat}\). Selecting a smaller pinch point yields more steam generation but demands exponentially larger heat transfer surface area.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <h3>The Approach Point Margin (ΔT_approach)</h3>
+                        <p>The Approach Point represents the degree of subcooling of water exiting the economizer relative to the drum saturation temperature (\(T_{econ,out} = T_{sat} - \Delta T_{approach}\)). A positive margin (\(5 - 15^\circ\text{C}\)) ensures steam does not generate inside the economizer tubes, preventing water hammer and vapor locking.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <h3>Acid Dew Point & Stack Corrosion</h3>
+                        <p>In fuels containing sulfur (heavy oil, sour gas, or high-sulfur coal), flue gas exit temperature must remain above the sulfuric acid dew point (\(130 - 150^\circ\text{C}\)) to prevent acid condensation on economizer tubes and chimney walls.</p>
+                    </div>
+                </div>
+
+                <!-- Industrial Standards Citation -->
+                <div class="references-section" style="margin-top: 24px;">
+                    <h3>Authoritative Standards & Engineering Codes</h3>
+                    <ul class="references-list">
+                        <li><strong>ASME PTC 4.4</strong> — <em>Performance Test Code on Gas Turbine Heat Recovery Steam Generators</em>. American Society of Mechanical Engineers.</li>
+                        <li><strong>IAPWS-IF97</strong> — <em>International Association for the Properties of Water and Steam Formulation 1997 for Industrial Use</em>.</li>
+                        <li><strong>EN 12952</strong> — <em>Water-tube boilers and auxiliary installations - Heat recovery steam generators</em>.</li>
+                        <li><strong>API 560 / ISO 13705</strong> — <em>Fired Heaters and Waste Heat Recovery in Petroleum and Petrochemical Industries</em>.</li>
+                    </ul>
+                </div>
+
+                <!-- Frequently Asked Questions (FAQ) Accordion -->
+                <section class="faq-accordion-section" aria-label="WHRB Boiler Frequently Asked Questions" style="margin-top: 30px;">
+                    <h2 class="faq-main-title">Frequently Asked Questions (FAQ)</h2>
+
+                    <div class="faq-accordion">
+                        <details class="faq-item">
+                            <summary class="faq-question">What is the difference between a WHRB and an HRSG?</summary>
+                            <div class="faq-answer">
+                                <p>In thermal engineering practice, both terms refer to waste heat recovery boilers. However, the designation <strong>HRSG (Heat Recovery Steam Generator)</strong> is predominantly used in combined-cycle power plants downstream of a combustion gas turbine. <strong>WHRB (Waste Heat Recovery Boiler)</strong> is more commonly used in heavy industrial processes such as cement rotary kilns, steel sponge iron/DRI kilns, incinerators, and chemical reactors.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Why is the Pinch Point critical in WHRB design?</summary>
+                            <div class="faq-answer">
+                                <p>The pinch point defines the thermodynamic bottleneck of heat transfer. Because boiling takes place at a constant temperature (\(T_{sat}\)), the flue gas temperature cannot drop below the saturation temperature. The temperature difference at the exit of the evaporator (\(T_{gas,evap} - T_{sat}\)) governs the maximum heat that can be absorbed by the evaporator and superheater combined.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">How does drum pressure affect steam generation?</summary>
+                            <div class="faq-answer">
+                                <p>Higher drum pressure raises the saturation temperature (\(T_{sat}\)) according to IAPWS-IF97 steam tables (e.g., \(T_{sat} = 180^\circ\text{C}\) at 10 bar, but \(253^\circ\text{C}\) at 42 bar). A higher \(T_{sat}\) increases the evaporator exit gas temperature, which reduces the amount of sensible heat available above the pinch point, resulting in a lower steam generation rate for the same exhaust gas inlet temperature.</p>
+                            </div>
+                        </details>
+
+                        <details class="faq-item">
+                            <summary class="faq-question">Can a WHRB operate on natural circulation or does it need a circulation pump?</summary>
+                            <div class="faq-answer">
+                                <p>Horizontal gas flow WHRBs with vertical evaporator tubes typically employ <strong>natural circulation</strong>, relying on the density difference between cold water in the external downcomers and the boiling two-phase mixture in the riser tubes. Vertical gas flow boilers with horizontal tube bundles typically require <strong>forced circulation pumps (BCPs)</strong> to ensure adequate boiling velocity and tube wall cooling.</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+            </article>
+
+            <!-- Peer Collaboration Banner -->
+            <section class="peer-collaboration-banner" style="margin-top: 24px;">
+                <div class="peer-banner-content">
+                    <span class="peer-banner-icon">💡</span>
+                    <div>
+                        <h3>Thermal Engineering & Plant Verification</h3>
+                        <p>Compare WHRB steam generation outputs against your plant DCS historian or ASME PTC 4.4 acceptance data. Switch between US Customary (psig, °F, klb/h) and Metric SI anytime using the navbar toggle.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Site Footer -->
+        <footer class="site-footer">
+            <p>
+                © <span id="year">2026</span> PowerPlantCalc.com — Power Plant Engineering Tools | 
+                <a href="/about" class="footer-link">About Us</a> | 
+                <a href="/contact" class="footer-link">Contact Us</a> | 
+                <a href="/privacy-policy" class="footer-link">Privacy Policy</a> | 
+                <a href="/terms-and-conditions" class="footer-link">Terms & Conditions</a>
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- Main Module Script -->
+    <script type="module" src="/src/whrb-main.js"></script>
+</body>
+
+</html>
