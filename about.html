@@ -75,40 +75,95 @@
 </head>
 <body>
     <!-- Site Global Navigation Header -->
-    <nav aria-label="Main Navigation" class="site-nav">
+    <nav class="site-nav" aria-label="Main Navigation">
         <div class="nav-container">
-            <a class="brand-logo" href="/">
-                <svg class="logo-icon" height="24" viewbox="0 0 32 32" width="24">
+            <a href="/" class="brand-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" class="logo-icon">
                     <defs>
-                        <lineargradient id="navG" x1="0%" x2="100%" y1="0%" y2="100%">
-                            <stop offset="0%" stop-color="#3b82f6"></stop>
-                            <stop offset="100%" stop-color="#06b6d4"></stop>
-                        </lineargradient>
+                        <linearGradient id="navG" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3b82f6"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
                     </defs>
-                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"></path>
-                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-width="2"></path>
+                    <path d="M7 28 L10 11 Q16 13 22 11 L25 28 Z" fill="url(#navG)"/>
+                    <path d="M12 8 Q14 4 16 8 Q18 4 20 8" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none"/>
                 </svg>
                 <span>PowerPlant<span class="highlight-text">Calc</span></span>
             </a>
-            <div class="nav-links" id="navLinksContainer">
-                <a class="nav-link" href="/">⚡ Home</a>
-                <a class="nav-link" href="/steam-calculator">🔥 Steam Properties</a>
-                <a class="nav-link" href="/boiler-efficiency-calculator">🏭 Boiler Efficiency</a>
-                <a class="nav-link" href="/steam-pipe-calculator">📏 Steam Pipe Sizing</a>
-                <a class="nav-link" href="/cooling-tower-calculator">🌊 Cooling Tower</a>
-                <a class="nav-link active" href="/about">ℹ️ About Us</a>
-                <a class="nav-link" href="/contact">✉️ Contact</a>
+            
+            <div id="navLinksContainer" class="nav-links">
+                <a href="/" class="nav-link">⚡ All Tools</a>
+
+                <!-- Engineering Calculators & Tables Dropdown Menu -->
+                <div class="nav-dropdown" id="toolsDropdown">
+                    <button type="button" class="nav-dropdown-btn" id="toolsDropdownBtn" aria-expanded="false" aria-haspopup="true">
+                        <span>⚙️ Engineering Tools</span>
+                        <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="nav-dropdown-menu" id="toolsDropdownMenu" role="menu">
+                        <a href="/steam-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🔥</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Enthalpy & Properties</div>
+                                <div class="dropdown-item-desc">IAPWS-IF97 property solver & Mollier chart</div>
+                            </div>
+                        </a>
+                        <a href="/steam-table" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">📖</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Tables (IAPWS-IF97)</div>
+                                <div class="dropdown-item-desc">Saturated & superheated tables with Excel export</div>
+                            </div>
+                        </a>
+                        <a href="/boiler-efficiency-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🏭</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Boiler Efficiency (ASME PTC 4)</div>
+                                <div class="dropdown-item-desc">Direct & Indirect heat loss methods (L1–L7)</div>
+                            </div>
+                        </a>
+                        <a href="/whrb-boiler-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">♻️</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">WHRB & HRSG Live Diagram</div>
+                                <div class="dropdown-item-desc">Real-time waste heat boiler simulator & pinch point</div>
+                            </div>
+                        </a>
+                        <a href="/steam-pipe-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">📏</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Pipe Sizing & Velocity</div>
+                                <div class="dropdown-item-desc">ASME B31.1 & B36.10M Darcy-Weisbach hydraulics</div>
+                            </div>
+                        </a>
+                        <a href="/cooling-tower-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🌊</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Cooling Tower Performance</div>
+                                <div class="dropdown-item-desc">CTI ATC-105 Range, Approach & CoC water loss</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="/about" class="nav-link active">ℹ️ About</a>
+                <a href="/contact" class="nav-link">✉️ Contact</a>
             </div>
+
             <div class="nav-right-controls">
                 <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
                     <span class="unit-flag">🇺🇸</span>
                     <span class="unit-text">US (psi, °F)</span>
                 </button>
-                <button aria-label="Toggle Light / Dark Theme" class="theme-toggle-btn" id="themeToggle">
+
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light / Dark Theme">
                     <span class="theme-icon">☀️</span>
                     <span class="theme-text">Light Mode</span>
                 </button>
-                <button aria-expanded="false" aria-label="Open Mobile Menu" class="mobile-menu-btn" id="mobileMenuToggle">
+
+                <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Mobile Menu" aria-expanded="false">
                     <span class="hamburger-icon">☰</span>
                 </button>
             </div>

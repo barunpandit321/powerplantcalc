@@ -170,16 +170,67 @@
             
             <div id="navLinksContainer" class="nav-links">
                 <a href="/" class="nav-link">⚡ All Tools</a>
-                <a href="/steam-calculator" class="nav-link">🔥 Steam Properties</a>
-                <a href="/cooling-tower-calculator" class="nav-link">🌊 Cooling Tower</a>
-                <a href="/boiler-efficiency-calculator" class="nav-link">🏭 Boiler Efficiency</a>
-                <a href="/steam-pipe-calculator" class="nav-link active">📏 Steam Pipe Sizing</a>
+
+                <!-- Engineering Calculators & Tables Dropdown Menu -->
+                <div class="nav-dropdown" id="toolsDropdown">
+                    <button type="button" class="nav-dropdown-btn active" id="toolsDropdownBtn" aria-expanded="false" aria-haspopup="true">
+                        <span>⚙️ Engineering Tools</span>
+                        <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </button>
+                    <div class="nav-dropdown-menu" id="toolsDropdownMenu" role="menu">
+                        <a href="/steam-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🔥</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Enthalpy & Properties</div>
+                                <div class="dropdown-item-desc">IAPWS-IF97 property solver & Mollier chart</div>
+                            </div>
+                        </a>
+                        <a href="/steam-table" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">📖</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Tables (IAPWS-IF97)</div>
+                                <div class="dropdown-item-desc">Saturated & superheated tables with Excel export</div>
+                            </div>
+                        </a>
+                        <a href="/boiler-efficiency-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🏭</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Boiler Efficiency (ASME PTC 4)</div>
+                                <div class="dropdown-item-desc">Direct & Indirect heat loss methods (L1–L7)</div>
+                            </div>
+                        </a>
+                        <a href="/whrb-boiler-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">♻️</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">WHRB & HRSG Live Diagram</div>
+                                <div class="dropdown-item-desc">Real-time waste heat boiler simulator & pinch point</div>
+                            </div>
+                        </a>
+                        <a href="/steam-pipe-calculator" class="dropdown-item active" role="menuitem">
+                            <span class="dropdown-item-icon">📏</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Steam Pipe Sizing & Velocity</div>
+                                <div class="dropdown-item-desc">ASME B31.1 & B36.10M Darcy-Weisbach hydraulics</div>
+                            </div>
+                        </a>
+                        <a href="/cooling-tower-calculator" class="dropdown-item" role="menuitem">
+                            <span class="dropdown-item-icon">🌊</span>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Cooling Tower Performance</div>
+                                <div class="dropdown-item-desc">CTI ATC-105 Range, Approach & CoC water loss</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
                 <a href="/about" class="nav-link">ℹ️ About</a>
                 <a href="/contact" class="nav-link">✉️ Contact</a>
             </div>
 
             <div class="nav-right-controls">
-                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Switch between US Customary and Metric units" title="Switch Unit System (US Imperial / Metric SI)">
+                <button id="unitSystemToggle" class="unit-system-toggle-btn" aria-label="Toggle US Customary or Metric System">
                     <span class="unit-flag">🇺🇸</span>
                     <span class="unit-text">US (psi, °F)</span>
                 </button>

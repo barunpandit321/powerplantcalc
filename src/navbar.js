@@ -98,4 +98,33 @@ export function initNavbar() {
             }
         });
     }
+
+    // Tools Dropdown Menu Handler (Desktop & Mobile)
+    const toolsDropdown = document.getElementById("toolsDropdown");
+    const toolsDropdownBtn = document.getElementById("toolsDropdownBtn");
+
+    if (toolsDropdown && toolsDropdownBtn) {
+        toolsDropdownBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = toolsDropdown.classList.contains("open");
+            toolsDropdown.classList.toggle("open", !isOpen);
+            toolsDropdownBtn.setAttribute("aria-expanded", String(!isOpen));
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+            if (!toolsDropdown.contains(e.target)) {
+                toolsDropdown.classList.remove("open");
+                toolsDropdownBtn.setAttribute("aria-expanded", "false");
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                toolsDropdown.classList.remove("open");
+                toolsDropdownBtn.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
 }
