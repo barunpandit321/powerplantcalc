@@ -1,7 +1,7 @@
 import { initNavbar } from "./navbar.js";
 import { CoolingChart } from "./cooling-chart.js";
 import { detectUserZone, getCoolingDefaultsForZone, prioritizeUnits } from "./geo.js";
-import { renderAffiliateSection } from "./affiliate.js";
+import { renderAffiliateSection, renderInResultRecommendation } from "./affiliate.js";
 
 const COOLING_STORAGE_KEY = "cooling_calculator_user_units_v1";
 
@@ -361,6 +361,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Render Canvas Chart
         chart.render({ Thot: ThotC, Tcold: TcoldC, Twb: TwbC });
+
+        // Contextual In-Result Recommendation (Cooling Water Chemistry & CoC)
+        renderInResultRecommendation("coolingInResultTip", {
+            badge: "Water Chemistry & CoC Control",
+            icon: "🧪",
+            headline: `Operating at CoC ${coc.toFixed(2)} — Calibrate Basin Blowdown with Digital TDS Meter`,
+            text: `At ${coc.toFixed(2)} Cycles of Concentration, maintaining exact blowdown (${outFlowConv.fromBase(blowdownM3H).toFixed(1)} ${outFlowConv.name}) prevents mineral scale deposition on condenser tubes while conserving makeup water. Regularly audit basin vs. makeup TDS with a calibrated digital conductivity meter.`,
+            productTitle: "Professional TDS & EC Water Conductivity Meter",
+            inQuery: "Digital TDS Meter Conductivity EC meter water testing",
+            inPriceEst: "From ₹699 on Amazon.in",
+            usQuery: "Digital TDS Meter Conductivity EC meter water testing",
+            usPriceEst: "From $19 on Amazon.com"
+        });
     }
 
     // Share Deep-Link

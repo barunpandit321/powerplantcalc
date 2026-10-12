@@ -363,10 +363,71 @@ export function renderAffiliateSection(target, category = "steam") {
                     localStorage.setItem("ppc_affiliate_store", activeStore);
                 } catch (e) {}
                 updateView();
+                window.dispatchEvent(new CustomEvent("affiliateStoreChanged", { detail: { store: activeStore } }));
             });
         });
     }
 
     updateView();
+}
+
+// Track active in-result recommendation containers for instantaneous store-switching
+const activeInResultContainers = new Set();
+
+window.addEventListener("affiliateStoreChanged", () => {
+    activeInResultContainers.forEach(el => {
+        if (el && el._currentOptions) {
+            renderInResultRecommendation(el, el._currentOptions);
+        }
+    });
+});
+
+/**
+ * Renders an authoritative in-result contextual recommendation directly beneath
+ * calculation results when calculations finish. Converts calculation intent into high-intent CTR.
+ *
+ * @param {string|HTMLElement} target - Container ID or HTMLElement
+ * @param {Object} options - Recommendation parameters
+ */
+export function renderInResultRecommendation(target, options) {
+    const container = typeof target === "string" ? document.getElementById(target) : target;
+    if (!container || !options) return;
+
+    // Cache latest options on element for dynamic store switcher response
+    container._currentOptions = options;
+    activeInResultContainers.add(container);
+
+    const isIndia = isIndianVisitor();
+    const query = isIndia ? (options.inQuery || options.query) : (options.usQuery || options.query);
+    const url = buildAffiliateUrl(query, isIndia);
+    const priceEst = isIndia ? options.inPriceEst : options.usPriceEst;
+    const storeName = isIndia ? "Amazon.in" : "Amazon.com";
+    const storeFlag = isIndia ? "🇮🇳" : "🇺🇸";
+
+    container.innerHTML = `
+        <div class="in-result-tip-card">
+            <div class="in-result-tip-header">
+                <div class="in-result-tip-badge-wrap">
+                    <span class="in-result-tip-icon">${options.icon || "💡"}</span>
+                    <span class="in-result-tip-badge">${options.badge || "Field Engineering Tip"}</span>
+                </div>
+                <span class="in-result-tip-store-indicator">${storeFlag} Verified on ${storeName}</span>
+            </div>
+            <h4 class="in-result-tip-headline">${options.headline}</h4>
+            <p class="in-result-tip-text">${options.text}</p>
+            <div class="in-result-tip-action-bar">
+                <div class="in-result-tip-product-info">
+                    <span class="in-result-tip-tool-label">Recommended Tool:</span>
+                    <strong class="in-result-tip-product-title">${options.productTitle}</strong>
+                    ${priceEst ? `<span class="in-result-tip-price">(${priceEst})</span>` : ""}
+                </div>
+                <a href="${url}" target="_blank" rel="sponsored nofollow noopener" class="in-result-tip-btn">
+                    <span>Check on ${storeName}</span>
+                    <span class="in-result-tip-btn-arrow">↗</span>
+                </a>
+            </div>
+        </div>
+    `;
+    container.style.display = "block";
 }
 

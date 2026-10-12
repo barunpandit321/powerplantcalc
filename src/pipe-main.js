@@ -3,7 +3,7 @@ import { PipeChart } from "./pipe-chart.js";
 import { sizePipeByVelocity, STANDARD_PIPES } from "./pipe-sizing.js";
 import { convertToBase, UNIT_TYPES } from "./units.js";
 import { detectUserZone } from "./geo.js";
-import { renderAffiliateSection } from "./affiliate.js";
+import { renderAffiliateSection, renderInResultRecommendation } from "./affiliate.js";
 
 export const PIPE_PRESETS = {
     "us-600psig": {
@@ -439,6 +439,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Populate Comparison Table
             renderComparisonTable(res.comparisonTable, rec.dn);
+
+            // Contextual In-Result Recommendation (ASME B31.1 Wall Integrity)
+            renderInResultRecommendation("pipeInResultTip", {
+                badge: "NDT Inspection Advisory",
+                icon: "🔍",
+                headline: `Verify Pipe Wall Thickness for ${rec.nps} (${schedule}) Under ASME B31.1`,
+                text: `Operating steam at ${rec.velocityMs.toFixed(1)} m/s (${rec.velocityFtMin.toLocaleString()} ft/min) causes long-term pipe wall thinning from droplet erosion and flow-accelerated corrosion (FAC). Use an ultrasonic NDT thickness gauge to inspect pipe elbows and tees during line outages.`,
+                productTitle: "Ultrasonic Pipe Wall Thickness Gauge Meter (NDT)",
+                inQuery: "Ultrasonic Thickness Gauge meter pipe wall metal NDT",
+                inPriceEst: "From ₹5,499 on Amazon.in",
+                usQuery: "Ultrasonic Thickness Gauge meter metal pipe wall NDT",
+                usPriceEst: "From $99 on Amazon.com"
+            });
 
         } catch (err) {
             console.error("Steam pipe sizing calculation error:", err);

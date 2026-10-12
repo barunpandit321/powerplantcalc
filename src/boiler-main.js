@@ -3,7 +3,7 @@ import { BoilerChart } from "./boiler-chart.js";
 import { calculateIndirectMethod, calculateDirectMethod, FUEL_PRESETS } from "./boiler-efficiency.js";
 import { convertToBase, convertFromBase, UNIT_TYPES } from "./units.js";
 import { detectUserZone, prioritizeUnits } from "./geo.js";
-import { renderAffiliateSection } from "./affiliate.js";
+import { renderAffiliateSection, renderInResultRecommendation } from "./affiliate.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
@@ -319,6 +319,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 L7: res.L7_unburntAsh
             });
 
+            // Contextual In-Result Recommendation (ASME PTC 4 Combustion Audit)
+            renderInResultRecommendation("boilerInResultTip", {
+                badge: "Combustion Audit Action",
+                icon: "🔥",
+                headline: `Dry Flue Gas Stack Loss is ${res.L1_dryFlueGas.toFixed(1)}% — Calibrate Flue Gas & Excess Air`,
+                text: `Stack gas heat loss (L1) is the single largest controllable thermal loss in your boiler system. Tuning excess air (${res.excessAir.toFixed(1)}%) with a digital anemometer/manometer and verifying economizer exit temperature with a high-temperature laser pyrometer directly recovers fuel.`,
+                productTitle: "High-Temperature Laser Pyrometer (up to 750°C)",
+                inQuery: "High Temperature Infrared Thermometer Gun 750C",
+                inPriceEst: "From ₹1,899 on Amazon.in",
+                usQuery: "High Temperature Infrared Thermometer 1000F",
+                usPriceEst: "From $49 on Amazon.com"
+            });
+
         } catch (err) {
             console.error("Indirect calculation error:", err);
             alert("Calculation Error: " + err.message);
@@ -419,6 +432,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 L5: 0.05,
                 L6: directLosses * 0.05,
                 L7: directLosses * 0.03
+            });
+
+            // Contextual In-Result Recommendation (Direct Method)
+            renderInResultRecommendation("boilerInResultTip", {
+                badge: "Efficiency Verification",
+                icon: "📖",
+                headline: `Direct Efficiency: ${res.efficiency.toFixed(1)}% (Evaporation Ratio: ${res.evaporationRatio.toFixed(2)})`,
+                text: "Direct input-output efficiency is sensitive to steam flow meter calibration and fuel GCV accuracy. Master ASME PTC 4 testing standards and combustion troubleshooting with authoritative reference literature.",
+                productTitle: "Boiler Operator's Guide (5th Edition)",
+                inQuery: "Boiler Operators Guide Anthony Kohan McGraw Hill",
+                inPriceEst: "From ₹790 on Amazon.in",
+                usQuery: "Boiler Operators Guide Anthony Kohan McGraw Hill",
+                usPriceEst: "From $75 on Amazon.com"
             });
 
         } catch (err) {

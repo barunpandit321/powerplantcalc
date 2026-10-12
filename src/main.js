@@ -5,7 +5,7 @@ import { solvePx } from "iapws-if97";
 import { drawThermodynamicChart } from "./chart.js";
 import { initNavbar } from "./navbar.js";
 import { detectUserZone, getSteamDefaultsForZone, prioritizeUnits } from "./geo.js";
-import { renderAffiliateSection } from "./affiliate.js";
+import { renderAffiliateSection, renderInResultRecommendation } from "./affiliate.js";
 
 const STORAGE_KEY = "steam_calculator_user_units_v1";
 
@@ -369,6 +369,34 @@ function renderResults() {
     );
 
     updateChart();
+
+    // Contextual In-Result Engineering Recommendation
+    const isSuperheated = currentState.region === 2 || (currentState.region === 5);
+    if (isSuperheated) {
+        renderInResultRecommendation("steamInResultTip", {
+            badge: "Field Engineering Action",
+            icon: "🌡️",
+            headline: "Audit Steam Line Skin Temperature & Insulation Efficiency",
+            text: "Your calculated steam state is in the superheated region. Ensuring adequate superheat across piping runs prevents droplet condensation and erosive turbine impingement. Field engineers verify insulation integrity and header temperatures using non-contact infrared pyrometers.",
+            productTitle: "Industrial Infrared Thermometer Gun (-50°C to 550°C)",
+            inQuery: "Infrared Thermometer Gun industrial laser temperature -50 to 550",
+            inPriceEst: "From ₹1,199 on Amazon.in",
+            usQuery: "Infrared Thermometer Gun industrial non contact laser",
+            usPriceEst: "From $29 on Amazon.com"
+        });
+    } else {
+        renderInResultRecommendation("steamInResultTip", {
+            badge: "Steam Trap Maintenance",
+            icon: "💧",
+            headline: "Inspect Saturated Steam Traps for Thermal Blow-Through",
+            text: "In saturated steam systems, leaking steam traps blowing live steam into condensate returns waste significant fuel every day. Instant non-contact temperature difference scanning between trap inlet and discharge spots malfunctioning traps immediately.",
+            productTitle: "Industrial Infrared Thermometer Gun (-50°C to 550°C)",
+            inQuery: "Infrared Thermometer Gun industrial laser temperature -50 to 550",
+            inPriceEst: "From ₹1,199 on Amazon.in",
+            usQuery: "Infrared Thermometer Gun industrial non contact laser",
+            usPriceEst: "From $29 on Amazon.com"
+        });
+    }
 }
 
 /**
