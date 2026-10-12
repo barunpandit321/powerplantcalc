@@ -5,6 +5,7 @@ import { solvePx } from "iapws-if97";
 import { drawThermodynamicChart } from "./chart.js";
 import { initNavbar } from "./navbar.js";
 import { detectUserZone, getSteamDefaultsForZone, prioritizeUnits } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 
 const STORAGE_KEY = "steam_calculator_user_units_v1";
 
@@ -580,6 +581,9 @@ if (savedPrefs && savedPrefs.mode) {
 
 // Initialize Shared Navbar & UI
 initNavbar();
+
+// Initialize Geotargeted Affiliate Recommendations (India Amazon.in vs US Amazon.com)
+renderAffiliateSection("affiliateRecommendationsContainer", "steam");
 
 const hasUrlParams = parseUrlQueryParams();
 if (!hasUrlParams) {

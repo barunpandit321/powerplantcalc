@@ -1,6 +1,7 @@
 import { initNavbar } from "./navbar.js";
 import { CoolingChart } from "./cooling-chart.js";
 import { detectUserZone, getCoolingDefaultsForZone, prioritizeUnits } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 
 const COOLING_STORAGE_KEY = "cooling_calculator_user_units_v1";
 
@@ -35,6 +36,9 @@ const HEAT_UNITS = {
 
 document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
+
+    // Initialize Geotargeted Affiliate Recommendations (India Amazon.in vs US Amazon.com)
+    renderAffiliateSection("affiliateRecommendationsContainer", "cooling");
 
     const chart = new CoolingChart("coolingChart");
 

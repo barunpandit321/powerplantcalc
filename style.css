@@ -3110,3 +3110,216 @@ header p {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* ==========================================
+   Amazon Associates Geotargeted Recommendations
+   ========================================== */
+.affiliate-recommendations-section {
+    margin: 32px 0 24px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: var(--card-shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.affiliate-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.affiliate-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.affiliate-badge-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.affiliate-main-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 2px;
+}
+
+.affiliate-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.affiliate-store-toggle {
+    display: inline-flex;
+    background: var(--bg-input);
+    padding: 3px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    gap: 4px;
+}
+
+.affiliate-store-btn {
+    background: transparent;
+    border: none;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.affiliate-store-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 2px 6px var(--primary-glow);
+}
+
+.affiliate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.affiliate-card {
+    background: var(--bg-hover, rgba(0, 0, 0, 0.02));
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.affiliate-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.affiliate-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.affiliate-product-icon {
+    font-size: 1.3rem;
+}
+
+.affiliate-type-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.affiliate-product-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    line-height: 1.35;
+}
+
+.affiliate-author {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.affiliate-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+    margin-bottom: 14px;
+    flex-grow: 1;
+}
+
+.affiliate-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.affiliate-price-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.affiliate-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ff9900;
+    color: #111827 !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.affiliate-cta-btn:hover {
+    background: #e68a00;
+    transform: translateY(-1px);
+}
+
+.affiliate-compliance-footer {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    opacity: 0.9;
+}
+
+.affiliate-compliance-icon {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+    .affiliate-header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .affiliate-store-toggle {
+        width: 100%;
+        display: flex;
+    }
+
+    .affiliate-store-btn {
+        flex: 1;
+        text-align: center;
+    }
+}

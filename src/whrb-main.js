@@ -7,6 +7,7 @@ import { calculateWhrb } from "./whrb-calc.js";
 import { WhrbDiagramManager } from "./whrb-diagram.js";
 import { WhrbChartManager } from "./whrb-chart.js";
 import { getUserUnitSystem } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 
 // Industrial Presets
 export const WHRB_PRESETS = {
@@ -79,6 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Initialize Visual Diagram and Charts
     const diagramManager = new WhrbDiagramManager("whrbDiagramContainer");
     const chartManager = new WhrbChartManager("trendCanvas", "qtCanvas");
+
+    // 3. Initialize Geotargeted Affiliate Recommendations
+    renderAffiliateSection("affiliateRecommendationsContainer", "boiler");
 
     let currentUnitSystem = getUserUnitSystem(); // "US" or "METRIC"
     let activePresetKey = "gt-combined-cycle";

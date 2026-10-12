@@ -3,9 +3,13 @@ import { BoilerChart } from "./boiler-chart.js";
 import { calculateIndirectMethod, calculateDirectMethod, FUEL_PRESETS } from "./boiler-efficiency.js";
 import { convertToBase, convertFromBase, UNIT_TYPES } from "./units.js";
 import { detectUserZone, prioritizeUnits } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
+
+    // Initialize Geotargeted Affiliate Recommendations (India Amazon.in vs US Amazon.com)
+    renderAffiliateSection("affiliateRecommendationsContainer", "boiler");
 
     const chart = new BoilerChart("boilerChart");
     let currentZone = detectUserZone();

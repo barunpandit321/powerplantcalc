@@ -3,6 +3,7 @@ import { PipeChart } from "./pipe-chart.js";
 import { sizePipeByVelocity, STANDARD_PIPES } from "./pipe-sizing.js";
 import { convertToBase, UNIT_TYPES } from "./units.js";
 import { detectUserZone } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 
 export const PIPE_PRESETS = {
     "us-600psig": {
@@ -93,6 +94,9 @@ export const PIPE_PRESETS = {
 
 document.addEventListener("DOMContentLoaded", () => {
     initNavbar();
+
+    // Initialize Geotargeted Affiliate Recommendations (India Amazon.in vs US Amazon.com)
+    renderAffiliateSection("affiliateRecommendationsContainer", "pipe");
 
     const chart = new PipeChart("pipeChart");
     let currentZone = detectUserZone();

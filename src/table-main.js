@@ -6,6 +6,7 @@
 
 import { initNavbar } from "./navbar.js";
 import { getUserUnitSystem } from "./geo.js";
+import { renderAffiliateSection } from "./affiliate.js";
 import {
     STANDARD_PRESSURES_BAR,
     STANDARD_TEMPERATURES_C,
@@ -19,6 +20,9 @@ import {
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Initialize Site Navbar
     initNavbar();
+
+    // 2. Initialize Geotargeted Affiliate Recommendations (India Amazon.in vs US Amazon.com)
+    renderAffiliateSection("affiliateRecommendationsContainer", "steam");
 
     let currentMode = "pressure"; // "pressure", "temperature", "superheated"
     let currentUnitSystem = getUserUnitSystem(); // "US" or "METRIC"
