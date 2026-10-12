@@ -232,6 +232,16 @@ export function isIndianVisitor() {
         if (stored === "US") return false;
     } catch (e) {}
 
+    // 1. Timezone UTC offset check: India Standard Time (IST) is strictly UTC+05:30 (-330 minutes)
+    let isOffsetIndia = false;
+    try {
+        const offset = new Date().getTimezoneOffset();
+        // -330 is UTC+5:30 (India & Sri Lanka)
+        if (offset === -330) {
+            isOffsetIndia = true;
+        }
+    } catch (e) {}
+
     let timeZone = "";
     try {
         timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
@@ -241,14 +251,15 @@ export function isIndianVisitor() {
     const languages = (navigator.languages || []).map(l => (l || "").toLowerCase());
 
     const isTzIndia = timeZone.includes("Kolkata") || timeZone.includes("Calcutta") ||
-                      timeZone.includes("Colombo") || timeZone.includes("Dhaka");
+                      timeZone.includes("Colombo") || timeZone.includes("Dhaka") ||
+                      timeZone.includes("IST");
 
     const indianLangs = ["hi", "ta", "te", "bn", "mr", "gu", "kn", "ml", "pa", "or", "as", "ur-in"];
     const isLangIndia = lang.endsWith("-in") ||
                         indianLangs.some(prefix => lang.startsWith(prefix)) ||
                         languages.some(l => l.endsWith("-in") || indianLangs.some(prefix => l.startsWith(prefix)));
 
-    if (isTzIndia || isLangIndia) return true;
+    if (isOffsetIndia || isTzIndia || isLangIndia) return true;
 
     try {
         if (detectUserZone() === "IN") return true;
