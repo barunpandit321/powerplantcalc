@@ -33,7 +33,7 @@
 
     <!-- Primary SEO Title & Meta Tags -->
     <title>Steam Table (IAPWS-IF97 Saturated Steam) | PowerPlantCalc</title>
-    <meta name="description" content="Free interactive Steam Tables based on IAPWS-IF97 standards. Saturated steam table by pressure and temperature, superheated steam matrix, instant search, and Excel export.">
+    <meta name="description" content="Interactive IAPWS-IF97 steam tables. Saturated steam by pressure &amp; temperature, superheated steam matrix, custom point evaluator, and instant Excel export.">
     <meta name="keywords" content="steam table, saturated steam table, steam table by pressure, steam table by temperature, superheated steam table, IAPWS-IF97 steam table, Dampftafel, tabla de vapor, table de vapeur">
     <meta name="author" content="PowerPlantCalc">
 
@@ -226,13 +226,13 @@
             <!-- Table Mode Selector Tabs -->
             <div class="chart-tabs" style="margin-bottom: 16px;">
                 <button id="tabPressure" class="chart-tab-btn active" type="button">
-                    🔥 Saturated Steam by Pressure (P<sub>sat</sub>)
+                    🔥 <span class="tab-label-full">Saturated Steam by Pressure (P<sub>sat</sub>)</span><span class="tab-label-short">Sat. by Pressure (P<sub>sat</sub>)</span>
                 </button>
                 <button id="tabTemperature" class="chart-tab-btn" type="button">
-                    🌡️ Saturated Steam by Temperature (T<sub>sat</sub>)
+                    🌡️ <span class="tab-label-full">Saturated Steam by Temperature (T<sub>sat</sub>)</span><span class="tab-label-short">Sat. by Temp (T<sub>sat</sub>)</span>
                 </button>
                 <button id="tabSuperheated" class="chart-tab-btn" type="button">
-                    ⚡ Superheated Steam Matrix (P vs T)
+                    ⚡ <span class="tab-label-full">Superheated Steam Matrix (P vs T)</span><span class="tab-label-short">Superheated (P vs T)</span>
                 </button>
             </div>
 
@@ -282,6 +282,11 @@
                             🖨️ Print
                         </button>
                     </div>
+                </div>
+
+                <!-- Mobile Horizontal Scroll Indicator -->
+                <div class="table-mobile-hint">
+                    👉 Swipe horizontally to view all 9 columns (v<sub>f</sub>, v<sub>g</sub>, h<sub>f</sub>, h<sub>fg</sub>, h<sub>g</sub>, s<sub>f</sub>, s<sub>g</sub>)
                 </div>
 
                 <!-- Table Content Wrapper with Sticky Header -->
@@ -348,7 +353,7 @@
                     </p>
 
                     <!-- 2x2 Grid of Formula Callout Cards -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; margin-bottom: 24px;">
                         
                         <!-- 1. Enthalpy Formula -->
                         <div class="formula-callout" style="margin: 0;">

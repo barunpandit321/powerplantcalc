@@ -36,6 +36,11 @@
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
@@ -45,7 +50,6 @@ body {
     align-items: center;
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
     width: 100%;
 }
 
@@ -480,7 +484,10 @@ header {
     border: 1px solid rgba(6, 182, 212, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    max-width: 100%;
 }
 
 .theme-toggle-btn {
@@ -552,12 +559,15 @@ header {
 }
 
 header h1 {
-    font-size: clamp(1.4rem, 4.5vw, 2.25rem);
+    font-size: clamp(1.25rem, 4.5vw, 2.25rem);
     font-weight: 700;
     color: var(--text-main);
     margin-bottom: 8px;
     line-height: 1.25;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    max-width: 100%;
 }
 
 header p {
@@ -916,6 +926,14 @@ header p {
     padding: 4px;
     border-radius: 10px;
     border: 1px solid var(--border-color);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+}
+
+.chart-tabs::-webkit-scrollbar {
+    display: none;
 }
 
 .chart-tab-btn {
@@ -928,6 +946,25 @@ header p {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tab-label-short {
+    display: none;
+}
+
+.tab-label-full {
+    display: inline;
+}
+
+@media (max-width: 640px) {
+    .tab-label-short {
+        display: inline;
+    }
+    .tab-label-full {
+        display: none;
+    }
 }
 
 .chart-tab-btn.active {
@@ -1745,10 +1782,13 @@ header p {
 
     .chart-tabs {
         width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .chart-tab-btn {
-        flex: 1;
+        flex: 0 0 auto;
         text-align: center;
     }
 
@@ -2996,4 +3036,77 @@ header p {
     font-size: 0.8rem;
     color: var(--text-muted);
     font-weight: 600;
+}
+
+.table-mobile-hint {
+    display: none;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .table-mobile-hint {
+        display: block;
+    }
+
+    .table-toolbar {
+        padding: 12px 10px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table-search-box {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .custom-point-bar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+    }
+
+    .custom-point-box {
+        flex: 1;
+        max-width: 130px;
+    }
+
+    .custom-point-box input {
+        width: 100%;
+        min-width: 45px;
+    }
+
+    .table-actions-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .table-actions-group .telemetry-btn {
+        flex: 1 1 calc(33.333% - 6px);
+        min-width: 70px;
+        justify-content: center;
+        padding: 6px 6px;
+        font-size: 0.78rem;
+    }
+
+    .table-actions-group label {
+        width: 100%;
+        margin-bottom: 2px;
+    }
+
+    .steam-table-wrapper {
+        -webkit-overflow-scrolling: touch;
+    }
 }
